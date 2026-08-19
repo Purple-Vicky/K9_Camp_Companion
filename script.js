@@ -27,7 +27,6 @@ function renderWeek(c){
   names.forEach((date,idx)=>{
     const p=data.programme[date], items=itemsFor(date);
     let extra="";
-if(date==="24 Aug")
     box.innerHTML+=`<div class="card"><div class="section-title"><h2>${date}</h2><span class="pill ${uniforms[p.uniform]}">${p.uniform.toUpperCase()}</span></div>${extra}${items.map(e=>`<div class="event"><div class="time">${e[0]}</div><div><h3>${e[1]}</h3>${e[2]?`<p>${e[2]}</p>`:""}${["STEM","Paintball","Archery","Leadership"].includes(e[1])?'<span class="tag">💧 Water bottle</span>':""}</div></div>`).join("")}</div>`;
   });
   const monday=itemsFor("24 Aug")[0];
