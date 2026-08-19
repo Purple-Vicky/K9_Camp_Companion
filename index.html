@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#06101d"><title>K9 RAFAC Camp Companion</title><link rel="stylesheet" href="style.css"></head>
+<body><main class="app">
+<header><img src="images/k9.png" alt="K9 robot dog"><div><h1>K9</h1><p>RAFAC CAMP COMPANION • LEEMING 2026</p></div></header>
+
+<section class="card hero"><h2>CADET <span data-id></span></h2><p class="muted"><span data-flight></span> • 22–28 August</p>
+<label class="small">Change cadet number (staff testing)</label><input id="cadetInput" inputmode="numeric" maxlength="3" placeholder="001" oninput="setId(this.value)"></section>
+
+<div class="nav">
+<button onclick="show('home',this)" class="active">🏠<br>Home</button>
+<button onclick="show('week',this)">📅<br>My Week</button>
+<button onclick="show('flying',this)">✈️<br>Flying</button>
+<button onclick="show('uniform',this)">👕<br>Uniform</button>
+<button onclick="show('more',this)">☰<br>More</button>
+</div>
+
+<section id="home" class="view active">
+<div class="card next" id="next"></div>
+<div class="card"><div class="section-title"><h2>🍽️ Today's Meal</h2><span class="pill greens">TBC</span></div><p id="mealDisplay" class="muted">Menu TBC</p></div>
+<div class="card"><div class="section-title"><h2>📢 K9 Alerts</h2><span>🐾</span></div><p class="muted">No new alerts.</p></div>
+</section>
+
+<section id="week" class="view"></section>
+
+<section id="flying" class="view">
+<div class="card"><div class="section-title"><h2>✈️ Flying</h2><span class="pill blues">12 CADETS</span></div>
+<p class="muted">Your personal flying slot will appear here when staff allocate it.</p>
+<div class="event"><div class="time">TBC</div><div><h3>Flying Slot</h3><p>Report point and time to be confirmed.</p></div></div></div>
+</section>
+
+<section id="uniform" class="view">
+<div class="card"><div class="section-title"><h2>👕 Uniform Guide</h2><span class="pill blues">APPROVED</span></div>
+<p class="muted">The four approved K9 uniform guides are ready. Sports information will be added later.</p>
+<div id="uniformDay"></div></div>
+<div class="card"><h2>🟩 Greens</h2><img class="uniform-img" src="images/uniform-greens.png" alt="Greens"></div>
+<div class="card"><h2>🟦 Blues</h2><img class="uniform-img" src="images/uniform-blues.png" alt="Blues"></div>
+<div class="card"><h2>🟨 Civvies</h2><img class="uniform-img" src="images/uniform-civvies.png" alt="Civvies"></div>
+<div class="card"><h2>🟧 Sports</h2><img class="uniform-img" src="images/uniform-sports.png" alt="Sports"></div>
+</section>
+
+<section id="more" class="view">
+<div class="card"><h2>🍽️ Meals</h2><p class="muted">Daily menu will be added as staff receive it.</p><input id="mealText" placeholder="Staff: enter today's menu"><button class="big-btn" onclick="updateMeals()">SAVE MENU ON THIS DEVICE</button></div>
+<div class="card"><h2>🚨 Emergency Information</h2><p class="muted">Camp emergency contacts and locations — TBC. Staff will complete these before use.</p><div class="event"><div class="time">999</div><div><h3>Emergency services</h3><p>Use in an immediate emergency.</p></div></div><button class="big-btn panic" onclick="alert('K9 emergency control is a prototype. Use the camp emergency procedure and staff chain of command.')">🚨 K9 EMERGENCY</button></div>
+<div class="card"><h2>🎉 K9 Fun Zone</h2><div class="photo-grid"><div class="fun">📸<b>Gallery</b><span class="muted small">Coming alive at camp</span></div><div class="fun">🧠<b>Quiz</b><span class="muted small">Camp challenge</span></div><div class="fun">🐾<b>NFC Hunt</b><span class="muted small">Checkpoint fun</span></div><div class="fun">🎤<b>Vox Pop</b><span class="muted small">Cadet memories</span></div></div></div>
+</section>
+
+<nav class="bottom">
+<button onclick="show('home',this)" class="active">🏠<br>Home</button><button onclick="show('week',this)">📅<br>My Week</button><button onclick="show('flying',this)">✈️<br>Flying</button><button onclick="show('uniform',this)">👕<br>Uniform</button><button onclick="show('more',this)">☰<br>More</button>
+</nav>
+</main>
+<script>const data={"programme": {"22 Aug": {"uniform": "Civvies", "items": [["13:30", "Arrival & check-in", "Packed lunch paperwork \u2022 tent allocation"], ["15:30", "Camp Brief & Fire Drill", ""], ["17:00", "Dinner", "Menu TBC"], ["18:00", "Evening Activity", "TBC"], ["20:30", "Free Time", ""], ["22:00", "Lights Out", ""]]}, "23 Aug": {"uniform": "Blues", "items": [["07:00", "Breakfast", ""], ["08:00", "Activity 1", "Round robin"], ["10:00", "Activity 2", "Round robin"], ["12:00", "Lunch", "Menu TBC"], ["13:00", "Activity 3", "Round robin"], ["15:00", "Activity 4", "Round robin"], ["17:00", "Dinner", "Menu TBC"], ["18:00", "Evening Activity", "TBC"], ["20:30", "Free Time", ""], ["22:00", "Lights Out", ""]]}, "24 Aug": {"uniform": "Greens", "flight_items": {"A": [["08:00", "STEM", ""], ["10:00", "Paintball", ""], ["13:00", "Archery", ""], ["15:00", "Leadership", ""]], "B": [["08:00", "Leadership", ""], ["10:00", "STEM", ""], ["13:00", "Paintball", ""], ["15:00", "Archery", ""]], "C": [["08:00", "Archery", ""], ["10:00", "Leadership", ""], ["13:00", "STEM", ""], ["15:00", "Paintball", ""]], "D": [["08:00", "Paintball", ""], ["10:00", "Archery", ""], ["13:00", "Leadership", ""], ["15:00", "STEM", ""]]}}, "25 Aug": {"uniform": "Blues", "items": [["07:00", "Breakfast", ""], ["08:00", "Section Visit", "TBC"], ["10:00", "Section Visit", "TBC"], ["12:00", "Lunch", "Menu TBC"], ["13:00", "Section Visit", "TBC"], ["15:00", "Section Visit", "TBC"], ["17:00", "Dinner", "Menu TBC"], ["18:00", "Evening Activity", "TBC"], ["22:00", "Lights Out", ""]]}, "26 Aug": {"uniform": "Civvies", "items": [["07:00", "Breakfast", "12 cadets flying"], ["08:00", "Travel", "On foot / minibus / TBC"], ["09:00", "York Air Museum / Adventure Training", "Allocation TBC"], ["12:00", "Lunch", "Menu TBC"], ["13:00", "York Air Museum / Adventure Training", "Allocation TBC"], ["17:00", "Dinner", "Menu TBC"], ["18:00", "Evening Activity", "TBC"], ["22:00", "Lights Out", ""]]}, "27 Aug": {"uniform": "Civvies", "items": [["07:00", "Breakfast", "12 cadets flying"], ["08:00", "Travel", "Coach / TBC"], ["09:00", "Adventure Training / York Air Museum", "Groups swap"], ["12:00", "Lunch", "Menu TBC"], ["13:00", "Adventure Training / York Air Museum", "Groups swap"], ["17:00", "Dinner", "Menu TBC"], ["18:00", "Evening Activity", "TBC"], ["22:00", "Lights Out", ""]]}, "28 Aug": {"uniform": "Civvies", "items": [["07:00", "Breakfast", ""], ["08:00", "Camp Photo", ""], ["08:30", "Parade", ""], ["09:00", "Camp Admin", "Clean, pack etc."], ["12:00", "Depart Camp", ""]]}}};</script>
+<script src="script.js"></script><script>loadMeal();</script>
+</body></html>
