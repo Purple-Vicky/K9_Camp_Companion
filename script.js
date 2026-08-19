@@ -5,7 +5,23 @@ let cadetId = localStorage.getItem("k9CadetId") || "001";
 const uniforms = {
   "Greens": "greens",
   "Blues": "blues",
-  "Civvies": "civvies"
+  "Civvies": "civvies",
+  "Sports": "sports"
+};
+
+const activityUniforms = {
+  "STEM": "Greens",
+  "Paintball": "Greens",
+  "Archery": "Greens",
+  "Leadership": "Greens",
+  "Section Visit": "Blues",
+  "York Air Museum": "Civvies",
+  "Adventure Training": "Sports",
+  "Flying": "Greens",
+  "Flying Slot": "Greens",
+  "Evening Activity": "Civvies",
+  "Camp Photo": "Blues",
+  "Parade": "Blues"
 };
 
 function cadet() {
@@ -34,6 +50,23 @@ function itemsFor(date) {
   }
 
   return p.items || [];
+}
+
+function uniformForItem(title, fallback) {
+  if (activityUniforms[title]) return activityUniforms[title];
+
+  if (
+    title.includes("York Air Museum") &&
+    title.includes("Adventure Training")
+  ) {
+    return "Civvies / Sports";
+  }
+
+  return fallback || "TBC";
+}
+
+function uniformClass(uniform) {
+  return uniforms[uniform] || "";
 }
 
 function render() {
@@ -66,25 +99,38 @@ function renderWeek(c) {
       <div class="card">
         <div class="section-title">
           <h2>${date}</h2>
-          <span class="pill ${uniforms[p.uniform] || ""}">
-            ${p.uniform.toUpperCase()}
+          <span class="pill ${uniformClass(p.uniform)}">
+            DAY: ${p.uniform.toUpperCase()}
           </span>
         </div>
 
-        ${items.map(e => `
-          <div class="event">
-            <div class="time">${e[0]}</div>
-            <div>
-              <h3>${e[1]}</h3>
-              ${e[2] ? `<p>${e[2]}</p>` : ""}
-              ${
-                ["STEM","Paintball","Archery","Leadership"].includes(e[1])
-                  ? `<span class="tag">💧 Water bottle</span>`
-                  : ""
-              }
+        ${items.map(e => {
+          const uniform = uniformForItem(e[1], p.uniform);
+          const uniformClassName = uniform.includes("/")
+            ? ""
+            : uniformClass(uniform);
+
+          return `
+            <div class="event">
+              <div class="time">${e[0]}</div>
+              <div>
+                <h3>${e[1]}</h3>
+
+                <span class="pill ${uniformClassName}">
+                  👕 ${uniform.toUpperCase()}
+                </span>
+
+                ${e[2] ? `<p>${e[2]}</p>` : ""}
+
+                ${
+                  ["STEM","Paintball","Archery","Leadership"].includes(e[1])
+                    ? `<span class="tag">💧 Water bottle</span>`
+                    : ""
+                }
+              </div>
             </div>
-          </div>
-        `).join("")}
+          `;
+        }).join("")}
       </div>
     `;
   });
@@ -94,9 +140,11 @@ function renderWeek(c) {
 
 function updateNextUp(c) {
   const next = document.getElementById("next");
+
   if (!next) return;
 
   const now = new Date();
+
   const campStart = new Date(2026, 7, 22, 0, 0);
   const campEnd = new Date(2026, 7, 28, 23, 59);
 
@@ -119,11 +167,14 @@ function updateNextUp(c) {
   let nextItem = null;
 
   if (now >= campStart && now <= campEnd) {
-    const minutesNow = now.getHours() * 60 + now.getMinutes();
+    const minutesNow =
+      now.getHours() * 60 + now.getMinutes();
 
     nextItem = items.find(item => {
       const parts = item[0].split(":");
-      const minutes = Number(parts[0]) * 60 + Number(parts[1]);
+      const minutes =
+        Number(parts[0]) * 60 + Number(parts[1]);
+
       return minutes > minutesNow;
     });
 
@@ -132,6 +183,7 @@ function updateNextUp(c) {
 
       if (index >= 0 && index < names.length - 1) {
         const tomorrow = names[index + 1];
+
         nextItem = itemsFor(tomorrow)[0] || null;
         targetDate = tomorrow;
       }
@@ -140,13 +192,36 @@ function updateNextUp(c) {
     nextItem = items[0] || null;
   }
 
+  const nextUniform = nextItem
+    ? uniformForItem(
+        nextItem[1],
+        data.programme[targetDate].uniform
+      )
+    : "";
+
   next.innerHTML = `
     <small>🐾 K9 SAYS… NEXT UP</small>
-    <h2>${nextItem ? nextItem[1] : "Check your programme"}</h2>
+
+    <h2>
+      ${nextItem ? nextItem[1] : "Check your programme"}
+    </h2>
+
     <p>
       Cadet ${c.id} • Flight ${c.flight}
-      ${nextItem ? ` • ${targetDate} • ${nextItem[0]}` : ""}
+      ${
+        nextItem
+          ? ` • ${targetDate} • ${nextItem[0]}`
+          : ""
+      }
     </p>
+
+    ${
+      nextItem
+        ? `<span class="pill ${uniformClass(nextUniform)}">
+             👕 ${nextUniform.toUpperCase()}
+           </span>`
+        : ""
+    }
   `;
 }
 
@@ -216,7 +291,8 @@ document.addEventListener("DOMContentLoaded", () => {
     input.value = cadet().id;
   }
 
-  const uniformDay = document.getElementById("uniformDay");
+  const uniformDay =
+    document.getElementById("uniformDay");
 
   if (uniformDay) {
     uniformDay.dataset.current = "civvies";
