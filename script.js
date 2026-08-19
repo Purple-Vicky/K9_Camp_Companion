@@ -11,9 +11,7 @@ const uniforms = {
 function cadet() {
   let n = parseInt(cadetId, 10);
 
-  if (!Number.isInteger(n) || n < 1 || n > 68) {
-    n = 1;
-  }
+  if (!Number.isInteger(n) || n < 1 || n > 68) n = 1;
 
   const id = String(n).padStart(3, "0");
   const flight = "ABCD"[Math.floor((n - 1) / 17)];
@@ -76,12 +74,9 @@ function renderWeek(c) {
         ${items.map(e => `
           <div class="event">
             <div class="time">${e[0]}</div>
-
             <div>
               <h3>${e[1]}</h3>
-
               ${e[2] ? `<p>${e[2]}</p>` : ""}
-
               ${
                 ["STEM","Paintball","Archery","Leadership"].includes(e[1])
                   ? `<span class="tag">💧 Water bottle</span>`
@@ -94,19 +89,65 @@ function renderWeek(c) {
     `;
   });
 
-  const monday = itemsFor("24 Aug")[0];
+  updateNextUp(c);
+}
 
+function updateNextUp(c) {
   const next = document.getElementById("next");
+  if (!next) return;
 
-  if (next) {
-    next.innerHTML = `
-      <small>🐾 K9 SAYS… NEXT UP</small>
-      <h2>${monday ? monday[1] : "Check your programme"}</h2>
-      <p>
-        Cadet ${c.id} • Flight ${c.flight} • Monday 08:00
-      </p>
-    `;
+  const now = new Date();
+  const campStart = new Date(2026, 7, 22, 0, 0);
+  const campEnd = new Date(2026, 7, 28, 23, 59);
+
+  let targetDate;
+
+  if (now < campStart) {
+    targetDate = "22 Aug";
+  } else {
+    const day = now.getDate();
+    const month = now.getMonth();
+
+    targetDate = `${day} Aug`;
+
+    if (month !== 7 || !names.includes(targetDate)) {
+      targetDate = "28 Aug";
+    }
   }
+
+  let items = itemsFor(targetDate);
+  let nextItem = null;
+
+  if (now >= campStart && now <= campEnd) {
+    const minutesNow = now.getHours() * 60 + now.getMinutes();
+
+    nextItem = items.find(item => {
+      const parts = item[0].split(":");
+      const minutes = Number(parts[0]) * 60 + Number(parts[1]);
+      return minutes > minutesNow;
+    });
+
+    if (!nextItem) {
+      const index = names.indexOf(targetDate);
+
+      if (index >= 0 && index < names.length - 1) {
+        const tomorrow = names[index + 1];
+        nextItem = itemsFor(tomorrow)[0] || null;
+        targetDate = tomorrow;
+      }
+    }
+  } else {
+    nextItem = items[0] || null;
+  }
+
+  next.innerHTML = `
+    <small>🐾 K9 SAYS… NEXT UP</small>
+    <h2>${nextItem ? nextItem[1] : "Check your programme"}</h2>
+    <p>
+      Cadet ${c.id} • Flight ${c.flight}
+      ${nextItem ? ` • ${targetDate} • ${nextItem[0]}` : ""}
+    </p>
+  `;
 }
 
 function renderUniform() {
@@ -140,9 +181,7 @@ function show(id, btn) {
     x.classList.remove("active");
   });
 
-  if (btn) {
-    btn.classList.add("active");
-  }
+  if (btn) btn.classList.add("active");
 }
 
 function updateMeals() {
