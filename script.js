@@ -29,7 +29,7 @@ const mealTitles = [
   "Breakfast",
   "Lunch",
   "Dinner",
-  "Tea",ƒ
+  "Tea",
   "Supper",
   "Evening Meal"
 ];
