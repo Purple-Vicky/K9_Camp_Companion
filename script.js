@@ -1,5 +1,4 @@
 
-const data = __DATA__;
 const names = ["22 Aug","23 Aug","24 Aug","25 Aug","26 Aug","27 Aug","28 Aug"];
 let cadetId = localStorage.getItem("k9CadetId") || "001";
 const uniforms={"Greens":"greens","Blues":"blues","Civvies":"civvies"};
