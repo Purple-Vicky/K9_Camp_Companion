@@ -29,7 +29,7 @@ const mealTitles = [
   "Breakfast",
   "Lunch",
   "Dinner",
-  "Tea",
+  "Tea",ƒ
   "Supper",
   "Evening Meal"
 ];
@@ -56,7 +56,19 @@ function itemsFor(date) {
   const c = cadet();
 
   if (p.flight_items) {
-    return p.flight_items[c.flight] || [];
+    const commonItems = [
+      ["07:00", "Breakfast", ""],
+      ["12:00", "Lunch", "Menu TBC"],
+      ["17:00", "Dinner", "Menu TBC"],
+      ["18:00", "Evening Activity", "TBC"],
+      ["20:30", "Free Time", ""],
+      ["22:00", "Lights Out", ""]
+    ];
+
+    return [
+      ...(p.flight_items[c.flight] || []),
+      ...commonItems
+    ].sort((a, b) => a[0].localeCompare(b[0]));
   }
 
   return p.items || [];
