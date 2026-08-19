@@ -21,8 +21,18 @@ const activityUniforms = {
   "Flying Slot": "Greens",
   "Evening Activity": "Civvies",
   "Camp Photo": "Blues",
-  "Parade": "Blues"
+  "Parade": "Blues",
+  "Free Time": "Civvies"
 };
+
+const mealTitles = [
+  "Breakfast",
+  "Lunch",
+  "Dinner",
+  "Tea",
+  "Supper",
+  "Evening Meal"
+];
 
 function cadet() {
   let n = parseInt(cadetId, 10);
@@ -52,15 +62,16 @@ function itemsFor(date) {
   return p.items || [];
 }
 
+function isMeal(title) {
+  return mealTitles.includes(title);
+}
+
+function isLightsOut(title) {
+  return title === "Lights Out";
+}
+
 function uniformForItem(title, fallback) {
   if (activityUniforms[title]) return activityUniforms[title];
-
-  if (
-    title.includes("York Air Museum") &&
-    title.includes("Adventure Training")
-  ) {
-    return "Civvies / Sports";
-  }
 
   return fallback || "TBC";
 }
@@ -105,31 +116,56 @@ function renderWeek(c) {
         </div>
 
         ${items.map(e => {
-          const uniform = uniformForItem(e[1], p.uniform);
-          const uniformClassName = uniform.includes("/")
-            ? ""
-            : uniformClass(uniform);
+
+          const title = e[1];
+          const meal = isMeal(title);
+          const lightsOut = isLightsOut(title);
+
+          let specialLabel = "";
+
+          if (meal) {
+            specialLabel =
+              title === "Lunch"
+                ? `<span class="pill">🥪 PACKED LUNCH</span>`
+                : `<span class="pill">🍽️ MEAL</span>`;
+          }
+
+          if (lightsOut) {
+            specialLabel = `<span class="pill">🧸 LIGHTS OUT</span>`;
+          }
+
+          const uniform = uniformForItem(title, p.uniform);
+
+          const showUniform =
+            !meal &&
+            !lightsOut;
 
           return `
             <div class="event">
               <div class="time">${e[0]}</div>
-              <div>
-                <h3>${e[1]}</h3>
 
-                <span class="pill ${uniformClassName}">
-                  👕 ${uniform.toUpperCase()}
-                </span>
+              <div>
+                <h3>${title}</h3>
+
+                ${
+                  showUniform
+                    ? `<span class="pill ${uniformClass(uniform)}">
+                         👕 ${uniform.toUpperCase()}
+                       </span>`
+                    : specialLabel
+                }
 
                 ${e[2] ? `<p>${e[2]}</p>` : ""}
 
                 ${
-                  ["STEM","Paintball","Archery","Leadership"].includes(e[1])
+                  ["STEM","Paintball","Archery","Leadership"].includes(title)
                     ? `<span class="tag">💧 Water bottle</span>`
                     : ""
                 }
               </div>
             </div>
           `;
+
         }).join("")}
       </div>
     `;
@@ -172,6 +208,7 @@ function updateNextUp(c) {
 
     nextItem = items.find(item => {
       const parts = item[0].split(":");
+
       const minutes =
         Number(parts[0]) * 60 + Number(parts[1]);
 
@@ -216,7 +253,9 @@ function updateNextUp(c) {
     </p>
 
     ${
-      nextItem
+      nextItem &&
+      !isMeal(nextItem[1]) &&
+      !isLightsOut(nextItem[1])
         ? `<span class="pill ${uniformClass(nextUniform)}">
              👕 ${nextUniform.toUpperCase()}
            </span>`
