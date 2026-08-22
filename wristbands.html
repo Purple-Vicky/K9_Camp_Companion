@@ -7,230 +7,36 @@
 <title>Individual Wristbands • K9 RAFAC Camp Companion</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #06101d;
-  color: white;
-}
-
-.app {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px;
-}
-
-header {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-header img {
-  width: 70px;
-  height: 70px;
-  object-fit: contain;
-}
-
-h1 {
-  margin: 0;
-  color: #49bfff;
-}
-
-header p {
-  margin: 4px 0 0;
-  color: #9aaabd;
-}
-
-.card {
-  background: #0c1c2d;
-  border: 1px solid #183752;
-  border-radius: 18px;
-  padding: 22px;
-  margin-bottom: 20px;
-}
-
-.hero {
-  display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 30px;
-  align-items: center;
-}
-
-h2 {
-  color: #49bfff;
-  margin-top: 0;
-}
-
-.muted {
-  color: #aebdca;
-  line-height: 1.5;
-}
-
-.wristband-id {
-  display: inline-block;
-  background: #087fc4;
-  color: white;
-  font-size: 48px;
-  font-weight: bold;
-  padding: 12px 30px;
-  border-radius: 15px;
-  margin: 10px 0;
-  letter-spacing: 4px;
-}
-
-.wristband {
-  height: 90px;
-  background: linear-gradient(135deg,#087fc4,#49bfff,#087fc4);
-  border-radius: 45px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 30px rgba(73,191,255,.25);
-}
-
-.tag {
-  background: #050b12;
-  border-radius: 14px;
-  padding: 12px 25px;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.status {
-  margin-top: 15px;
-  background: #102c25;
-  border: 1px solid #277d62;
-  color: #69e0ae;
-  padding: 15px;
-  border-radius: 12px;
-  text-align: center;
-}
-
-.status strong {
-  display: block;
-  font-size: 18px;
-}
-
-.section-title {
-  font-size: 20px;
-  font-weight: bold;
-  color: #49bfff;
-  margin-bottom: 15px;
-}
-
-.features {
-  display: grid;
-  grid-template-columns: repeat(5,1fr);
-  gap: 12px;
-}
-
-.feature {
-  background: #091725;
-  border: 1px solid #183752;
-  border-radius: 14px;
-  padding: 18px;
-  min-height: 130px;
-}
-
-.feature-icon {
-  font-size: 30px;
-  margin-bottom: 10px;
-}
-
-.feature strong {
-  display: block;
-  margin-bottom: 8px;
-}
-
-.feature span {
-  color: #aebdca;
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-.steps {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 15px;
-}
-
-.step {
-  background: #091725;
-  border-radius: 14px;
-  padding: 20px;
-  border: 1px solid #183752;
-}
-
-.number {
-  width: 38px;
-  height: 38px;
-  background: #087fc4;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 20px;
-  margin-bottom: 12px;
-}
-
-.warning {
-  background: #302817;
-  border: 1px solid #806b2b;
-  color: #f2d477;
-  border-radius: 12px;
-  padding: 16px;
-  margin-top: 20px;
-}
-
-.nav {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  margin-bottom: 20px;
-}
-
-.nav a {
-  text-decoration: none;
-  color: #aebdca;
-  background: #0c1c2d;
-  border: 1px solid #183752;
-  padding: 10px 14px;
-  border-radius: 10px;
-  white-space: nowrap;
-}
-
-.nav a:hover {
-  color: white;
-  border-color: #49bfff;
-}
-
-@media (max-width:800px) {
-  .hero {
-    grid-template-columns: 1fr;
-  }
-
-  .features {
-    grid-template-columns: repeat(2,1fr);
-  }
-
-  .steps {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width:500px) {
-  .features {
-    grid-template-columns: 1fr;
-  }
-}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#06101d;color:white}
+.app{max-width:1100px;margin:auto;padding:20px}
+header{display:flex;align-items:center;gap:15px;margin-bottom:20px}
+header img{width:70px;height:70px;object-fit:contain}
+h1{margin:0;color:#49bfff}
+header p{margin:4px 0 0;color:#9aaabd}
+.card{background:#0c1c2d;border:1px solid #183752;border-radius:18px;padding:22px;margin-bottom:20px}
+.hero{display:grid;grid-template-columns:1fr 320px;gap:30px;align-items:center}
+h2{color:#49bfff;margin-top:0}
+.muted{color:#aebdca;line-height:1.5}
+.wristband-id{display:inline-block;background:#087fc4;color:white;font-size:48px;font-weight:bold;padding:12px 30px;border-radius:15px;margin:10px 0;letter-spacing:4px}
+.wristband{height:90px;background:linear-gradient(135deg,#087fc4,#49bfff,#087fc4);border-radius:45px;display:flex;align-items:center;justify-content:center}
+.tag{background:#050b12;border-radius:14px;padding:12px 25px;font-size:24px;font-weight:bold}
+.status{margin-top:15px;background:#102c25;border:1px solid #277d62;color:#69e0ae;padding:15px;border-radius:12px;text-align:center}
+.status strong{display:block;font-size:18px}
+.section-title{font-size:20px;font-weight:bold;color:#49bfff;margin-bottom:15px}
+.features{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.feature{background:#091725;border:1px solid #183752;border-radius:14px;padding:18px;min-height:130px}
+.feature-icon{font-size:30px;margin-bottom:10px}
+.feature strong{display:block;margin-bottom:8px}
+.feature span{color:#aebdca;font-size:14px;line-height:1.4}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.step{background:#091725;border-radius:14px;padding:20px;border:1px solid #183752}
+.number{width:38px;height:38px;background:#087fc4;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:20px;margin-bottom:12px}
+.warning{background:#302817;border:1px solid #806b2b;color:#f2d477;border-radius:12px;padding:16px;margin-top:20px}
+.nav{display:flex;gap:8px;overflow-x:auto;margin-bottom:20px}
+.nav a{text-decoration:none;color:#aebdca;background:#0c1c2d;border:1px solid #183752;padding:10px 14px;border-radius:10px;white-space:nowrap}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.features{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:1fr}}
+@media(max-width:500px){.features{grid-template-columns:1fr}}
 </style>
 </head>
 
@@ -239,146 +45,142 @@ h2 {
 <main class="app">
 
 <header>
-  <img src="images/k9.png" alt="K9">
-  <div>
-    <h1>K9 RAFAC Camp Companion</h1>
-    <p>LEEMING 2026 • INDIVIDUAL WRISTBANDS</p>
-  </div>
+<img src="images/k9.png" alt="K9">
+<div>
+<h1>K9 RAFAC Camp Companion</h1>
+<p>LEEMING 2026 • INDIVIDUAL WRISTBANDS</p>
+</div>
 </header>
 
 <nav class="nav">
-  <a href="index.html">🏠 Home</a>
-  <a href="index.html">📅 My Week</a>
-  <a href="index.html">✈️ Flying</a>
-  <a href="index.html">👕 Uniform</a>
-  <a href="wristbands.html">⌚ Wristbands</a>
-  <a href="index.html">☰ More</a>
+<a href="index.html">🏠 Home</a>
+<a href="index.html">📅 My Week</a>
+<a href="index.html">✈️ Flying</a>
+<a href="index.html">👕 Uniform</a>
+<a href="wristbands.html">⌚ Wristbands</a>
+<a href="index.html">☰ More</a>
 </nav>
 
 <section class="card hero">
 
-  <div>
-    <h2>⌚ INDIVIDUAL WRISTBANDS</h2>
+<div>
+<h2>⌚ INDIVIDUAL WRISTBANDS</h2>
 
-    <p class="muted">
-      Use your NFC wristband for all activities, meals,
-      and camp access.
-    </p>
+<p class="muted">Use your NFC wristband for all activities, meals, and camp access.</p>
 
-    <p class="muted">
-      Tap your wristband on the reader when asked.
-    </p>
+<p class="muted">Tap your wristband on the reader when asked.</p>
 
-    <p class="muted">Your wristband ID</p>
+<p class="muted">Your wristband ID</p>
 
-    <div class="wristband-id">023</div>
+<div class="wristband-id" id="cadetId">023</div>
 
-    <p class="muted">
-      If your wristband is not working, report it to your Flight Staff.
-    </p>
-  </div>
+<p class="muted">If your wristband is not working, report it to your Flight Staff.</p>
+</div>
 
-  <div>
-    <div class="wristband">
-      <div class="tag">◉ NFC &nbsp; 023</div>
-    </div>
+<div>
 
-    <div class="status">
-      ✓
-      <strong>Wristband status</strong>
-      Active and working
-    </div>
-  </div>
+<div class="wristband">
+<div class="tag">◉ NFC &nbsp; <span id="cadetTag">023</span></div>
+</div>
+
+<div class="status">
+✓
+<strong>Wristband status</strong>
+Active and working
+</div>
+
+</div>
 
 </section>
 
 <section class="card">
 
-  <div class="section-title">
-    WHAT YOU CAN USE YOUR WRISTBAND FOR
-  </div>
+<div class="section-title">WHAT YOU CAN USE YOUR WRISTBAND FOR</div>
 
-  <div class="features">
+<div class="features">
 
-    <div class="feature">
-      <div class="feature-icon">🚪</div>
-      <strong>Camp Access</strong>
-      <span>Tap to enter and exit camp areas.</span>
-    </div>
+<div class="feature">
+<div class="feature-icon">🚪</div>
+<strong>Camp Access</strong>
+<span>Tap to enter and exit camp areas.</span>
+</div>
 
-    <div class="feature">
-      <div class="feature-icon">📋</div>
-      <strong>Activity Check-in</strong>
-      <span>Tap when you arrive at activities.</span>
-    </div>
+<div class="feature">
+<div class="feature-icon">📋</div>
+<strong>Activity Check-in</strong>
+<span>Tap when you arrive at activities.</span>
+</div>
 
-    <div class="feature">
-      <div class="feature-icon">🍽️</div>
-      <strong>Meal Times</strong>
-      <span>Tap to record your meal.</span>
-    </div>
+<div class="feature">
+<div class="feature-icon">🍽️</div>
+<strong>Meal Times</strong>
+<span>Tap to record your meal.</span>
+</div>
 
-    <div class="feature">
-      <div class="feature-icon">🏥</div>
-      <strong>Medical Station</strong>
-      <span>Tap when visiting the medical centre.</span>
-    </div>
+<div class="feature">
+<div class="feature-icon">🏥</div>
+<strong>Medical Station</strong>
+<span>Tap when visiting the medical centre.</span>
+</div>
 
-    <div class="feature">
-      <div class="feature-icon">🏆</div>
-      <strong>Events & Games</strong>
-      <span>Tap for event participation.</span>
-    </div>
+<div class="feature">
+<div class="feature-icon">🏆</div>
+<strong>Events & Games</strong>
+<span>Tap for event participation.</span>
+</div>
 
-  </div>
-
+</div>
 </section>
 
 <section class="card">
 
-  <div class="section-title">
-    HOW TO USE
-  </div>
+<div class="section-title">HOW TO USE</div>
 
-  <div class="steps">
+<div class="steps">
 
-    <div class="step">
-      <div class="number">1</div>
-      <strong>Wear your wristband</strong>
-      <p class="muted">
-        Make sure your wristband is securely on your wrist.
-      </p>
-    </div>
+<div class="step">
+<div class="number">1</div>
+<strong>Wear your wristband</strong>
+<p class="muted">Make sure your wristband is securely on your wrist.</p>
+</div>
 
-    <div class="step">
-      <div class="number">2</div>
-      <strong>Tap the reader</strong>
-      <p class="muted">
-        Hold your wrist near the NFC reader until it beeps
-        or the green light shows.
-      </p>
-    </div>
+<div class="step">
+<div class="number">2</div>
+<strong>Tap the reader</strong>
+<p class="muted">Hold your wrist near the NFC reader until it beeps or the green light shows.</p>
+</div>
 
-    <div class="step">
-      <div class="number">3</div>
-      <strong>Wait for confirmation</strong>
-      <p class="muted">
-        Wait for confirmation on the screen before moving away.
-      </p>
-    </div>
+<div class="step">
+<div class="number">3</div>
+<strong>Wait for confirmation</strong>
+<p class="muted">Wait for confirmation on the screen before moving away.</p>
+</div>
 
-  </div>
+</div>
 
-  <div class="warning">
-    ⚠️ <strong>Keep your wristband safe and dry.</strong>
-    Do not share it with anyone.
-    <br><br>
-    Lost wristbands must be reported immediately.
-  </div>
+<div class="warning">
+⚠️ <strong>Keep your wristband safe and dry.</strong>
+Do not share it with anyone.
+<br><br>
+Lost wristbands must be reported immediately.
+</div>
 
 </section>
 
 </main>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const supplied = params.get("cadet") || localStorage.getItem("k9CadetId") || "023";
+const number = parseInt(supplied, 10);
+
+const id = Number.isInteger(number) && number >= 1 && number <= 68
+  ? String(number).padStart(3, "0")
+  : "023";
+
+document.getElementById("cadetId").textContent = id;
+document.getElementById("cadetTag").textContent = id;
+</script>
 
 </body>
 </html>
