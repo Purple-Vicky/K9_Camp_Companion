@@ -591,9 +591,18 @@ function renderStaffGrid() {
         <button type="button" class="big-btn ghost" onclick="saveToken()">SAVE TOKEN ON THIS DEVICE</button>
       </details>
 
-      <button type="button" class="big-btn ghost" onclick="saveMobilesCsv()">SAVE FILE INSTEAD</button>
-      <button type="button" class="big-btn ghost" onclick="showMobilesText()">SHOW TEXT TO COPY</button>
-      <button type="button" class="big-btn ghost" onclick="clearStaffEntries()">CLEAR THIS DEVICE</button>
+      <details>
+        <summary class="small">If publishing will not work</summary>
+        <p class="muted small">Publishing needs a signal. With none, get the register off this device by hand and upload it as mobiles.csv when you are back in range.</p>
+        <button type="button" class="big-btn ghost" onclick="saveMobilesCsv()">SAVE AS A FILE</button>
+        <button type="button" class="big-btn ghost" onclick="showMobilesText()">SHOW TEXT TO COPY</button>
+      </details>
+
+      <details>
+        <summary class="small">Danger zone</summary>
+        <p class="muted small">Wipes every entry held on this device. Anything not yet published is lost.</p>
+        <button type="button" class="big-btn ghost" onclick="clearStaffEntries()">CLEAR THIS DEVICE</button>
+      </details>
     </div>
   `;
 
