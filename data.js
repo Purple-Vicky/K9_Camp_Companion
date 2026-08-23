@@ -39,19 +39,43 @@ const data = {
     },
 
     "23 Aug": {
-      uniform: "Blues",
+      uniform: "Civvies",
       items: [
         { time: "07:00", title: "Breakfast", location: "", note: "", type: "meal" },
-        { time: "08:00", title: "Activity 1", location: "", note: "Round robin" },
-        { time: "10:00", title: "Activity 2", location: "", note: "Round robin" },
         { time: "12:00", title: "Lunch", location: "", note: "Menu TBC", type: "meal" },
-        { time: "13:00", title: "Activity 3", location: "", note: "Round robin" },
-        { time: "15:00", title: "Activity 4", location: "", note: "Round robin" },
         { time: "17:00", title: "Dinner", location: "", note: "Menu TBC", type: "meal" },
         { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
         { time: "20:30", title: "Free Time", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
-      ]
+      ],
+      // AM: A & B on Leadership, C & D on First Aid, both halves.
+      // PM: A & B swap between First Aid and AGS; C & D on Leadership throughout.
+      flights: {
+        A: [
+          { time: "08:00", title: "Leadership", location: "", uniform: "Civvies", note: "" },
+          { time: "10:00", title: "Leadership", location: "", uniform: "Civvies", note: "" },
+          { time: "13:00", title: "First Aid", location: "", uniform: "Civvies", note: "" },
+          { time: "15:00", title: "AGS", location: "", uniform: "Civvies", note: "" }
+        ],
+        B: [
+          { time: "08:00", title: "Leadership", location: "", uniform: "Civvies", note: "" },
+          { time: "10:00", title: "Leadership", location: "", uniform: "Civvies", note: "" },
+          { time: "13:00", title: "AGS", location: "", uniform: "Civvies", note: "" },
+          { time: "15:00", title: "First Aid", location: "", uniform: "Civvies", note: "" }
+        ],
+        C: [
+          { time: "08:00", title: "First Aid", location: "", uniform: "Civvies", note: "" },
+          { time: "10:00", title: "First Aid", location: "", uniform: "Civvies", note: "" },
+          { time: "13:00", title: "Leadership", location: "", uniform: "Civvies", note: "" },
+          { time: "15:00", title: "Leadership", location: "", uniform: "Civvies", note: "" }
+        ],
+        D: [
+          { time: "08:00", title: "First Aid", location: "", uniform: "Civvies", note: "" },
+          { time: "10:00", title: "First Aid", location: "", uniform: "Civvies", note: "" },
+          { time: "13:00", title: "Leadership", location: "", uniform: "Civvies", note: "" },
+          { time: "15:00", title: "Leadership", location: "", uniform: "Civvies", note: "" }
+        ]
+      }
     },
 
     "24 Aug": {
