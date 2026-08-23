@@ -4,7 +4,14 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="K9 — your RAFAC camp companion for Leeming 2026. Programme, uniform, flight and flying.">
 <link rel="icon" href="images/k9.png"><link rel="apple-touch-icon" href="images/k9.png">
-<link rel="stylesheet" href="style.css"></head>
+<script>
+// Load the stylesheet with a cache-buster, so a phone that opened the app
+// yesterday does not keep yesterday's styling. document.write is used
+// deliberately: it blocks parsing until the sheet is in, which avoids the
+// page flashing up unstyled the way an injected <link> would.
+document.write('<link rel="stylesheet" href="style.css?v=' + Date.now() + '">');
+</script>
+<noscript><link rel="stylesheet" href="style.css"></noscript></head>
 <body><main class="app">
 <header><img src="images/k9.png" alt=""><div><h1>K9</h1><p>RAFAC CAMP COMPANION • LEEMING 2026</p></div></header>
 
