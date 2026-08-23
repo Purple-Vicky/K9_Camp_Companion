@@ -8,6 +8,7 @@
 //   location  Where to report. Shows as "📍 ...". Leave "" to hide.
 //   uniform   Overrides the uniform for this item only. Leave out to use
 //             the day's uniform. One of: Greens, Blues, Civvies, Sports.
+//   end       Optional finish time, "HH:MM". Shown under the start time.
 //   note      Small print underneath. Leave "" to hide.
 //   type      "meal" or "lightsout" for special styling. Leave out otherwise.
 //
@@ -29,7 +30,7 @@ const data = {
       items: [
         { time: "13:30", title: "Arrival & check-in", location: "", note: "Packed lunch paperwork • tent allocation" },
         { time: "15:30", title: "Camp Brief & Fire Drill", location: "", note: "" },
-        { time: "17:00", title: "Dinner", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
+        { time: "17:00", title: "Dinner", location: "Dining Facility", note: "Menu TBC", type: "meal" },
         { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
         { time: "20:30", title: "Free Time", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
@@ -39,9 +40,9 @@ const data = {
     "23 Aug": {
       uniform: "Civvies",
       items: [
-        { time: "07:00", title: "Breakfast", location: "All Ranks Mess", note: "", type: "meal" },
-        { time: "12:00", title: "Lunch", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
-        { time: "17:00", title: "Dinner", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
+        { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "", type: "meal" },
+        { time: "12:00", title: "Lunch", location: "Dining Facility", note: "Menu TBC", type: "meal" },
+        { time: "17:00", title: "Dinner", location: "Dining Facility", note: "Menu TBC", type: "meal" },
         { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
         { time: "20:30", title: "Free Time", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
@@ -80,9 +81,9 @@ const data = {
       uniform: "Greens",
       // Everyone gets these...
       items: [
-        { time: "07:00", title: "Breakfast", location: "All Ranks Mess", note: "", type: "meal" },
-        { time: "12:00", title: "Lunch", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
-        { time: "17:00", title: "Dinner", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
+        { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "", type: "meal" },
+        { time: "12:00", title: "Lunch", location: "Dining Facility", note: "Menu TBC", type: "meal" },
+        { time: "17:00", title: "Dinner", location: "Dining Facility", note: "Menu TBC", type: "meal" },
         { time: "18:00", title: "Evening Activity", location: "", uniform: "Civvies", note: "TBC" },
         { time: "20:30", title: "Free Time", location: "", uniform: "Civvies", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
@@ -116,30 +117,61 @@ const data = {
       }
     },
 
+    // Taken from the camp admin order, Camp Four serials 61-80.
+    // The order groups cadets as Blue, Bronze, Silver and Gold. Those are the
+    // flights under other names: A = Blue, B = Bronze, C = Silver, D = Gold.
     "25 Aug": {
       uniform: "Blues",
+      // The order calls the flights by colour on this day, so show that.
+      flightNames: { A: "Blue", B: "Bronze", C: "Silver", D: "Gold" },
       items: [
-        { time: "07:00", title: "Breakfast", location: "All Ranks Mess", note: "", type: "meal" },
-        { time: "08:00", title: "Section Visit", location: "", note: "TBC" },
-        { time: "10:00", title: "Section Visit", location: "", note: "TBC" },
-        { time: "12:00", title: "Lunch", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
-        { time: "13:00", title: "Section Visit", location: "", note: "TBC" },
-        { time: "15:00", title: "Section Visit", location: "", note: "TBC" },
-        { time: "17:00", title: "Dinner", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
-        { time: "18:00", title: "Evening Activity", location: "", uniform: "Civvies", note: "TBC" },
+        { time: "07:00", end: "08:00", title: "Breakfast", location: "Dining Facility", note: "", type: "meal" },
+        { time: "11:30", end: "13:30", title: "Packed Lunch", location: "RAFAC HQ", note: "Collect from Catering Flt", type: "meal" },
+        { time: "17:00", end: "18:00", title: "Dinner", location: "Dining Facility", note: "", type: "meal" },
+        { time: "18:00", end: "20:30", title: "RAFAC Activities", location: "RAFAC HQ", uniform: "Civvies", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
-      ]
+      ],
+      flights: {
+        // Blue
+        A: [
+          { time: "08:30", end: "10:00", title: "Section Visit", location: "90SU", note: "" },
+          { time: "10:00", end: "11:30", title: "Section Visit", location: "34 Sqn", note: "" },
+          { time: "13:30", end: "15:00", title: "Section Visit", location: "11 Sqn", note: "" },
+          { time: "15:00", end: "16:30", title: "Section Visit", location: "Fire Section", note: "" }
+        ],
+        // Bronze
+        B: [
+          { time: "08:30", end: "10:00", title: "Section Visit", location: "34 Sqn", note: "" },
+          { time: "10:00", end: "11:30", title: "Section Visit", location: "ATC", note: "" },
+          { time: "13:30", end: "15:00", title: "Section Visit", location: "Fire Section", note: "" },
+          { time: "15:00", end: "16:30", title: "Section Visit", location: "11 Sqn", note: "" }
+        ],
+        // Silver
+        C: [
+          { time: "08:30", end: "10:00", title: "Section Visit", location: "11 Sqn", note: "" },
+          { time: "10:00", end: "11:30", title: "Section Visit", location: "Fire Section", note: "" },
+          { time: "13:30", end: "15:00", title: "Section Visit", location: "34 Sqn", note: "" },
+          { time: "15:00", end: "16:30", title: "Section Visit", location: "ATC", note: "" }
+        ],
+        // Gold
+        D: [
+          { time: "08:30", end: "10:00", title: "Section Visit", location: "Fire Section", note: "" },
+          { time: "10:00", end: "11:30", title: "Section Visit", location: "11 Sqn", note: "" },
+          { time: "13:30", end: "15:00", title: "Section Visit", location: "ATC", note: "" },
+          { time: "15:00", end: "16:30", title: "Section Visit", location: "34 Sqn", note: "" }
+        ]
+      }
     },
 
     "26 Aug": {
       uniform: "Civvies",
       items: [
-        { time: "07:00", title: "Breakfast", location: "All Ranks Mess", note: "12 cadets flying", type: "meal" },
+        { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "12 cadets flying", type: "meal" },
         { time: "08:00", title: "Travel", location: "", note: "On foot / minibus / TBC" },
         { time: "09:00", title: "York Air Museum / Adventure Training", location: "", uniform: "Sports", note: "Allocation TBC" },
-        { time: "12:00", title: "Lunch", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
+        { time: "12:00", title: "Lunch", location: "Dining Facility", note: "Menu TBC", type: "meal" },
         { time: "13:00", title: "York Air Museum / Adventure Training", location: "", uniform: "Sports", note: "Allocation TBC" },
-        { time: "17:00", title: "Dinner", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
+        { time: "17:00", title: "Dinner", location: "Dining Facility", note: "Menu TBC", type: "meal" },
         { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ]
@@ -148,12 +180,12 @@ const data = {
     "27 Aug": {
       uniform: "Civvies",
       items: [
-        { time: "07:00", title: "Breakfast", location: "All Ranks Mess", note: "12 cadets flying", type: "meal" },
+        { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "12 cadets flying", type: "meal" },
         { time: "08:00", title: "Travel", location: "", note: "Coach / TBC" },
         { time: "09:00", title: "Adventure Training / York Air Museum", location: "", uniform: "Sports", note: "Groups swap" },
-        { time: "12:00", title: "Lunch", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
+        { time: "12:00", title: "Lunch", location: "Dining Facility", note: "Menu TBC", type: "meal" },
         { time: "13:00", title: "Adventure Training / York Air Museum", location: "", uniform: "Sports", note: "Groups swap" },
-        { time: "17:00", title: "Dinner", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
+        { time: "17:00", title: "Dinner", location: "Dining Facility", note: "Menu TBC", type: "meal" },
         { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ]
@@ -162,7 +194,7 @@ const data = {
     "28 Aug": {
       uniform: "Civvies",
       items: [
-        { time: "07:00", title: "Breakfast", location: "All Ranks Mess", note: "", type: "meal" },
+        { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "", type: "meal" },
         { time: "08:00", title: "Camp Photo", location: "", uniform: "Blues", note: "" },
         { time: "08:30", title: "Parade", location: "", uniform: "Blues", note: "" },
         { time: "09:00", title: "Camp Admin", location: "", note: "Clean, pack etc." },

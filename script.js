@@ -775,7 +775,7 @@ function eventHtml(item, dayUniform) {
 
   return `
     <div class="event">
-      <div class="time">${esc(formatTime(item.time))}</div>
+      <div class="time">${esc(formatTime(item.time))}${item.end ? `<span class="until">–${esc(formatTime(item.end))}</span>` : ""}</div>
       <div>
         <h3>${esc(item.title)}</h3>
         ${label}
@@ -795,12 +795,17 @@ function renderWeek(c) {
   box.innerHTML = names.map(date => {
     const p = data.programme[date];
 
+    // Some days call the flights something else -- 25 Aug uses colours. Show
+    // the name the cadet will actually be called by on the day.
+    const alias = p.flightNames && p.flightNames[c.flight];
+
     return `
       <div class="card">
         <div class="section-title">
           <h2>${esc(date)}</h2>
           <span class="pill ${uniformClass(p.uniform)}">DAY: ${esc(p.uniform.toUpperCase())}</span>
         </div>
+        ${alias ? `<p class="muted small">You are <b>${esc(alias)}</b> today (Flight ${esc(c.flight)}).</p>` : ""}
         ${itemsFor(date).map(item => eventHtml(item, p.uniform)).join("")}
       </div>
     `;
