@@ -37,10 +37,10 @@ const mealTitles = [
 function cadet() {
   let n = parseInt(cadetId, 10);
 
-  if (!Number.isInteger(n) || n < 1 || n > 68) n = 1;
+  if (!Number.isInteger(n) || n < 1 || n > 58) n = 1;
 
   const id = String(n).padStart(3, "0");
-  const flight = "ABCD"[Math.floor((n - 1) / 17)];
+  const flight = "ABCD"[Math.floor((n - 1) / 15)];
 
   return { id, flight };
 }
