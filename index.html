@@ -62,7 +62,7 @@ const params = new URLSearchParams(window.location.search);
 
 if (params.get("staff") === "true") {
   document.getElementById("staffTesting").hidden = false;
-  window.k9Staff = true;
+  document.getElementById("personRole").textContent = "STAFF";
 }
 </script>
 <script src="data.js"></script>
