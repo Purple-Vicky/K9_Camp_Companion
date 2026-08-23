@@ -167,32 +167,66 @@ const data = {
       }
     },
 
+    // A and B to York, C and D to Adventure Training. They swap on the 27th.
     "26 Aug": {
       uniform: "Civvies",
       items: [
-        { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "12 cadets flying", type: "meal" },
+        { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "", type: "meal" },
         { time: "08:00", title: "Travel", location: "", note: "On foot / minibus / TBC" },
-        { time: "09:00", title: "York Air Museum / Adventure Training", location: "", uniform: "Sports", note: "Allocation TBC" },
         { time: "12:00", title: "Lunch", location: "Dining Facility", note: "Menu TBC", type: "meal" },
-        { time: "13:00", title: "York Air Museum / Adventure Training", location: "", uniform: "Sports", note: "Allocation TBC" },
         { time: "17:00", title: "Dinner", location: "Dining Facility", note: "Menu TBC", type: "meal" },
         { time: "18:00", title: "RAF Presentation", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
-      ]
+      ],
+      flights: {
+        A: [
+          { time: "09:00", title: "York Air Museum", location: "", note: "" },
+          { time: "13:00", title: "York Air Museum", location: "", note: "" }
+        ],
+        B: [
+          { time: "09:00", title: "York Air Museum", location: "", note: "" },
+          { time: "13:00", title: "York Air Museum", location: "", note: "" }
+        ],
+        C: [
+          { time: "09:00", title: "Adventure Training", location: "", uniform: "Sports", note: "" },
+          { time: "13:00", title: "Adventure Training", location: "", uniform: "Sports", note: "" }
+        ],
+        D: [
+          { time: "09:00", title: "Adventure Training", location: "", uniform: "Sports", note: "" },
+          { time: "13:00", title: "Adventure Training", location: "", uniform: "Sports", note: "" }
+        ]
+      }
     },
 
+    // The swap: A and B to Adventure Training, C and D to York.
     "27 Aug": {
       uniform: "Civvies",
       items: [
-        { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "12 cadets flying", type: "meal" },
+        { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "", type: "meal" },
         { time: "08:00", title: "Travel", location: "", note: "Coach / TBC" },
-        { time: "09:00", title: "Adventure Training / York Air Museum", location: "", uniform: "Sports", note: "Groups swap" },
         { time: "12:00", title: "Lunch", location: "Dining Facility", note: "Menu TBC", type: "meal" },
-        { time: "13:00", title: "Adventure Training / York Air Museum", location: "", uniform: "Sports", note: "Groups swap" },
         { time: "17:00", title: "Dinner", location: "Dining Facility", note: "Menu TBC", type: "meal" },
         { time: "18:00", title: "Disco", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
-      ]
+      ],
+      flights: {
+        A: [
+          { time: "09:00", title: "Adventure Training", location: "", uniform: "Sports", note: "" },
+          { time: "13:00", title: "Adventure Training", location: "", uniform: "Sports", note: "" }
+        ],
+        B: [
+          { time: "09:00", title: "Adventure Training", location: "", uniform: "Sports", note: "" },
+          { time: "13:00", title: "Adventure Training", location: "", uniform: "Sports", note: "" }
+        ],
+        C: [
+          { time: "09:00", title: "York Air Museum", location: "", note: "" },
+          { time: "13:00", title: "York Air Museum", location: "", note: "" }
+        ],
+        D: [
+          { time: "09:00", title: "York Air Museum", location: "", note: "" },
+          { time: "13:00", title: "York Air Museum", location: "", note: "" }
+        ]
+      }
     },
 
     "28 Aug": {
