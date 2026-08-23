@@ -263,10 +263,31 @@ const data = {
     //   "24 Aug": { "012": "TBC", "034": "TBC" },
     //
     // A cadet not listed sees "no slot allocated". Nobody sees anyone else's.
+
+    // The order cadets are called forward for AEF. Being on here is not a slot:
+    // a cadet sees their position and that the day is still to be confirmed.
+    // Once a slot is fixed, put them under the day below and the position is
+    // replaced by the real thing.
+    priority: [
+      "003", "015", "002", "001", "006",
+      "014", "005", "007", "011", "013",
+      "009", "012", "008", "004", "010"
+    ],
+
     days: {
       "22 Aug": {},
       "23 Aug": {},
-      "24 Aug": {},
+
+      // Twelve fly on the 24th, in the order below, plus three reserves.
+      // Times are not fixed yet, so TBC; replace a cadet's TBC with their time
+      // as slots are confirmed. Use "RESERVE" for a standby.
+      "24 Aug": {
+        "003": "TBC", "015": "TBC", "002": "TBC", "001": "TBC", "006": "TBC",
+        "014": "TBC", "005": "TBC", "007": "TBC", "011": "TBC", "013": "TBC",
+        "009": "TBC", "012": "TBC",
+        "008": "RESERVE", "004": "RESERVE", "010": "RESERVE"
+      },
+
       "25 Aug": {},
       "26 Aug": {},
       "27 Aug": {},

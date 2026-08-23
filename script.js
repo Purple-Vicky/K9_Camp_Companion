@@ -721,13 +721,16 @@ function itemsFor(date) {
 
   const slot = flyingSlotFor(date, c.id);
 
-  // Being listed at all is the allocation; the time may still be TBC.
+  // Being listed at all is the allocation; the time may still be TBC, and a
+  // standby is listed as RESERVE rather than a time.
   if (slot !== null && slot !== undefined) {
+    const reserve = isReserve(slot);
+
     items.push({
-      time: slot || "TBC",
-      title: "Flying Slot",
-      location: data.flying.location,
-      note: data.flying.note,
+      time: reserve ? "TBC" : (slot || "TBC"),
+      title: reserve ? "Flying Reserve" : "Flying Slot",
+      location: reserve ? "" : data.flying.location,
+      note: reserve ? "Standby, in case a slot frees up." : data.flying.note,
       uniform: "Greens"
     });
   }
@@ -738,6 +741,11 @@ function itemsFor(date) {
 function flyingSlotFor(date, id) {
   const day = data.flying && data.flying.days && data.flying.days[date];
   return day ? day[id] : null;
+}
+
+// A standby rather than a booked slot.
+function isReserve(v) {
+  return String(v).trim().toUpperCase() === "RESERVE";
 }
 
 // The item wins if it names a uniform, otherwise the day does. There is
@@ -875,24 +883,46 @@ function renderFlying(c) {
     .map(date => ({ date, time: flyingSlotFor(date, c.id) }))
     .filter(s => s.time !== null && s.time !== undefined);
 
-  const total = Object.keys(data.flying.days)
-    .reduce((n, date) => n + Object.keys(data.flying.days[date]).length, 0);
+  // Reserves are listed but are not booked on, so they are counted separately.
+  let booked = 0, standby = 0;
+
+  Object.keys(data.flying.days).forEach(date => {
+    Object.keys(data.flying.days[date]).forEach(id => {
+      if (isReserve(data.flying.days[date][id])) standby++;
+      else booked++;
+    });
+  });
+
+  // Where they sit in the order cadets are called forward.
+  const queued = (data.flying.priority || []).indexOf(c.id) + 1;
+
+  const paperwork = `<p class="muted small">Your TG 21, TG 23, AVME 1 and medical review form must be with staff before you can fly.</p>`;
 
   box.innerHTML = `
     <div class="card">
       <div class="section-title">
         <h2>✈️ Flying</h2>
-        <span class="pill blues">${total} ALLOCATED</span>
+        <span class="pill blues">${booked} FLYING${standby ? " · " + standby + " RESERVE" : ""}</span>
       </div>
       ${slots.length
-        ? slots.map(s => eventHtml({
-            time: s.time || "TBC",
-            title: "Your Flying Slot",
-            location: data.flying.location,
-            note: s.date + " • " + data.flying.note,
-            uniform: "Greens"
-          }, "Greens")).join("")
-        : `<p class="muted">No flying slot allocated to Cadet ${esc(c.id)}. Staff will add slots as they are confirmed.</p>`}
+        ? slots.map(s => isReserve(s.time)
+            ? `<p class="items"><span class="pill info">RESERVE</span></p>
+               <p>You are a <b>reserve</b> for flying on ${esc(s.date)}.</p>
+               <p class="muted">You are not booked on. Be ready in case a slot frees up, and check with your Flight Staff on the day.</p>`
+            : eventHtml({
+                time: s.time || "TBC",
+                title: "Your Flying Slot",
+                location: data.flying.location,
+                note: s.date + " • " + data.flying.note,
+                uniform: "Greens"
+              }, "Greens")).join("")
+          + (queued ? `<p class="muted">You are <b>number ${queued}</b> in the order cadets are called forward.</p>` : "")
+          + paperwork
+        : queued
+          ? `<p class="items"><span class="pill info">ON THE LIST</span></p>
+             <p>You are <b>number ${queued}</b> in the order for Air Experience Flying.</p>
+             <p class="muted">The day is not fixed yet. Your slot will appear here once staff confirm it, and in My Week too.</p>` + paperwork
+          : `<p class="muted">No flying slot allocated to Cadet ${esc(c.id)}. Staff will add slots as they are confirmed.</p>`}
     </div>
   `;
 }
