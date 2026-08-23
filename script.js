@@ -40,7 +40,7 @@ function cadet() {
   if (!Number.isInteger(n) || n < 1 || n > 58) n = 1;
 
   const id = String(n).padStart(3, "0");
-  const flight = "ABCD"[Math.floor((n - 1) / 19)];
+  const flight = "ABCD"[Math.floor((n - 1) / 20)];
 
   return { id, flight };
 }
