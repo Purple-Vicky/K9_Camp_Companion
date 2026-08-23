@@ -1,0 +1,172 @@
+// ===========================================================================
+// K9 CAMP DATA — this is the only file staff need to edit.
+//
+// Every activity is one line. Fields:
+//
+//   time      "HH:MM" in 24hr. Required. Items are sorted by this.
+//   title     What shows in bold. Required.
+//   location  Where to report. Shows as "📍 ...". Leave "" to hide.
+//   uniform   Overrides the uniform for this item only. Leave out to use
+//             the day's uniform. One of: Greens, Blues, Civvies, Sports.
+//   note      Small print underneath. Leave "" to hide.
+//   type      "meal" or "lightsout" for special styling. Leave out otherwise.
+//
+// To add an activity: copy any line, change the fields, done.
+// To change lunch time: edit the time on that day's Lunch line.
+// To add a day: add a new date block. It appears in My Week automatically.
+// ===========================================================================
+
+const data = {
+
+  camp: {
+    name: "RAFAC Camp",
+    location: "RAF Leeming",
+    year: 2026
+  },
+
+  programme: {
+
+    "22 Aug": {
+      uniform: "Civvies",
+      items: [
+        { time: "13:30", title: "Arrival & check-in", location: "", note: "Packed lunch paperwork • tent allocation" },
+        { time: "15:30", title: "Camp Brief & Fire Drill", location: "", note: "" },
+        { time: "17:00", title: "Dinner", location: "", note: "Menu TBC", type: "meal" },
+        { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
+        { time: "20:30", title: "Free Time", location: "", note: "" },
+        { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
+      ]
+    },
+
+    "23 Aug": {
+      uniform: "Blues",
+      items: [
+        { time: "07:00", title: "Breakfast", location: "", note: "", type: "meal" },
+        { time: "08:00", title: "Activity 1", location: "", note: "Round robin" },
+        { time: "10:00", title: "Activity 2", location: "", note: "Round robin" },
+        { time: "12:00", title: "Lunch", location: "", note: "Menu TBC", type: "meal" },
+        { time: "13:00", title: "Activity 3", location: "", note: "Round robin" },
+        { time: "15:00", title: "Activity 4", location: "", note: "Round robin" },
+        { time: "17:00", title: "Dinner", location: "", note: "Menu TBC", type: "meal" },
+        { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
+        { time: "20:30", title: "Free Time", location: "", note: "" },
+        { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
+      ]
+    },
+
+    "24 Aug": {
+      uniform: "Greens",
+      // Everyone gets these...
+      items: [
+        { time: "07:00", title: "Breakfast", location: "", note: "", type: "meal" },
+        { time: "12:00", title: "Lunch", location: "", note: "Menu TBC", type: "meal" },
+        { time: "17:00", title: "Dinner", location: "", note: "Menu TBC", type: "meal" },
+        { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
+        { time: "20:30", title: "Free Time", location: "", note: "" },
+        { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
+      ],
+      // ...plus their own flight's rotation, merged in and sorted by time.
+      flights: {
+        A: [
+          { time: "08:00", title: "STEM", location: "", note: "" },
+          { time: "10:00", title: "Paintball", location: "", note: "" },
+          { time: "13:00", title: "Archery", location: "", note: "" },
+          { time: "15:00", title: "Leadership", location: "", note: "" }
+        ],
+        B: [
+          { time: "08:00", title: "Leadership", location: "", note: "" },
+          { time: "10:00", title: "STEM", location: "", note: "" },
+          { time: "13:00", title: "Paintball", location: "", note: "" },
+          { time: "15:00", title: "Archery", location: "", note: "" }
+        ],
+        C: [
+          { time: "08:00", title: "Archery", location: "", note: "" },
+          { time: "10:00", title: "Leadership", location: "", note: "" },
+          { time: "13:00", title: "STEM", location: "", note: "" },
+          { time: "15:00", title: "Paintball", location: "", note: "" }
+        ],
+        D: [
+          { time: "08:00", title: "Paintball", location: "", note: "" },
+          { time: "10:00", title: "Archery", location: "", note: "" },
+          { time: "13:00", title: "Leadership", location: "", note: "" },
+          { time: "15:00", title: "STEM", location: "", note: "" }
+        ]
+      }
+    },
+
+    "25 Aug": {
+      uniform: "Blues",
+      items: [
+        { time: "07:00", title: "Breakfast", location: "", note: "", type: "meal" },
+        { time: "08:00", title: "Section Visit", location: "", note: "TBC" },
+        { time: "10:00", title: "Section Visit", location: "", note: "TBC" },
+        { time: "12:00", title: "Lunch", location: "", note: "Menu TBC", type: "meal" },
+        { time: "13:00", title: "Section Visit", location: "", note: "TBC" },
+        { time: "15:00", title: "Section Visit", location: "", note: "TBC" },
+        { time: "17:00", title: "Dinner", location: "", note: "Menu TBC", type: "meal" },
+        { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
+        { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
+      ]
+    },
+
+    "26 Aug": {
+      uniform: "Civvies",
+      items: [
+        { time: "07:00", title: "Breakfast", location: "", note: "12 cadets flying", type: "meal" },
+        { time: "08:00", title: "Travel", location: "", note: "On foot / minibus / TBC" },
+        { time: "09:00", title: "York Air Museum / Adventure Training", location: "", uniform: "Sports", note: "Allocation TBC" },
+        { time: "12:00", title: "Lunch", location: "", note: "Menu TBC", type: "meal" },
+        { time: "13:00", title: "York Air Museum / Adventure Training", location: "", uniform: "Sports", note: "Allocation TBC" },
+        { time: "17:00", title: "Dinner", location: "", note: "Menu TBC", type: "meal" },
+        { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
+        { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
+      ]
+    },
+
+    "27 Aug": {
+      uniform: "Civvies",
+      items: [
+        { time: "07:00", title: "Breakfast", location: "", note: "12 cadets flying", type: "meal" },
+        { time: "08:00", title: "Travel", location: "", note: "Coach / TBC" },
+        { time: "09:00", title: "Adventure Training / York Air Museum", location: "", uniform: "Sports", note: "Groups swap" },
+        { time: "12:00", title: "Lunch", location: "", note: "Menu TBC", type: "meal" },
+        { time: "13:00", title: "Adventure Training / York Air Museum", location: "", uniform: "Sports", note: "Groups swap" },
+        { time: "17:00", title: "Dinner", location: "", note: "Menu TBC", type: "meal" },
+        { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
+        { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
+      ]
+    },
+
+    "28 Aug": {
+      uniform: "Civvies",
+      items: [
+        { time: "07:00", title: "Breakfast", location: "", note: "", type: "meal" },
+        { time: "08:00", title: "Camp Photo", location: "", uniform: "Blues", note: "" },
+        { time: "08:30", title: "Parade", location: "", uniform: "Blues", note: "" },
+        { time: "09:00", title: "Camp Admin", location: "", note: "Clean, pack etc." },
+        { time: "12:00", title: "Depart Camp", location: "", note: "" }
+      ]
+    }
+
+  },
+
+  // =========================================================================
+  // FLYING — 12 cadets per day. Add a cadet by putting their number and slot
+  // time in the list below. They will see it on their Flying tab and it will
+  // appear in their week. Cadets not listed see "no slot allocated".
+  // =========================================================================
+  flying: {
+    location: "",
+    note: "Report point and time to be confirmed.",
+    days: {
+      "26 Aug": {
+        // "001": "09:30",
+        // "014": "09:30",
+      },
+      "27 Aug": {
+        // "032": "10:15",
+      }
+    }
+  }
+
+};
