@@ -24,8 +24,13 @@ const activityUniforms = {
   "Free Time": "Civvies"
 };
 
-// Activities that need a water bottle prompt.
-const needsWater = ["STEM", "Paintball", "Archery", "Leadership", "Adventure Training"];
+// Extra markers shown under an activity. An activity gets a tag when its
+// title contains any of the words in "match". Add a line here to give any
+// activity its own marker.
+const activityTags = [
+  { match: ["STEM", "Paintball", "Archery", "Leadership", "Adventure Training"], tag: "💧 Water bottle" },
+  { match: ["AGS"], tag: "✈️ Aircraft" }
+];
 
 // ---------------------------------------------------------------------------
 // ROSTER — loaded from cadets.csv.
@@ -194,9 +199,10 @@ function eventHtml(item, dayUniform) {
     label = `<span class="pill ${uniformClass(uniform)}">👕 ${esc(uniform.toUpperCase())}</span>`;
   }
 
-  const water = needsWater.some(a => item.title.includes(a))
-    ? `<span class="tag">💧 Water bottle</span>`
-    : "";
+  const tags = activityTags
+    .filter(t => t.match.some(a => item.title.includes(a)))
+    .map(t => `<span class="tag">${t.tag}</span>`)
+    .join("");
 
   return `
     <div class="event">
@@ -206,7 +212,7 @@ function eventHtml(item, dayUniform) {
         ${label}
         ${item.location ? `<p class="muted small">📍 ${esc(item.location)}</p>` : ""}
         ${item.note ? `<p>${esc(item.note)}</p>` : ""}
-        ${water}
+        ${tags}
       </div>
     </div>
   `;
