@@ -1,6 +1,23 @@
 // Dates come straight from data.js, so adding a day there is enough.
 const names = Object.keys(data.programme);
 
+const CAMP_YEAR = 2026;
+
+const MONTHS = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+// "22 Aug" -> "Sat". Worked out rather than written down, so it cannot drift
+// out of step with the dates if a day is added or moved.
+function dayName(date) {
+  const bits = String(date).trim().split(/\s+/);
+  const day = parseInt(bits[0], 10);
+  const month = MONTHS[bits[1]];
+
+  if (!Number.isInteger(day) || month === undefined) return "";
+
+  return WEEKDAYS[new Date(CAMP_YEAR, month, day).getDay()];
+}
+
 const isStaff = new URLSearchParams(window.location.search).get("staff") === "true";
 
 let cadetId = new URLSearchParams(window.location.search).get("cadet") || localStorage.getItem("k9CadetId") || "001";
@@ -837,7 +854,7 @@ function renderWeek(c) {
     return `
       <div class="card">
         <div class="section-title">
-          <h2>${esc(date)}</h2>
+          <h2>${esc(dayName(date))} ${esc(date)}</h2>
           <span class="pill ${uniformClass(p.uniform)}">DAY: ${esc(p.uniform.toUpperCase())}</span>
         </div>
         ${alias ? `<p class="muted small">You are <b>${esc(alias)}</b> today (Flight ${esc(c.flight)}).</p>` : ""}
@@ -956,30 +973,6 @@ function show(id, btn) {
   if (btn) btn.classList.add("active");
 }
 
-function updateMeals() {
-  const input = document.getElementById("mealText");
-
-  if (!input) return;
-
-  const text = input.value.trim() || "Menu TBC";
-
-  localStorage.setItem("k9Meal", text);
-
-  const display = document.getElementById("mealDisplay");
-
-  if (display) {
-    display.textContent = text;
-  }
-}
-
-function loadMeal() {
-  const display = document.getElementById("mealDisplay");
-
-  if (!display) return;
-
-  display.textContent = localStorage.getItem("k9Meal") || "Menu TBC";
-}
-
 // Pull in the roster, then draw. If cadets.csv cannot be read the programme
 // still works; only the flight and tent drop out.
 function loadRoster() {
@@ -1023,8 +1016,6 @@ function start() {
   if (input) {
     input.value = cadet().id;
   }
-
-  loadMeal();
 
   loadStaffEntries();
 
