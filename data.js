@@ -29,7 +29,7 @@ const data = {
       items: [
         { time: "13:30", title: "Arrival & check-in", location: "", note: "Packed lunch paperwork • tent allocation" },
         { time: "15:30", title: "Camp Brief & Fire Drill", location: "", note: "" },
-        { time: "17:00", title: "Dinner", location: "", note: "Menu TBC", type: "meal" },
+        { time: "17:00", title: "Dinner", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
         { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
         { time: "20:30", title: "Free Time", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
@@ -39,9 +39,9 @@ const data = {
     "23 Aug": {
       uniform: "Civvies",
       items: [
-        { time: "07:00", title: "Breakfast", location: "", note: "", type: "meal" },
-        { time: "12:00", title: "Lunch", location: "", note: "Menu TBC", type: "meal" },
-        { time: "17:00", title: "Dinner", location: "", note: "Menu TBC", type: "meal" },
+        { time: "07:00", title: "Breakfast", location: "All Ranks Mess", note: "", type: "meal" },
+        { time: "12:00", title: "Lunch", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
+        { time: "17:00", title: "Dinner", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
         { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
         { time: "20:30", title: "Free Time", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
@@ -80,9 +80,9 @@ const data = {
       uniform: "Greens",
       // Everyone gets these...
       items: [
-        { time: "07:00", title: "Breakfast", location: "", note: "", type: "meal" },
-        { time: "12:00", title: "Lunch", location: "", note: "Menu TBC", type: "meal" },
-        { time: "17:00", title: "Dinner", location: "", note: "Menu TBC", type: "meal" },
+        { time: "07:00", title: "Breakfast", location: "All Ranks Mess", note: "", type: "meal" },
+        { time: "12:00", title: "Lunch", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
+        { time: "17:00", title: "Dinner", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
         { time: "18:00", title: "Evening Activity", location: "", uniform: "Civvies", note: "TBC" },
         { time: "20:30", title: "Free Time", location: "", uniform: "Civvies", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
@@ -119,13 +119,13 @@ const data = {
     "25 Aug": {
       uniform: "Blues",
       items: [
-        { time: "07:00", title: "Breakfast", location: "", note: "", type: "meal" },
+        { time: "07:00", title: "Breakfast", location: "All Ranks Mess", note: "", type: "meal" },
         { time: "08:00", title: "Section Visit", location: "", note: "TBC" },
         { time: "10:00", title: "Section Visit", location: "", note: "TBC" },
-        { time: "12:00", title: "Lunch", location: "", note: "Menu TBC", type: "meal" },
+        { time: "12:00", title: "Lunch", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
         { time: "13:00", title: "Section Visit", location: "", note: "TBC" },
         { time: "15:00", title: "Section Visit", location: "", note: "TBC" },
-        { time: "17:00", title: "Dinner", location: "", note: "Menu TBC", type: "meal" },
+        { time: "17:00", title: "Dinner", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
         { time: "18:00", title: "Evening Activity", location: "", uniform: "Civvies", note: "TBC" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ]
@@ -134,12 +134,12 @@ const data = {
     "26 Aug": {
       uniform: "Civvies",
       items: [
-        { time: "07:00", title: "Breakfast", location: "", note: "12 cadets flying", type: "meal" },
+        { time: "07:00", title: "Breakfast", location: "All Ranks Mess", note: "12 cadets flying", type: "meal" },
         { time: "08:00", title: "Travel", location: "", note: "On foot / minibus / TBC" },
         { time: "09:00", title: "York Air Museum / Adventure Training", location: "", uniform: "Sports", note: "Allocation TBC" },
-        { time: "12:00", title: "Lunch", location: "", note: "Menu TBC", type: "meal" },
+        { time: "12:00", title: "Lunch", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
         { time: "13:00", title: "York Air Museum / Adventure Training", location: "", uniform: "Sports", note: "Allocation TBC" },
-        { time: "17:00", title: "Dinner", location: "", note: "Menu TBC", type: "meal" },
+        { time: "17:00", title: "Dinner", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
         { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ]
@@ -148,12 +148,12 @@ const data = {
     "27 Aug": {
       uniform: "Civvies",
       items: [
-        { time: "07:00", title: "Breakfast", location: "", note: "12 cadets flying", type: "meal" },
+        { time: "07:00", title: "Breakfast", location: "All Ranks Mess", note: "12 cadets flying", type: "meal" },
         { time: "08:00", title: "Travel", location: "", note: "Coach / TBC" },
         { time: "09:00", title: "Adventure Training / York Air Museum", location: "", uniform: "Sports", note: "Groups swap" },
-        { time: "12:00", title: "Lunch", location: "", note: "Menu TBC", type: "meal" },
+        { time: "12:00", title: "Lunch", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
         { time: "13:00", title: "Adventure Training / York Air Museum", location: "", uniform: "Sports", note: "Groups swap" },
-        { time: "17:00", title: "Dinner", location: "", note: "Menu TBC", type: "meal" },
+        { time: "17:00", title: "Dinner", location: "All Ranks Mess", note: "Menu TBC", type: "meal" },
         { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ]
@@ -162,7 +162,7 @@ const data = {
     "28 Aug": {
       uniform: "Civvies",
       items: [
-        { time: "07:00", title: "Breakfast", location: "", note: "", type: "meal" },
+        { time: "07:00", title: "Breakfast", location: "All Ranks Mess", note: "", type: "meal" },
         { time: "08:00", title: "Camp Photo", location: "", uniform: "Blues", note: "" },
         { time: "08:30", title: "Parade", location: "", uniform: "Blues", note: "" },
         { time: "09:00", title: "Camp Admin", location: "", note: "Clean, pack etc." },

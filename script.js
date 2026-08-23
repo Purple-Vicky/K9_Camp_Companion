@@ -91,6 +91,17 @@ function toMinutes(time) {
   return Number(h) * 60 + Number(m);
 }
 
+// Times are stored as "HH:MM" in data.js so they sort and compare correctly.
+// Everything shown to a cadet goes through here and comes out military style:
+// "07:00" becomes "0700 hrs".
+function formatTime(time) {
+  const parts = String(time).split(":");
+
+  if (parts.length !== 2) return String(time);
+
+  return parts[0].padStart(2, "0") + parts[1].padStart(2, "0") + " hrs";
+}
+
 function byTime(a, b) {
   return toMinutes(a.time) - toMinutes(b.time);
 }
@@ -187,7 +198,7 @@ function eventHtml(item, dayUniform) {
 
   return `
     <div class="event">
-      <div class="time">${esc(item.time)}</div>
+      <div class="time">${esc(formatTime(item.time))}</div>
       <div>
         <h3>${esc(item.title)}</h3>
         ${label}
@@ -303,7 +314,7 @@ function updateNextUp(c) {
     <h2>${nextItem ? esc(nextItem.title) : "Check your programme"}</h2>
     <p>
       Cadet ${esc(c.id)} • Flight ${esc(c.flight)}
-      ${nextItem ? ` • ${esc(targetDate)} • ${esc(nextItem.time)}` : ""}
+      ${nextItem ? ` • ${esc(targetDate)} • ${esc(formatTime(nextItem.time))}` : ""}
     </p>
     ${nextItem && nextItem.location ? `<p class="muted small">📍 ${esc(nextItem.location)}</p>` : ""}
     ${nextUniform ? `<span class="pill ${uniformClass(nextUniform)}">👕 ${esc(nextUniform.toUpperCase())}</span>` : ""}
