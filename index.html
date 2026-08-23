@@ -1,14 +1,16 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#06101d"><title>K9 RAFAC Camp Companion</title>
+<meta name="theme-color" content="#06101d"><title>K9 RAFAC Camp Companion</title> <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="K9 — your RAFAC camp companion for Leeming 2026. Programme, uniform, flight and flying.">
 <link rel="icon" href="images/k9.png"><link rel="apple-touch-icon" href="images/k9.png">
 <link rel="stylesheet" href="style.css"></head>
 <body><main class="app">
 <header><img src="images/k9.png" alt=""><div><h1>K9</h1><p>RAFAC CAMP COMPANION • LEEMING 2026</p></div></header>
 
-<section class="card hero"><h2 id="personTitle"><span id="personRole">CADET</span> <span data-id></span> <span class="pill" data-flight></span></h2>
-<div id="staffTesting" hidden>
+<section class="card hero"><h2 id="personTitle"><span id="personRole">CADET</span> <span data-id></span></h2>
+<p class="bunk"><span class="pill info" data-staff hidden>STAFF VIEW</span> <span class="pill" data-flight></span> <span class="pill info" data-tent hidden></span></p>
+<p class="muted small" data-roster-error hidden></p>
+  <div id="staffTesting" hidden>
 <label class="small" for="cadetInput">Staff: view cadet</label>
 <input id="cadetInput" inputmode="numeric" maxlength="3" placeholder="001" autocomplete="off">
 <button type="button" onclick="setId(document.getElementById('cadetInput').value)">VIEW CADET</button>
