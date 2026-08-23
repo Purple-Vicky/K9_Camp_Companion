@@ -174,7 +174,7 @@ const params = new URLSearchParams(window.location.search);
 const supplied = params.get("cadet") || localStorage.getItem("k9CadetId") || "023";
 const number = parseInt(supplied, 10);
 
-const id = Number.isInteger(number) && number >= 1 && number <= 68
+const id = Number.isInteger(number) && number >= 1 && number <= 60
   ? String(number).padStart(3, "0")
   : "023";
 
