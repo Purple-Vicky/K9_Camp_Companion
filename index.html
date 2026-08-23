@@ -3,7 +3,8 @@
 <meta name="theme-color" content="#06101d"><title>K9 RAFAC Camp Companion</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="K9 — your RAFAC camp companion for Leeming 2026. Programme, uniform, flight and flying.">
-<link rel="icon" href="images/k9.png"><link rel="apple-touch-icon" href="images/k9.png">
+<link rel="icon" href="images/k9.jpg"><link rel="apple-touch-icon" href="images/k9.jpg">
+<link rel="manifest" href="manifest.webmanifest">
 <script>
 // Load the stylesheet with a cache-buster, so a phone that opened the app
 // yesterday does not keep yesterday's styling. document.write is used
@@ -13,7 +14,7 @@ document.write('<link rel="stylesheet" href="style.css?v=' + Date.now() + '">');
 </script>
 <noscript><link rel="stylesheet" href="style.css"></noscript></head>
 <body><main class="app">
-<header><img src="images/k9.png" alt=""><div><h1>K9</h1><p>RAFAC CAMP COMPANION • LEEMING 2026</p></div></header>
+<header><img src="images/k9.jpg" alt=""><div><h1>K9</h1><p>RAFAC CAMP COMPANION • LEEMING 2026</p></div></header>
 
 <section class="card hero"><h2 id="personTitle"><span id="personRole">CADET</span> <span data-id></span></h2>
 <p class="bunk"><span class="pill" data-flight></span> <span class="pill info" data-tent hidden></span></p>
@@ -46,19 +47,23 @@ document.write('<link rel="stylesheet" href="style.css?v=' + Date.now() + '">');
 <section id="uniform" class="view">
 <div class="card"><div class="section-title"><h2>👕 Uniform Guide</h2><span class="pill blues">APPROVED</span></div>
 <p class="muted">Approved K9 uniform guides. Check My Week for the uniform of the day.</p>
-<div class="card"><h2>🟩 Greens</h2><img class="uniform-img" src="images/uniform-greens.png" alt="Greens uniform layout guide" width="1024" height="1536" loading="lazy" decoding="async"></div>
+<div class="card"><h2>🟩 Greens</h2><img class="uniform-img" src="images/uniform-greens.jpg" alt="Greens uniform layout guide" width="1024" height="1536" loading="lazy" decoding="async"></div>
 <!-- Blues guide hidden pending approval. Remove the hidden attribute to bring it back. -->
-<div class="card" hidden><h2>🟦 Blues</h2><img class="uniform-img" src="images/uniform-blues.png" alt="Blues uniform layout guide" width="1024" height="1536" loading="lazy" decoding="async"></div>
-<div class="card"><h2>🟨 Civvies</h2><img class="uniform-img" src="images/uniform-civvies.png" alt="Civvies guide" width="1024" height="1536" loading="lazy" decoding="async"></div>
-<div class="card"><h2>🟧 Sports</h2><img class="uniform-img" src="images/uniform-sports.png" alt="Sports kit guide" width="1024" height="1536" loading="lazy" decoding="async"></div>
+<div class="card" hidden><h2>🟦 Blues</h2><img class="uniform-img" src="images/uniform-blues.jpg" alt="Blues uniform layout guide" width="1024" height="1536" loading="lazy" decoding="async"></div>
+<div class="card"><h2>🟨 Civvies</h2><img class="uniform-img" src="images/uniform-civvies.jpg" alt="Civvies guide" width="1024" height="1536" loading="lazy" decoding="async"></div>
+<div class="card"><h2>🟧 Sports</h2><img class="uniform-img" src="images/uniform-sports.jpg" alt="Sports kit guide" width="1024" height="1536" loading="lazy" decoding="async"></div>
 </div>
 </section>
 
 <section id="more" class="view">
 <div class="card"><h2>🍽️ Meals</h2><p class="muted">Daily menu will be added as staff receive it.</p><input id="mealText" placeholder="Staff: enter today's menu"><button class="big-btn" onclick="updateMeals()">SAVE MENU ON THIS DEVICE</button></div>
 <div class="card"><h2>⌚ Wristbands</h2><p class="muted">Your NFC wristband ID and how to use it.</p><a class="big-btn" href="wristbands.html">OPEN WRISTBAND PAGE</a></div>
-<div class="card"><h2>🚨 Emergency Information</h2><p class="muted">Camp emergency contacts and locations — TBC. Staff will complete these before use.</p><div class="event"><div class="time">999</div><div><h3>Emergency services</h3><p>Use in an immediate emergency.</p></div></div><button class="big-btn panic" onclick="alert('K9 emergency control is a prototype. Use the camp emergency procedure and staff chain of command.')">🚨 K9 EMERGENCY</button></div>
-<div class="card"><h2>🎉 K9 Fun Zone</h2><div class="photo-grid"><div class="fun">📸<b>Gallery</b><span class="muted small">Coming alive at camp</span></div><div class="fun">🧠<b>Quiz</b><span class="muted small">Camp challenge</span></div><div class="fun">🐾<b>NFC Hunt</b><span class="muted small">Checkpoint fun</span></div><div class="fun">🎤<b>Vox Pop</b><span class="muted small">Cadet memories</span></div></div></div>
+<div class="card"><h2>🚨 Emergency Information</h2><p class="muted">In an emergency, tell the nearest member of staff. Follow the camp emergency procedure and the staff chain of command.</p><div class="event"><div class="time">999</div><div><h3>Emergency services</h3><p>Use in an immediate emergency.</p></div></div>
+<!-- The K9 EMERGENCY button is hidden: it only ever showed an alert saying it
+     was a prototype. A button that looks like it summons help but does not is
+     worse than no button. Remove the hidden attribute once it does something
+     real, such as dialling the duty staff mobile. -->
+<button class="big-btn panic" hidden onclick="alert('K9 emergency control is a prototype. Use the camp emergency procedure and staff chain of command.')">🚨 K9 EMERGENCY</button></div>
 </section>
 
 <nav class="bottom">
@@ -88,5 +93,14 @@ if (params.get("staff") === "true") {
     document.head.appendChild(s);
   });
 })();
+
+// Offline support, so the app still opens where there is no signal.
+// Registered on load so it never delays first paint, and failure is survivable:
+// without it the app simply needs a connection, as it did before.
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("sw.js").catch(function () {});
+  });
+}
 </script>
 </body></html>

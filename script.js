@@ -10,20 +10,6 @@ const uniforms = {
   "Sports": "sports"
 };
 
-// Fallback only. An item's own "uniform" field in data.js always wins, and
-// anything not listed here falls back to the uniform of the day.
-const activityUniforms = {
-  "STEM": "Greens",
-  "Paintball": "Greens",
-  "Archery": "Greens",
-  "Leadership": "Greens",
-  "Section Visit": "Blues",
-  "Camp Photo": "Blues",
-  "Parade": "Blues",
-  "Evening Activity": "Civvies",
-  "Free Time": "Civvies"
-};
-
 // Extra markers shown under an activity. An activity gets a tag when its
 // title contains any of the words in "match". Add a line here to give any
 // activity its own marker.
@@ -142,9 +128,12 @@ function flyingSlotFor(date, id) {
   return day ? day[id] : null;
 }
 
-// An item's own uniform wins, then the activity lookup, then the day's.
+// The item wins if it names a uniform, otherwise the day does. There is
+// deliberately no activity-name lookup: one used to silently override the day
+// for nine named activities, so a day set to Civvies still showed Greens for
+// Leadership. What data.js says is now what cadets see.
 function uniformForItem(item, dayUniform) {
-  return item.uniform || activityUniforms[item.title] || dayUniform || "TBC";
+  return item.uniform || dayUniform || "TBC";
 }
 
 function uniformClass(uniform) {

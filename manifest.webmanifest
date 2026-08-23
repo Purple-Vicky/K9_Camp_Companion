@@ -1,0 +1,18 @@
+{
+  "name": "K9 RAFAC Camp Companion",
+  "short_name": "K9",
+  "description": "Your RAFAC camp companion for Leeming 2026. Programme, uniform, flight and flying.",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#06101d",
+  "theme_color": "#06101d",
+  "icons": [
+    {
+      "src": "images/k9.jpg",
+      "sizes": "256x405",
+      "type": "image/jpeg"
+    }
+  ]
+}

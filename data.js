@@ -83,8 +83,8 @@ const data = {
         { time: "07:00", title: "Breakfast", location: "", note: "", type: "meal" },
         { time: "12:00", title: "Lunch", location: "", note: "Menu TBC", type: "meal" },
         { time: "17:00", title: "Dinner", location: "", note: "Menu TBC", type: "meal" },
-        { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
-        { time: "20:30", title: "Free Time", location: "", note: "" },
+        { time: "18:00", title: "Evening Activity", location: "", uniform: "Civvies", note: "TBC" },
+        { time: "20:30", title: "Free Time", location: "", uniform: "Civvies", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
       // ...plus their own flight's rotation, merged in and sorted by time.
@@ -126,7 +126,7 @@ const data = {
         { time: "13:00", title: "Section Visit", location: "", note: "TBC" },
         { time: "15:00", title: "Section Visit", location: "", note: "TBC" },
         { time: "17:00", title: "Dinner", location: "", note: "Menu TBC", type: "meal" },
-        { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
+        { time: "18:00", title: "Evening Activity", location: "", uniform: "Civvies", note: "TBC" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ]
     },
