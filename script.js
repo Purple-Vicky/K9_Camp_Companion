@@ -218,6 +218,7 @@ function cycleItem(id, item, el) {
     state.className = "statecell " + (updated.status === "OUT" ? "out" : updated.status === "IN" ? "in" : "");
   }
 
+  noteSaved(id);
   updateStaffTotals();
   renderMobiles(cadet());
 }
@@ -238,8 +239,17 @@ function toggleReturned(id, el) {
   el.textContent = updated.status === "OUT" ? "OUT" : "IN";
   el.className = "statecell " + (updated.status === "OUT" ? "out" : "in");
 
+  noteSaved(id);
   updateStaffTotals();
   renderMobiles(cadet());
+}
+
+// Every tap is stored immediately. Say so, or staff have no way to know the
+// register is being kept and will wonder whether they need to press something.
+function noteSaved(id) {
+  const msg = document.getElementById("mMsg");
+
+  if (msg) msg.textContent = "Saved cadet " + id + " on this device at " + formatTime(nowHHMM()) + ".";
 }
 
 function updateStaffTotals() {
@@ -262,7 +272,7 @@ function updateStaffTotals() {
   el.textContent = held + " items held, " + cadets + " cadets";
 }
 
-function exportMobilesCsv() {
+function mobilesCsvText() {
   const rows = ["SN,Phone,Power bank,Cable,Other,Status,Time"];
 
   Object.keys(roster).sort().forEach(id => {
@@ -282,14 +292,51 @@ function exportMobilesCsv() {
     ].join(","));
   });
 
+  return { text: rows.join("\n"), count: rows.length - 1 };
+}
+
+// Save the register as a real mobiles.csv file. Some phone browsers refuse a
+// script-triggered download, so if that happens the text is shown to copy
+// instead rather than the button appearing to do nothing.
+function saveMobilesCsv() {
+  const csv = mobilesCsvText();
+  const msg = document.getElementById("mMsg");
+
+  if (!csv.count) {
+    msg.textContent = "Nothing to save yet. Record some items first.";
+    return;
+  }
+
+  try {
+    const blob = new Blob([csv.text], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = "mobiles.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+    msg.textContent = "Saved mobiles.csv with " + csv.count + " cadet(s). Upload it to the repo to show it on cadets' phones.";
+  } catch (e) {
+    showMobilesText();
+    msg.textContent = "This browser blocked the download. Copy the text below and save it as mobiles.csv.";
+  }
+}
+
+function showMobilesText() {
+  const csv = mobilesCsvText();
   const out = document.getElementById("mExport");
 
-  out.value = rows.join("\n");
+  out.value = csv.text;
   out.hidden = false;
   out.select();
 
   document.getElementById("mMsg").textContent =
-    (rows.length - 1) + " row(s). Copy this and upload it as mobiles.csv to show it on cadets' phones.";
+    csv.count + " cadet(s). Copy this and save it as mobiles.csv.";
 }
 
 function clearStaffEntries() {
@@ -368,7 +415,8 @@ function renderStaffGrid() {
 
       <textarea id="mExport" rows="6" hidden readonly></textarea>
       <p class="muted small" id="mMsg">Edits are held on this device. Export and upload mobiles.csv to show them to cadets.</p>
-      <button type="button" class="big-btn" onclick="exportMobilesCsv()">EXPORT mobiles.csv</button>
+      <button type="button" class="big-btn" onclick="saveMobilesCsv()">SAVE mobiles.csv</button>
+      <button type="button" class="big-btn ghost" onclick="showMobilesText()">SHOW TEXT TO COPY</button>
       <button type="button" class="big-btn ghost" onclick="clearStaffEntries()">CLEAR THIS DEVICE</button>
     </div>
   `;
