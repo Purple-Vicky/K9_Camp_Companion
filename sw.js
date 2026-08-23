@@ -20,6 +20,7 @@ const PRECACHE = [
   "data.js",
   "script.js",
   "cadets.csv",
+  "mobiles.csv",
   "wristbands.html",
   "images/k9.jpg",
   "images/uniform-greens.jpg",
