@@ -21,7 +21,7 @@ h2{color:#49bfff;margin-top:0}
 .wristband-id{display:inline-block;background:#087fc4;color:white;font-size:48px;font-weight:bold;padding:12px 30px;border-radius:15px;margin:10px 0;letter-spacing:4px}
 .wristband{height:90px;background:linear-gradient(135deg,#087fc4,#49bfff,#087fc4);border-radius:45px;display:flex;align-items:center;justify-content:center}
 .tag{background:#050b12;border-radius:14px;padding:12px 25px;font-size:24px;font-weight:bold}
-.status{margin-top:15px;background:#102c25;border:1px solid #277d62;color:#69e0ae;padding:15px;border-radius:12px;text-align:center}
+.status.unknown{background:#2b2416;border-color:#7a6420;color:#f2d477}.status{margin-top:15px;background:#102c25;border:1px solid #277d62;color:#69e0ae;padding:15px;border-radius:12px;text-align:center}
 .status strong{display:block;font-size:18px}
 .section-title{font-size:20px;font-weight:bold;color:#49bfff;margin-bottom:15px}
 .features{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
@@ -53,12 +53,7 @@ h2{color:#49bfff;margin-top:0}
 </header>
 
 <nav class="nav">
-<a href="index.html">🏠 Home</a>
-<a href="index.html">📅 My Week</a>
-<a href="index.html">✈️ Flying</a>
-<a href="index.html">👕 Uniform</a>
-<a href="wristbands.html">⌚ Wristbands</a>
-<a href="index.html">☰ More</a>
+<a href="index.html">← Back to K9</a>
 </nav>
 
 <section class="card hero">
@@ -83,10 +78,9 @@ h2{color:#49bfff;margin-top:0}
 <div class="tag">◉ NFC &nbsp; <span id="cadetTag">023</span></div>
 </div>
 
-<div class="status">
-✓
+<div class="status" id="wristbandStatus">
 <strong>Wristband status</strong>
-Active and working
+Check with Flight Staff if it is not reading.
 </div>
 
 </div>
@@ -171,15 +165,22 @@ Lost wristbands must be reported immediately.
 
 <script>
 const params = new URLSearchParams(window.location.search);
-const supplied = params.get("cadet") || localStorage.getItem("k9CadetId") || "023";
+const supplied = params.get("cadet") || localStorage.getItem("k9CadetId");
 const number = parseInt(supplied, 10);
+const valid = Number.isInteger(number) && number >= 1 && number <= 60;
 
-const id = Number.isInteger(number) && number >= 1 && number <= 60
-  ? String(number).padStart(3, "0")
-  : "023";
+// Show a dash rather than someone else's number when we do not know who this
+// is. A cadet seeing a real ID that is not theirs would report the wrong one.
+const id = valid ? String(number).padStart(3, "0") : "—";
 
 document.getElementById("cadetId").textContent = id;
 document.getElementById("cadetTag").textContent = id;
+
+if (!valid) {
+  document.getElementById("wristbandStatus").innerHTML =
+    "<strong>Cadet number not set</strong>Open K9 first so it knows who you are.";
+  document.getElementById("wristbandStatus").className = "status unknown";
+}
 </script>
 
 </body>

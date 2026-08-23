@@ -167,17 +167,9 @@ function render() {
     x.hidden = !c.tent;
   });
 
-  document.querySelectorAll("[data-staff]").forEach(x => {
-    x.hidden = !window.k9Staff;
-  });
-
   document.querySelectorAll("[data-roster-error]").forEach(x => {
     x.textContent = rosterError;
     x.hidden = !rosterError;
-  });
-
-  document.querySelectorAll("[data-camp-location]").forEach(x => {
-    x.textContent = data.camp.location;
   });
 
   renderWeek(c);

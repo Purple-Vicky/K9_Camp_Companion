@@ -19,9 +19,7 @@
 const data = {
 
   camp: {
-    name: "RAFAC Camp",
     location: "RAF Leeming",
-    year: 2026
   },
 
   programme: {

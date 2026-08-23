@@ -16,7 +16,7 @@ document.write('<link rel="stylesheet" href="style.css?v=' + Date.now() + '">');
 <header><img src="images/k9.png" alt=""><div><h1>K9</h1><p>RAFAC CAMP COMPANION • LEEMING 2026</p></div></header>
 
 <section class="card hero"><h2 id="personTitle"><span id="personRole">CADET</span> <span data-id></span></h2>
-<p class="bunk"><span class="pill info" data-staff hidden>STAFF VIEW</span> <span class="pill" data-flight></span> <span class="pill info" data-tent hidden></span></p>
+<p class="bunk"><span class="pill" data-flight></span> <span class="pill info" data-tent hidden></span></p>
 <p class="muted small" data-roster-error hidden></p>
 <div id="staffTesting" hidden>
 <label class="small" for="cadetInput">Staff: view cadet</label>
@@ -56,6 +56,7 @@ document.write('<link rel="stylesheet" href="style.css?v=' + Date.now() + '">');
 
 <section id="more" class="view">
 <div class="card"><h2>🍽️ Meals</h2><p class="muted">Daily menu will be added as staff receive it.</p><input id="mealText" placeholder="Staff: enter today's menu"><button class="big-btn" onclick="updateMeals()">SAVE MENU ON THIS DEVICE</button></div>
+<div class="card"><h2>⌚ Wristbands</h2><p class="muted">Your NFC wristband ID and how to use it.</p><a class="big-btn" href="wristbands.html">OPEN WRISTBAND PAGE</a></div>
 <div class="card"><h2>🚨 Emergency Information</h2><p class="muted">Camp emergency contacts and locations — TBC. Staff will complete these before use.</p><div class="event"><div class="time">999</div><div><h3>Emergency services</h3><p>Use in an immediate emergency.</p></div></div><button class="big-btn panic" onclick="alert('K9 emergency control is a prototype. Use the camp emergency procedure and staff chain of command.')">🚨 K9 EMERGENCY</button></div>
 <div class="card"><h2>🎉 K9 Fun Zone</h2><div class="photo-grid"><div class="fun">📸<b>Gallery</b><span class="muted small">Coming alive at camp</span></div><div class="fun">🧠<b>Quiz</b><span class="muted small">Camp challenge</span></div><div class="fun">🐾<b>NFC Hunt</b><span class="muted small">Checkpoint fun</span></div><div class="fun">🎤<b>Vox Pop</b><span class="muted small">Cadet memories</span></div></div></div>
 </section>
