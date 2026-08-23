@@ -896,7 +896,7 @@ function renderFlying(c) {
   // Where they sit in the order cadets are called forward.
   const queued = (data.flying.priority || []).indexOf(c.id) + 1;
 
-  const paperwork = `<p class="muted small">Your TG 21, TG 23, AVME 1 and medical review form must be with staff before you can fly.</p>`;
+  const paperwork = `<p class="muted small">Your TG 21, TG 23, AVMED1 and medical review form must be with staff before you can fly.</p>`;
 
   box.innerHTML = `
     <div class="card">
