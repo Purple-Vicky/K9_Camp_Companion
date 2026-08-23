@@ -31,7 +31,7 @@ const data = {
         { time: "13:30", title: "Arrival & check-in", location: "", note: "Packed lunch paperwork • tent allocation" },
         { time: "15:30", title: "Camp Brief & Fire Drill", location: "", note: "" },
         { time: "17:00", title: "Dinner", location: "Dining Facility", note: "Menu TBC", type: "meal" },
-        { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
+        { time: "18:00", title: "Flight Brief", location: "", note: "Then down time and esports" },
         { time: "20:30", title: "Free Time", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ]
@@ -84,7 +84,7 @@ const data = {
         { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "", type: "meal" },
         { time: "12:00", title: "Lunch", location: "Dining Facility", note: "Menu TBC", type: "meal" },
         { time: "17:00", title: "Dinner", location: "Dining Facility", note: "Menu TBC", type: "meal" },
-        { time: "18:00", title: "Evening Activity", location: "", uniform: "Civvies", note: "TBC" },
+        { time: "18:00", title: "Down Time and Esports", location: "", uniform: "Civvies", note: "Flight Sim also running, possible Cinebowl" },
         { time: "20:30", title: "Free Time", location: "", uniform: "Civvies", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
@@ -172,7 +172,7 @@ const data = {
         { time: "12:00", title: "Lunch", location: "Dining Facility", note: "Menu TBC", type: "meal" },
         { time: "13:00", title: "York Air Museum / Adventure Training", location: "", uniform: "Sports", note: "Allocation TBC" },
         { time: "17:00", title: "Dinner", location: "Dining Facility", note: "Menu TBC", type: "meal" },
-        { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
+        { time: "18:00", title: "RAF Presentation", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ]
     },
@@ -186,7 +186,7 @@ const data = {
         { time: "12:00", title: "Lunch", location: "Dining Facility", note: "Menu TBC", type: "meal" },
         { time: "13:00", title: "Adventure Training / York Air Museum", location: "", uniform: "Sports", note: "Groups swap" },
         { time: "17:00", title: "Dinner", location: "Dining Facility", note: "Menu TBC", type: "meal" },
-        { time: "18:00", title: "Evening Activity", location: "", note: "TBC" },
+        { time: "18:00", title: "Disco", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ]
     },
@@ -195,10 +195,11 @@ const data = {
       uniform: "Civvies",
       items: [
         { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "", type: "meal" },
-        { time: "08:00", title: "Camp Photo", location: "", uniform: "Blues", note: "" },
-        { time: "08:30", title: "Parade", location: "", uniform: "Blues", note: "" },
-        { time: "09:00", title: "Camp Admin", location: "", note: "Clean, pack etc." },
-        { time: "12:00", title: "Depart Camp", location: "", note: "" }
+        { time: "08:00", title: "Fireside Chat", location: "", uniform: "Blues", note: "" },
+        { time: "08:30", title: "Camp Photo", location: "", uniform: "Blues", note: "" },
+        { time: "09:00", title: "Parade", location: "", uniform: "Blues", note: "" },
+        { time: "09:30", title: "Camp Admin", location: "", note: "Clean up and pack" },
+        { time: "12:00", title: "Transport Departs", location: "", note: "" }
       ]
     }
 
