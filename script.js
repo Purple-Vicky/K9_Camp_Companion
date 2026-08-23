@@ -24,15 +24,16 @@ const activityTags = [
 // ROSTER — loaded from cadets.csv.
 //
 // This file is published on the public web, so it deliberately carries NO
-// names or ranks. Cadet number, flight and tent only. A cadet
+// names or ranks. Cadet number, flight, tent and any notice only. A cadet
 // identifies themselves by their own number; nothing here identifies a person
 // to anyone who does not already have the nominal roll.
 //
 // DO NOT add name or rank columns to cadets.csv. Keep the nominal roll
 // in the camp admin spreadsheet, offline.
 //
-// To update: in the camp admin sheet, produce a CSV of just these three
-// columns -- SN, Flight, Tent -- and upload it over cadets.csv.
+// To update: in the camp admin sheet, produce a CSV of just these
+// columns -- SN, Flight, Tent, Notice -- and upload it over cadets.csv.
+// Notice is a per-cadet message shown as an alert; leave it blank for most.
 // ---------------------------------------------------------------------------
 let roster = {};
 let rosterError = "";
@@ -55,7 +56,10 @@ function parseRoster(text) {
 
     out[String(n).padStart(3, "0")] = {
       flight: (cell[1] || "").trim().toUpperCase(),
-      tent: (cell[2] || "").trim()
+      tent: (cell[2] || "").trim(),
+      // Free text for one cadet, shown to them as an alert. Used for things
+      // like a tent move: "GO TO M5".
+      notice: (cell[3] || "").trim()
     };
   }
 
@@ -70,9 +74,9 @@ function cadet() {
   const id = String(n).padStart(3, "0");
   const r = roster[id];
 
-  if (!r) return { id, flight: "TBC", tent: "", known: false };
+  if (!r) return { id, flight: "TBC", tent: "", notice: "", known: false };
 
-  return { id, flight: r.flight || "TBC", tent: r.tent, known: true };
+  return { id, flight: r.flight || "TBC", tent: r.tent, notice: r.notice, known: true };
 }
 
 // ===========================================================================
@@ -745,10 +749,36 @@ function render() {
     x.hidden = !rosterError;
   });
 
+  renderAlerts(c);
+
   renderWeek(c);
   renderMobiles(c);
   renderStaffGrid();
   renderFlying(c);
+}
+
+// A cadet's own message from the Notice column of cadets.csv. Sits at the top
+// of the home screen so a tent move is not something they have to go looking
+// for.
+function renderAlerts(c) {
+  const box = document.getElementById("alerts");
+
+  if (!box) return;
+
+  const notice = c.notice || "";
+
+  box.innerHTML = `
+    <div class="card${notice ? " alert" : ""}">
+      <div class="section-title">
+        <h2>📢 K9 Alerts</h2>
+        <span>${notice ? "❗" : "🐾"}</span>
+      </div>
+      ${notice
+        ? `<p class="noticetext">${esc(notice)}</p>
+           <p class="muted small">For Cadet ${esc(c.id)}. Ask your Flight Staff if you are unsure.</p>`
+        : `<p class="muted">No new alerts.</p>`}
+    </div>
+  `;
 }
 
 // One activity row.
