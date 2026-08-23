@@ -27,30 +27,59 @@ const activityUniforms = {
 // Activities that need a water bottle prompt.
 const needsWater = ["STEM", "Paintball", "Archery", "Leadership", "Adventure Training"];
 
-// Flight allocation, in blocks of 15. Move a cadet by cutting their number
-// out of one flight and pasting it into another.
-// 060 is a spare slot in D, held for a late arrival. Everyone up to 059 is
-// on the nominal roll.
-const flightList = {
-  A: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
-  B: [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
-  C: [31,32,33,34,35,36,37,38,39,40,41,42,43,44,45],
-  D: [46,47,48,49,50,51,52,53,54,55,56,57,58,59,60]
-};
+// ---------------------------------------------------------------------------
+// ROSTER — loaded from cadets.csv.
+//
+// This file is published on the public web, so it deliberately carries NO
+// names, ranks or bed numbers. Cadet number, flight and tent only. A cadet
+// identifies themselves by their own number; nothing here identifies a person
+// to anyone who does not already have the nominal roll.
+//
+// DO NOT add name, rank or bed columns to cadets.csv. Keep the nominal roll
+// in the camp admin spreadsheet, offline.
+//
+// To update: in the camp admin sheet, produce a CSV of just these three
+// columns -- SN, Flight, Tent -- and upload it over cadets.csv.
+// ---------------------------------------------------------------------------
+let roster = {};
+let rosterError = "";
 
-function flightFor(n) {
-  return Object.keys(flightList).find(f => flightList[f].includes(n));
+function parseRoster(text) {
+  const out = {};
+  const lines = text.trim().split(/\r?\n/);
+
+  // Tolerate the header row being present or not.
+  const start = /^\s*sn\b/i.test(lines[0]) ? 1 : 0;
+
+  for (let i = start; i < lines.length; i++) {
+    const cell = lines[i].split(",");
+
+    if (!cell.length || !cell[0].trim()) continue;
+
+    const n = parseInt(cell[0], 10);
+
+    if (!Number.isInteger(n)) continue;
+
+    out[String(n).padStart(3, "0")] = {
+      flight: (cell[1] || "").trim().toUpperCase(),
+      tent: (cell[2] || "").trim()
+    };
+  }
+
+  return out;
 }
 
 function cadet() {
   let n = parseInt(cadetId, 10);
 
-  if (!Number.isInteger(n) || n < 1 || n > 60) n = 1;
+  if (!Number.isInteger(n) || n < 1) n = 1;
 
   const id = String(n).padStart(3, "0");
-  const flight = flightFor(n) || "TBC";
+  const r = roster[id];
 
-  return { id, flight };
+  if (!r) return { id, flight: "TBC", tent: "", known: false };
+
+  return { id, flight: r.flight || "TBC", tent: r.tent, known: true };
 }
 
 function setId(v) {
@@ -126,6 +155,20 @@ function render() {
 
   document.querySelectorAll("[data-flight]").forEach(x => {
     x.textContent = "Flight " + c.flight;
+  });
+
+  document.querySelectorAll("[data-tent]").forEach(x => {
+    x.textContent = c.tent ? "Tent " + c.tent : "";
+    x.hidden = !c.tent;
+  });
+
+  document.querySelectorAll("[data-staff]").forEach(x => {
+    x.hidden = !window.k9Staff;
+  });
+
+  document.querySelectorAll("[data-roster-error]").forEach(x => {
+    x.textContent = rosterError;
+    x.hidden = !rosterError;
   });
 
   document.querySelectorAll("[data-camp-location]").forEach(x => {
@@ -322,6 +365,27 @@ function loadMeal() {
   display.textContent = localStorage.getItem("k9Meal") || "Menu TBC";
 }
 
+// Pull in the roster, then draw. If cadets.csv cannot be read the programme
+// still works; only the flight and tent drop out.
+function loadRoster() {
+  return fetch("cadets.csv", { cache: "no-cache" })
+    .then(r => {
+      if (!r.ok) throw new Error("cadets.csv returned " + r.status);
+      return r.text();
+    })
+    .then(text => {
+      roster = parseRoster(text);
+
+      if (!Object.keys(roster).length) {
+        rosterError = "cadets.csv was read but contained no cadets. Columns should be SN, Flight, Tent.";
+      }
+    })
+    .catch(e => {
+      roster = {};
+      rosterError = "Could not load cadets.csv (" + e.message + "). Flight and tent are unavailable.";
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("cadetInput");
 
@@ -329,6 +393,10 @@ document.addEventListener("DOMContentLoaded", () => {
     input.value = cadet().id;
   }
 
-  render();
   loadMeal();
+
+  loadRoster().then(() => {
+    if (input) input.value = cadet().id;
+    render();
+  });
 });
