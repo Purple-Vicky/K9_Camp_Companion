@@ -24,7 +24,7 @@ const activityTags = [
 // ROSTER — loaded from cadets.csv.
 //
 // This file is published on the public web, so it deliberately carries NO
-// names or ranks. Cadet number, flight, tent and bed only. A cadet
+// names or ranks. Cadet number, flight and tent only. A cadet
 // identifies themselves by their own number; nothing here identifies a person
 // to anyone who does not already have the nominal roll.
 //
@@ -32,7 +32,7 @@ const activityTags = [
 // in the camp admin spreadsheet, offline.
 //
 // To update: in the camp admin sheet, produce a CSV of just these three
-// columns -- SN, Flight, Tent, Bed -- and upload it over cadets.csv.
+// columns -- SN, Flight, Tent -- and upload it over cadets.csv.
 // ---------------------------------------------------------------------------
 let roster = {};
 let rosterError = "";
@@ -55,8 +55,7 @@ function parseRoster(text) {
 
     out[String(n).padStart(3, "0")] = {
       flight: (cell[1] || "").trim().toUpperCase(),
-      tent: (cell[2] || "").trim(),
-      bed: (cell[3] || "").trim()
+      tent: (cell[2] || "").trim()
     };
   }
 
@@ -71,9 +70,9 @@ function cadet() {
   const id = String(n).padStart(3, "0");
   const r = roster[id];
 
-  if (!r) return { id, flight: "TBC", tent: "", bed: "", known: false };
+  if (!r) return { id, flight: "TBC", tent: "", known: false };
 
-  return { id, flight: r.flight || "TBC", tent: r.tent, bed: r.bed, known: true };
+  return { id, flight: r.flight || "TBC", tent: r.tent, known: true };
 }
 
 // ===========================================================================
@@ -92,7 +91,7 @@ function cadet() {
 // when collection is done and upload the result as mobiles.csv, which is what
 // puts it on the cadets' phones.
 //
-// SN, tent and bed are read from cadets.csv and are not editable here.
+// SN and tent are read from cadets.csv and are not editable here.
 // Like cadets.csv this file carries numbers only, never names.
 // ===========================================================================
 const ITEMS = ["Phone", "Power bank", "Cable"];
@@ -557,7 +556,6 @@ function renderStaffGrid() {
       <tr>
         <th scope="row">${esc(id)}</th>
         <td class="fixed">${esc(r.tent || "—")}</td>
-        <td class="fixed">${esc(r.bed || "—")}</td>
         ${cells}
         <td><button type="button" class="statecell ${state === "OUT" ? "out" : state === "IN" ? "in" : ""}" onclick="toggleReturned('${id}',this)" aria-label="Handed in or returned for cadet ${id}">${state}</button></td>
       </tr>
@@ -567,12 +565,12 @@ function renderStaffGrid() {
   box.innerHTML = `
     <div class="card">
       <div class="section-title"><h2>📱 Mobiles register</h2><span class="pill info" id="mTotals"></span></div>
-      <p class="muted small">Tap a number to change it: 0, 1, 2, 3 and back to 0. Tap the last column to mark items returned. Tent and bed come from cadets.csv and cannot be edited here.</p>
+      <p class="muted small">Tap a number to change it: 0, 1, 2, 3 and back to 0. Tap the last column to mark items returned. Tent comes from cadets.csv and cannot be edited here.</p>
 
       <div class="gridwrap">
         <table class="mgrid">
           <thead>
-            <tr><th>SN</th><th>Tent</th><th>Bed</th><th>📱</th><th>🔋</th><th>🔌</th><th>State</th></tr>
+            <tr><th>SN</th><th>Tent</th><th>📱</th><th>🔋</th><th>🔌</th><th>State</th></tr>
           </thead>
           <tbody>${rows}</tbody>
         </table>
