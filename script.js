@@ -679,8 +679,13 @@ function formatTime(time) {
   return parts[0].padStart(2, "0") + parts[1].padStart(2, "0") + " hrs";
 }
 
+// An unparseable time, such as "TBC", sorts to the top of the day rather than
+// landing at random, so an unconfirmed slot is the first thing a cadet sees.
 function byTime(a, b) {
-  return toMinutes(a.time) - toMinutes(b.time);
+  const x = toMinutes(a.time);
+  const y = toMinutes(b.time);
+
+  return (Number.isNaN(x) ? -1 : x) - (Number.isNaN(y) ? -1 : y);
 }
 
 // Everything a cadet does on a given day: the whole-camp items, their own
@@ -699,12 +704,14 @@ function itemsFor(date) {
 
   const slot = flyingSlotFor(date, c.id);
 
-  if (slot) {
+  // Being listed at all is the allocation; the time may still be TBC.
+  if (slot !== null && slot !== undefined) {
     items.push({
-      time: slot,
+      time: slot || "TBC",
       title: "Flying Slot",
       location: data.flying.location,
-      note: data.flying.note
+      note: data.flying.note,
+      uniform: "Greens"
     });
   }
 
@@ -849,7 +856,7 @@ function renderFlying(c) {
 
   const slots = Object.keys(data.flying.days)
     .map(date => ({ date, time: flyingSlotFor(date, c.id) }))
-    .filter(s => s.time);
+    .filter(s => s.time !== null && s.time !== undefined);
 
   const total = Object.keys(data.flying.days)
     .reduce((n, date) => n + Object.keys(data.flying.days[date]).length, 0);
@@ -862,7 +869,7 @@ function renderFlying(c) {
       </div>
       ${slots.length
         ? slots.map(s => eventHtml({
-            time: s.time,
+            time: s.time || "TBC",
             title: "Your Flying Slot",
             location: data.flying.location,
             note: s.date + " • " + data.flying.note,

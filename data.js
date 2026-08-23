@@ -216,15 +216,27 @@ const data = {
   // =========================================================================
   flying: {
     location: "",
-    note: "Report point and time to be confirmed.",
+    note: "Report to your Flight Staff before going.",
+
+    // AEF runs every day, two cadets a day. Add a cadet by putting their
+    // number against the day, with their slot time:
+    //
+    //   "24 Aug": { "012": "09:30", "034": "10:15" },
+    //
+    // If the time is not confirmed yet, use "TBC" and the slot still shows,
+    // at the top of that day, so the cadet knows to expect it.
+    //
+    //   "24 Aug": { "012": "TBC", "034": "TBC" },
+    //
+    // A cadet not listed sees "no slot allocated". Nobody sees anyone else's.
     days: {
-      "26 Aug": {
-        // "001": "09:30",
-        // "014": "09:30",
-      },
-      "27 Aug": {
-        // "032": "10:15",
-      }
+      "22 Aug": {},
+      "23 Aug": {},
+      "24 Aug": {},
+      "25 Aug": {},
+      "26 Aug": {},
+      "27 Aug": {},
+      "28 Aug": {}
     }
   }
 
