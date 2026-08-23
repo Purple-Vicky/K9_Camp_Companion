@@ -1,22 +1,26 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#06101d"><title>K9 RAFAC Camp Companion</title><link rel="stylesheet" href="style.css"></head>
+<meta name="theme-color" content="#06101d"><title>K9 RAFAC Camp Companion</title>
+<meta name="description" content="K9 — your RAFAC camp companion for Leeming 2026. Programme, uniform, flight and flying.">
+<link rel="icon" href="images/k9.png"><link rel="apple-touch-icon" href="images/k9.png">
+<link rel="stylesheet" href="style.css"></head>
 <body><main class="app">
-<header><img src="images/k9.png" alt="K9 robot dog"><div><h1>K9</h1><p>RAFAC CAMP COMPANION • LEEMING 2026</p></div></header>
+<header><img src="images/k9.png" alt=""><div><h1>K9</h1><p>RAFAC CAMP COMPANION • LEEMING 2026</p></div></header>
 
-<section class="card hero"><h2><span id="personTitle">CADET <span data-id></span></span></h2>
-<div id="staffTesting" style="display:none">
-<label class="small">Staff: view cadet</label>
-<input id="cadetInput" inputmode="numeric" maxlength="3" placeholder="001">
-<button onclick="setId(document.getElementById('cadetInput').value)">VIEW CADET</button>
+<section class="card hero"><h2 id="personTitle"><span id="personRole">CADET</span> <span data-id></span> <span class="pill" data-flight></span></h2>
+<div id="staffTesting" hidden>
+<label class="small" for="cadetInput">Staff: view cadet</label>
+<input id="cadetInput" inputmode="numeric" maxlength="3" placeholder="001" autocomplete="off">
+<button type="button" onclick="setId(document.getElementById('cadetInput').value)">VIEW CADET</button>
 </div>
 <div class="nav">
-<button onclick="show('home',this)" class="active">🏠<br>Home</button>
-<button onclick="show('week',this)">📅<br>My Week</button>
-<button onclick="show('flying',this)">✈️<br>Flying</button>
-<button onclick="show('uniform',this)">👕<br>Uniform</button>
-<button onclick="show('more',this)">☰<br>More</button>
+<button type="button" onclick="show('home',this)" class="active" aria-label="Home"><span aria-hidden="true">🏠</span><br>Home</button>
+<button type="button" onclick="show('week',this)" aria-label="My Week"><span aria-hidden="true">📅</span><br>My Week</button>
+<button type="button" onclick="show('flying',this)" aria-label="Flying"><span aria-hidden="true">✈️</span><br>Flying</button>
+<button type="button" onclick="show('uniform',this)" aria-label="Uniform"><span aria-hidden="true">👕</span><br>Uniform</button>
+<button type="button" onclick="show('more',this)" aria-label="More"><span aria-hidden="true">☰</span><br>More</button>
 </div>
+</section>
 
 <section id="home" class="view active">
 <div class="card next" id="next"></div>
@@ -27,18 +31,17 @@
 <section id="week" class="view"></section>
 
 <section id="flying" class="view">
-<div class="card"><div class="section-title"><h2>✈️ Flying</h2><span class="pill blues">12 CADETS</span></div>
-<p class="muted">Your personal flying slot will appear here when staff allocate it.</p>
-<div class="event"><div class="time">TBC</div><div><h3>Flying Slot</h3><p>Report point and time to be confirmed.</p></div></div></div>
 </section>
 
 <section id="uniform" class="view">
 <div class="card"><div class="section-title"><h2>👕 Uniform Guide</h2><span class="pill blues">APPROVED</span></div>
-<p class="muted">The four approved K9 uniform guides are ready. Sports information will be added later.</p>
-<div class="card"><h2>🟩 Greens</h2><img class="uniform-img" src="images/uniform-greens.png" alt="Greens"></div>
-<div class="card"><h2>🟦 Blues</h2><img class="uniform-img" src="images/uniform-blues.png" alt="Blues"></div>
-<div class="card"><h2>🟨 Civvies</h2><img class="uniform-img" src="images/uniform-civvies.png" alt="Civvies"></div>
-<div class="card"><h2>🟧 Sports</h2><img class="uniform-img" src="images/uniform-sports.png" alt="Sports"></div>
+<p class="muted">Approved K9 uniform guides. Check My Week for the uniform of the day.</p>
+<div class="card"><h2>🟩 Greens</h2><img class="uniform-img" src="images/uniform-greens.png" alt="Greens uniform layout guide" width="1024" height="1536" loading="lazy" decoding="async"></div>
+<!-- Blues guide hidden pending approval. Remove the hidden attribute to bring it back. -->
+<div class="card" hidden><h2>🟦 Blues</h2><img class="uniform-img" src="images/uniform-blues.png" alt="Blues uniform layout guide" width="1024" height="1536" loading="lazy" decoding="async"></div>
+<div class="card"><h2>🟨 Civvies</h2><img class="uniform-img" src="images/uniform-civvies.png" alt="Civvies guide" width="1024" height="1536" loading="lazy" decoding="async"></div>
+<div class="card"><h2>🟧 Sports</h2><img class="uniform-img" src="images/uniform-sports.png" alt="Sports kit guide" width="1024" height="1536" loading="lazy" decoding="async"></div>
+</div>
 </section>
 
 <section id="more" class="view">
@@ -51,13 +54,14 @@
 <button onclick="show('home',this)" class="active">🏠<br>Home</button><button onclick="show('week',this)">📅<br>My Week</button><button onclick="show('flying',this)">✈️<br>Flying</button><button onclick="show('uniform',this)">👕<br>Uniform</button><button onclick="show('more',this)">☰<br>More</button>
 </nav>
 </main>
-<script>const data={"programme": {"22 Aug": {"uniform": "Civvies", "items": [["13:30", "Arrival & check-in", "Packed lunch paperwork \u2022 tent allocation"], ["15:30", "Camp Brief & Fire Drill", ""], ["17:00", "Dinner", "Menu TBC"], ["18:00", "Evening Activity", "TBC"], ["20:30", "Free Time", ""], ["22:00", "Lights Out", ""]]}, "23 Aug": {"uniform": "Blues", "items": [["07:00", "Breakfast", ""], ["08:00", "Activity 1", "Round robin"], ["10:00", "Activity 2", "Round robin"], ["12:00", "Lunch", "Menu TBC"], ["13:00", "Activity 3", "Round robin"], ["15:00", "Activity 4", "Round robin"], ["17:00", "Dinner", "Menu TBC"], ["18:00", "Evening Activity", "TBC"], ["20:30", "Free Time", ""], ["22:00", "Lights Out", ""]]}, "24 Aug": {"uniform": "Greens", "flight_items": {"A": [["08:00", "STEM", ""], ["10:00", "Paintball", ""], ["13:00", "Archery", ""], ["15:00", "Leadership", ""]], "B": [["08:00", "Leadership", ""], ["10:00", "STEM", ""], ["13:00", "Paintball", ""], ["15:00", "Archery", ""]], "C": [["08:00", "Archery", ""], ["10:00", "Leadership", ""], ["13:00", "STEM", ""], ["15:00", "Paintball", ""]], "D": [["08:00", "Paintball", ""], ["10:00", "Archery", ""], ["13:00", "Leadership", ""], ["15:00", "STEM", ""]]}}, "25 Aug": {"uniform": "Blues", "items": [["07:00", "Breakfast", ""], ["08:00", "Section Visit", "TBC"], ["10:00", "Section Visit", "TBC"], ["12:00", "Lunch", "Menu TBC"], ["13:00", "Section Visit", "TBC"], ["15:00", "Section Visit", "TBC"], ["17:00", "Dinner", "Menu TBC"], ["18:00", "Evening Activity", "TBC"], ["22:00", "Lights Out", ""]]}, "26 Aug": {"uniform": "Civvies", "items": [["07:00", "Breakfast", "12 cadets flying"], ["08:00", "Travel", "On foot / minibus / TBC"], ["09:00", "York Air Museum / Adventure Training", "Allocation TBC"], ["12:00", "Lunch", "Menu TBC"], ["13:00", "York Air Museum / Adventure Training", "Allocation TBC"], ["17:00", "Dinner", "Menu TBC"], ["18:00", "Evening Activity", "TBC"], ["22:00", "Lights Out", ""]]}, "27 Aug": {"uniform": "Civvies", "items": [["07:00", "Breakfast", "12 cadets flying"], ["08:00", "Travel", "Coach / TBC"], ["09:00", "Adventure Training / York Air Museum", "Groups swap"], ["12:00", "Lunch", "Menu TBC"], ["13:00", "Adventure Training / York Air Museum", "Groups swap"], ["17:00", "Dinner", "Menu TBC"], ["18:00", "Evening Activity", "TBC"], ["22:00", "Lights Out", ""]]}, "28 Aug": {"uniform": "Civvies", "items": [["07:00", "Breakfast", ""], ["08:00", "Camp Photo", ""], ["08:30", "Parade", ""], ["09:00", "Camp Admin", "Clean, pack etc."], ["12:00", "Depart Camp", ""]]}}};</script>
 <script>
 const params = new URLSearchParams(window.location.search);
 
 if (params.get("staff") === "true") {
-  document.getElementById("staffTesting").style.display = "block";
-  document.getElementById("personTitle").textContent = "DURACELL BUNNY • STAFF";
+  document.getElementById("staffTesting").hidden = false;
+  document.getElementById("personRole").textContent = "STAFF";
 }
-</script>  <script src="script.js"></script><script>loadMeal();</script>
+</script>
+<script src="data.js"></script>
+<script src="script.js"></script>
 </body></html>
