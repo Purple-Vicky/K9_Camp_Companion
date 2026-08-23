@@ -95,28 +95,28 @@ const data = {
       // two flights are ever on the same one.
       flights: {
         A: [
-          { time: "08:00", end: "10:00", title: "Drill", location: "", note: "" },
-          { time: "10:00", end: "12:00", title: "Paintball", location: "", note: "" },
-          { time: "13:00", end: "15:00", title: "Archery", location: "", note: "" },
-          { time: "15:00", end: "17:00", title: "Bridge Building", location: "", note: "" }
+          { time: "08:00", end: "10:00", title: "Drill", location: "Tented camp site", note: "" },
+          { time: "10:00", end: "12:00", title: "Paintball", location: "Tented camp site", note: "" },
+          { time: "13:00", end: "15:00", title: "Archery", location: "Tented camp site", note: "" },
+          { time: "15:00", end: "17:00", title: "Bridge Building", location: "Tented camp site", note: "" }
         ],
         B: [
-          { time: "08:00", end: "10:00", title: "Bridge Building", location: "", note: "" },
-          { time: "10:00", end: "12:00", title: "Drill", location: "", note: "" },
-          { time: "13:00", end: "15:00", title: "Paintball", location: "", note: "" },
-          { time: "15:00", end: "17:00", title: "Archery", location: "", note: "" }
+          { time: "08:00", end: "10:00", title: "Bridge Building", location: "Tented camp site", note: "" },
+          { time: "10:00", end: "12:00", title: "Drill", location: "Tented camp site", note: "" },
+          { time: "13:00", end: "15:00", title: "Paintball", location: "Tented camp site", note: "" },
+          { time: "15:00", end: "17:00", title: "Archery", location: "Tented camp site", note: "" }
         ],
         C: [
-          { time: "08:00", end: "10:00", title: "Archery", location: "", note: "" },
-          { time: "10:00", end: "12:00", title: "Bridge Building", location: "", note: "" },
-          { time: "13:00", end: "15:00", title: "Drill", location: "", note: "" },
-          { time: "15:00", end: "17:00", title: "Paintball", location: "", note: "" }
+          { time: "08:00", end: "10:00", title: "Archery", location: "Tented camp site", note: "" },
+          { time: "10:00", end: "12:00", title: "Bridge Building", location: "Tented camp site", note: "" },
+          { time: "13:00", end: "15:00", title: "Drill", location: "Tented camp site", note: "" },
+          { time: "15:00", end: "17:00", title: "Paintball", location: "Tented camp site", note: "" }
         ],
         D: [
-          { time: "08:00", end: "10:00", title: "Paintball", location: "", note: "" },
-          { time: "10:00", end: "12:00", title: "Archery", location: "", note: "" },
-          { time: "13:00", end: "15:00", title: "Bridge Building", location: "", note: "" },
-          { time: "15:00", end: "17:00", title: "Drill", location: "", note: "" }
+          { time: "08:00", end: "10:00", title: "Paintball", location: "Tented camp site", note: "" },
+          { time: "10:00", end: "12:00", title: "Archery", location: "Tented camp site", note: "" },
+          { time: "13:00", end: "15:00", title: "Bridge Building", location: "Tented camp site", note: "" },
+          { time: "15:00", end: "17:00", title: "Drill", location: "Tented camp site", note: "" }
         ]
       }
     },
