@@ -392,7 +392,7 @@ function loadRoster() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function start() {
   const input = document.getElementById("cadetInput");
 
   if (input) {
@@ -405,4 +405,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (input) input.value = cadet().id;
     render();
   });
-});
+}
+
+// This file is loaded dynamically, so DOMContentLoaded may already have
+// fired by the time it runs. Waiting for an event that has been and gone
+// would leave the app blank, so check first.
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", start);
+} else {
+  start();
+}

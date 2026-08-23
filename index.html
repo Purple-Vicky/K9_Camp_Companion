@@ -65,6 +65,20 @@ if (params.get("staff") === "true") {
   document.getElementById("personRole").textContent = "STAFF";
 }
 </script>
-<script src="data.js"></script>
-<script src="script.js"></script>
+<script>
+// Load the programme and code with a cache-buster on the end. Without this a
+// phone that opened the app yesterday keeps showing yesterday's programme,
+// because the browser reuses its cached copy of data.js. async = false keeps
+// data.js running before script.js.
+(function () {
+  var v = "?v=" + Date.now();
+
+  ["data.js", "script.js"].forEach(function (src) {
+    var s = document.createElement("script");
+    s.src = src + v;
+    s.async = false;
+    document.head.appendChild(s);
+  });
+})();
+</script>
 </body></html>
