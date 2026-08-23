@@ -16,7 +16,7 @@ const uniforms = {
 // title contains any of the words in "match". Add a line here to give any
 // activity its own marker.
 const activityTags = [
-  { match: ["STEM", "Paintball", "Archery", "Leadership", "Adventure Training"], tag: "💧 Water bottle" },
+  { match: ["STEM", "Paintball", "Archery", "Leadership", "Adventure Training", "Drill", "Bridge Building"], tag: "💧 Water bottle" },
   { match: ["AGS"], tag: "✈️ Aircraft" }
 ];
 

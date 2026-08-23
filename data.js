@@ -89,30 +89,34 @@ const data = {
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
       // ...plus their own flight's rotation, merged in and sorted by time.
+      //
+      // Drill, Bridge Building, Archery and Paintball, each taking half of the
+      // morning or half of the afternoon. Every flight does all four and no
+      // two flights are ever on the same one.
       flights: {
         A: [
-          { time: "08:00", title: "STEM", location: "", note: "" },
-          { time: "10:00", title: "Paintball", location: "", note: "" },
-          { time: "13:00", title: "Archery", location: "", note: "" },
-          { time: "15:00", title: "Leadership", location: "", note: "" }
+          { time: "08:00", end: "10:00", title: "Drill", location: "", note: "" },
+          { time: "10:00", end: "12:00", title: "Paintball", location: "", note: "" },
+          { time: "13:00", end: "15:00", title: "Archery", location: "", note: "" },
+          { time: "15:00", end: "17:00", title: "Bridge Building", location: "", note: "" }
         ],
         B: [
-          { time: "08:00", title: "Leadership", location: "", note: "" },
-          { time: "10:00", title: "STEM", location: "", note: "" },
-          { time: "13:00", title: "Paintball", location: "", note: "" },
-          { time: "15:00", title: "Archery", location: "", note: "" }
+          { time: "08:00", end: "10:00", title: "Bridge Building", location: "", note: "" },
+          { time: "10:00", end: "12:00", title: "Drill", location: "", note: "" },
+          { time: "13:00", end: "15:00", title: "Paintball", location: "", note: "" },
+          { time: "15:00", end: "17:00", title: "Archery", location: "", note: "" }
         ],
         C: [
-          { time: "08:00", title: "Archery", location: "", note: "" },
-          { time: "10:00", title: "Leadership", location: "", note: "" },
-          { time: "13:00", title: "STEM", location: "", note: "" },
-          { time: "15:00", title: "Paintball", location: "", note: "" }
+          { time: "08:00", end: "10:00", title: "Archery", location: "", note: "" },
+          { time: "10:00", end: "12:00", title: "Bridge Building", location: "", note: "" },
+          { time: "13:00", end: "15:00", title: "Drill", location: "", note: "" },
+          { time: "15:00", end: "17:00", title: "Paintball", location: "", note: "" }
         ],
         D: [
-          { time: "08:00", title: "Paintball", location: "", note: "" },
-          { time: "10:00", title: "Archery", location: "", note: "" },
-          { time: "13:00", title: "Leadership", location: "", note: "" },
-          { time: "15:00", title: "STEM", location: "", note: "" }
+          { time: "08:00", end: "10:00", title: "Paintball", location: "", note: "" },
+          { time: "10:00", end: "12:00", title: "Archery", location: "", note: "" },
+          { time: "13:00", end: "15:00", title: "Bridge Building", location: "", note: "" },
+          { time: "15:00", end: "17:00", title: "Drill", location: "", note: "" }
         ]
       }
     },
