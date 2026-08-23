@@ -272,11 +272,165 @@ function updateStaffTotals() {
   el.textContent = held + " items held, " + cadets + " cadets";
 }
 
-function mobilesCsvText() {
+// ---------------------------------------------------------------------------
+// PUBLISH TO CADETS
+//
+// Commits mobiles.csv straight to the repo through the GitHub API, so the
+// register reaches cadets' phones without exporting a file and uploading it
+// by hand.
+//
+// This needs a GitHub token, which is entered on the staff device and kept in
+// that device's local storage. It is never committed and never leaves the
+// browser except in the request to github.com.
+//
+// Use a FINE-GRAINED token limited to this one repository, with Contents set
+// to read and write and nothing else, and an expiry at the end of camp. Then
+// a lost phone means at worst someone can edit this repo until that date,
+// rather than reaching the whole account.
+//
+// Revoke at github.com/settings/personal-access-tokens when camp is over.
+// ---------------------------------------------------------------------------
+const REPO = "Purple-Vicky/K9_Camp_Companion";
+const BRANCH = "main";
+const TOKEN_KEY = "k9GhToken";
+
+function ghToken() {
+  return localStorage.getItem(TOKEN_KEY) || "";
+}
+
+function saveToken() {
+  const box = document.getElementById("mToken");
+  const t = box.value.trim();
+
+  if (!t) {
+    localStorage.removeItem(TOKEN_KEY);
+    setPublishMsg("Token cleared from this device.");
+  } else {
+    localStorage.setItem(TOKEN_KEY, t);
+    setPublishMsg("Token saved on this device. Publish is ready.");
+  }
+
+  box.value = "";
+  renderPublishState();
+}
+
+function setPublishMsg(text) {
+  const el = document.getElementById("mPubMsg");
+
+  if (el) el.textContent = text;
+}
+
+function renderPublishState() {
+  const el = document.getElementById("mTokenState");
+
+  if (!el) return;
+
+  const has = !!ghToken();
+
+  el.textContent = has ? "Token set on this device" : "No token on this device — publish will not work yet";
+  el.className = "muted small" + (has ? "" : " warn");
+}
+
+// UTF-8 safe, since "Other" is free text and may not be plain ASCII.
+function toBase64(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = "";
+
+  bytes.forEach(b => { bin += String.fromCharCode(b); });
+
+  return btoa(bin);
+}
+
+function publishMobiles() {
+  const token = ghToken();
+
+  if (!token) {
+    setPublishMsg("Add a GitHub token below first.");
+    return;
+  }
+
+  const csv = mobilesCsvText();
+
+  if (!csv.count) {
+    setPublishMsg("Nothing to publish yet. Record some items first.");
+    return;
+  }
+
+  const url = "https://api.github.com/repos/" + REPO + "/contents/mobiles.csv";
+  const headers = {
+    "Authorization": "Bearer " + token,
+    "Accept": "application/vnd.github+json"
+  };
+
+  setPublishMsg("Publishing…");
+
+  // Read what is already published first, for two reasons: the API needs the
+  // file's sha to replace it, and other staff may have published cadets this
+  // device knows nothing about. Overwriting with only this device's entries
+  // would wipe their work, so the two are merged.
+  fetch(url + "?ref=" + BRANCH, { headers, cache: "no-cache" })
+    .then(r => (r.ok ? r.json() : r.status === 404 ? {} : Promise.reject(r)))
+    .then(current => {
+      let merged = {};
+
+      if (current.content) {
+        // atob gives bytes; decode them as UTF-8.
+        const bin = atob(current.content.replace(/\n/g, ""));
+        const bytes = Uint8Array.from(bin, ch => ch.charCodeAt(0));
+
+        merged = parseMobiles(new TextDecoder().decode(bytes));
+      }
+
+      // This device's entries are the newer word on the cadets it touched.
+      Object.keys(staffEntries).forEach(id => { merged[id] = staffEntries[id]; });
+
+      const text = mobilesCsvFrom(merged);
+
+      return fetch(url, {
+        method: "PUT",
+        headers,
+        body: JSON.stringify({
+          message: "Update mobiles register (" + text.count + " cadets, " + formatTime(nowHHMM()) + ")",
+          content: toBase64(text.text + "\n"),
+          branch: BRANCH,
+          sha: current.sha
+        })
+      }).then(r => (r.ok ? r.json() : Promise.reject(r))).then(() => text.count);
+    })
+    .then(total => {
+      // Everything on this device is now published. Clearing it means a later
+      // publish by someone else is not overridden by this device's stale copy.
+      staffEntries = {};
+      saveStaffEntries();
+
+      return loadMobiles().then(() => {
+        const grid = document.getElementById("mobilesStaff");
+
+        if (grid) grid.dataset.built = "";
+
+        renderStaffGrid();
+        renderMobiles(cadet());
+        setPublishMsg("Published. " + total + " cadet(s) now on the register. Cadets will see it in a minute or two.");
+      });
+    })
+    .catch(err => {
+      const status = err && err.status;
+
+      if (status === 401) setPublishMsg("GitHub rejected the token. It may be wrong or expired — add it again below.");
+      else if (status === 403) setPublishMsg("Token lacks permission. It needs Contents: read and write on this repository.");
+      else if (status === 404) setPublishMsg("Repository or file not found. Check the token covers " + REPO + ".");
+      else if (status === 409) setPublishMsg("Someone else changed mobiles.csv. Reload the page and publish again.");
+      else setPublishMsg("Could not publish — no signal, or GitHub is unreachable. Your entries are still saved on this device.");
+    });
+}
+
+// Build the file from an arbitrary set of records, so the same code serves
+// both a local save and a merged publish.
+function mobilesCsvFrom(records) {
   const rows = ["SN,Phone,Power bank,Cable,Other,Status,Time"];
 
-  Object.keys(roster).sort().forEach(id => {
-    const rec = mobileRecord(id);
+  Object.keys(records).sort().forEach(id => {
+    const rec = records[id];
 
     if (!rec) return;
     if (!ITEMS.reduce((n, k) => n + (rec[k] || 0), 0)) return;
@@ -293,6 +447,17 @@ function mobilesCsvText() {
   });
 
   return { text: rows.join("\n"), count: rows.length - 1 };
+}
+
+// What this device would save: the published register with its own edits on
+// top, which is also what the grid is showing.
+function mobilesCsvText() {
+  const merged = {};
+
+  Object.keys(mobiles).forEach(id => { merged[id] = mobiles[id]; });
+  Object.keys(staffEntries).forEach(id => { merged[id] = staffEntries[id]; });
+
+  return mobilesCsvFrom(merged);
 }
 
 // Save the register as a real mobiles.csv file. Some phone browsers refuse a
@@ -415,7 +580,18 @@ function renderStaffGrid() {
 
       <textarea id="mExport" rows="6" hidden readonly></textarea>
       <p class="muted small" id="mMsg">Edits are held on this device. Export and upload mobiles.csv to show them to cadets.</p>
-      <button type="button" class="big-btn" onclick="saveMobilesCsv()">SAVE mobiles.csv</button>
+      <button type="button" class="big-btn" onclick="publishMobiles()">PUBLISH TO CADETS</button>
+      <p class="muted small" id="mPubMsg">Sends the register straight to the app, so cadets can see it.</p>
+      <p class="muted small" id="mTokenState"></p>
+
+      <details>
+        <summary class="small">GitHub token (set once per device)</summary>
+        <p class="muted small">Create a <b>fine-grained</b> token at github.com/settings/personal-access-tokens, limited to this repository, with <b>Contents: read and write</b> and an expiry at the end of camp. Paste it here. It stays on this device.</p>
+        <input id="mToken" type="password" placeholder="github_pat_…" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <button type="button" class="big-btn ghost" onclick="saveToken()">SAVE TOKEN ON THIS DEVICE</button>
+      </details>
+
+      <button type="button" class="big-btn ghost" onclick="saveMobilesCsv()">SAVE FILE INSTEAD</button>
       <button type="button" class="big-btn ghost" onclick="showMobilesText()">SHOW TEXT TO COPY</button>
       <button type="button" class="big-btn ghost" onclick="clearStaffEntries()">CLEAR THIS DEVICE</button>
     </div>
@@ -423,6 +599,7 @@ function renderStaffGrid() {
 
   box.dataset.built = "1";
   updateStaffTotals();
+  renderPublishState();
 }
 
 // What one cadet sees.
