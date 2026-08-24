@@ -715,8 +715,12 @@ function itemsFor(date) {
   const c = cadet();
   const items = [...(p.items || [])];
 
+  // A day can move a cadet into another flight just for that day, without
+  // touching the roster. Used when flying pulls cadets out of their own flight.
+  const flight = (p.flightMoves && p.flightMoves[c.id]) || c.flight;
+
   if (p.flights) {
-    items.push(...(p.flights[c.flight] || []));
+    items.push(...(p.flights[flight] || []));
   }
 
   const slot = flyingSlotFor(date, c.id);
@@ -857,7 +861,9 @@ function renderWeek(c) {
 
     // Some days call the flights something else -- 25 Aug uses colours. Show
     // the name the cadet will actually be called by on the day.
-    const alias = p.flightNames && p.flightNames[c.flight];
+    const dayFlight = (p.flightMoves && p.flightMoves[c.id]) || c.flight;
+    const alias = p.flightNames && p.flightNames[dayFlight];
+    const moved = p.flightMoves && p.flightMoves[c.id];
 
     return `
       <div class="card">
@@ -865,7 +871,8 @@ function renderWeek(c) {
           <h2>${esc(dayName(date))} ${esc(date)}</h2>
           <span class="pill ${uniformClass(p.uniform)}">DAY: ${esc(p.uniform.toUpperCase())}</span>
         </div>
-        ${alias ? `<p class="muted small">You are <b>${esc(alias)}</b> today (Flight ${esc(c.flight)}).</p>` : ""}
+        ${moved ? `<p class="noticetext" style="font-size:15px">Today you are with <b>Flight ${esc(moved)}</b>, not ${esc(c.flight)}.</p>` : ""}
+        ${alias ? `<p class="muted small">You are <b>${esc(alias)}</b> today (Flight ${esc(dayFlight)}).</p>` : ""}
         ${itemsFor(date).map(item => eventHtml(item, p.uniform)).join("")}
       </div>
     `;

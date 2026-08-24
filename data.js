@@ -79,44 +79,47 @@ const data = {
 
     "24 Aug": {
       uniform: "Greens",
+
+      // Flight A is at AEF all day, so only B, C and D are on the stands.
+      // The Flight A cadets who are not flying join another flight for the
+      // day: their own flight is empty, so without this they would see
+      // nothing. The roster is untouched; this is for this date only.
+      flightMoves: { "003": "D", "010": "D", "012": "B", "004": "C", "008": "C" },
+
       // Everyone gets these...
       items: [
         { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "", type: "meal" },
-        { time: "12:00", title: "Lunch", location: "Dining Facility", note: "", type: "meal" },
+        { time: "13:00", end: "14:00", title: "Lunch", location: "Dining Facility", note: "", type: "meal" },
         { time: "17:00", title: "Dinner", location: "Dining Facility", note: "", type: "meal" },
         { time: "18:00", title: "Down Time and Esports", location: "", uniform: "Civvies", note: "Flight Sim also running, possible Cinebowl" },
         { time: "20:30", title: "Free Time", location: "", uniform: "Civvies", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
+
       // ...plus their own flight's rotation, merged in and sorted by time.
       //
-      // Drill, Bridge Building, Archery and Paintball, each taking half of the
-      // morning or half of the afternoon. Every flight does all four and no
-      // two flights are ever on the same one.
+      // Three activities of two hours: two before lunch, one after, then Drill
+      // for all three flights together. B, C and D each do all three and no
+      // two are ever on the same one. Flight A is flying and has no rotation.
       flights: {
-        A: [
-          { time: "08:00", end: "10:00", title: "Drill", location: "Tented camp site", note: "" },
-          { time: "10:00", end: "12:00", title: "Paintball", location: "Tented camp site", note: "" },
-          { time: "13:00", end: "15:00", title: "Archery", location: "Tented camp site", note: "" },
-          { time: "15:00", end: "17:00", title: "Bridge Building", location: "Tented camp site", note: "" }
-        ],
+        A: [],
         B: [
-          { time: "08:00", end: "10:00", title: "Bridge Building", location: "Tented camp site", note: "" },
-          { time: "10:00", end: "12:00", title: "Drill", location: "Tented camp site", note: "" },
-          { time: "13:00", end: "15:00", title: "Paintball", location: "Tented camp site", note: "" },
-          { time: "15:00", end: "17:00", title: "Archery", location: "Tented camp site", note: "" }
+          { time: "09:00", end: "11:00", title: "Bridge Building", location: "Tented camp site", note: "" },
+          { time: "11:00", end: "13:00", title: "Archery", location: "Tented camp site", note: "" },
+          { time: "14:00", end: "16:00", title: "Paintball", location: "Tented camp site", note: "" },
+          { time: "16:00", end: "17:00", title: "Drill", location: "Tented camp site", note: "All flights together" }
         ],
         C: [
-          { time: "08:00", end: "10:00", title: "Archery", location: "Tented camp site", note: "" },
-          { time: "10:00", end: "12:00", title: "Bridge Building", location: "Tented camp site", note: "" },
-          { time: "13:00", end: "15:00", title: "Drill", location: "Tented camp site", note: "" },
-          { time: "15:00", end: "17:00", title: "Paintball", location: "Tented camp site", note: "" }
+          { time: "09:00", end: "11:00", title: "Archery", location: "Tented camp site", note: "" },
+          { time: "11:00", end: "13:00", title: "Paintball", location: "Tented camp site", note: "" },
+          { time: "14:00", end: "16:00", title: "Bridge Building", location: "Tented camp site", note: "" },
+          { time: "16:00", end: "17:00", title: "Drill", location: "Tented camp site", note: "All flights together" }
         ],
         D: [
-          { time: "08:00", end: "10:00", title: "Paintball", location: "Tented camp site", note: "" },
-          { time: "10:00", end: "12:00", title: "Archery", location: "Tented camp site", note: "" },
-          { time: "13:00", end: "15:00", title: "Bridge Building", location: "Tented camp site", note: "" },
-          { time: "15:00", end: "17:00", title: "Drill", location: "Tented camp site", note: "" }
+          { time: "09:00", end: "11:00", title: "Paintball", location: "Tented camp site", note: "" },
+          { time: "11:00", end: "13:00", title: "Bridge Building", location: "Tented camp site", note: "" },
+          { time: "14:00", end: "16:00", title: "Archery", location: "Tented camp site", note: "" },
+          { time: "16:00", end: "17:00", title: "Drill", location: "Tented camp site", note: "All flights together" }
         ]
       }
     },
@@ -268,24 +271,23 @@ const data = {
     // a cadet sees their position and that the day is still to be confirmed.
     // Once a slot is fixed, put them under the day below and the position is
     // replaced by the real thing.
+    // 003, 012, 008, 004 and 010 came off for the 24th: they are not flying
+    // and have joined another flight for the day instead.
     priority: [
-      "003", "015", "002", "001", "006",
-      "014", "005", "007", "011", "013",
-      "009", "012", "008", "004", "010"
+      "015", "002", "001", "006", "014",
+      "005", "007", "011", "013", "009"
     ],
 
     days: {
       "22 Aug": {},
       "23 Aug": {},
 
-      // Twelve fly on the 24th, in the order below, plus three reserves.
-      // Times are not fixed yet, so TBC; replace a cadet's TBC with their time
-      // as slots are confirmed. Use "RESERVE" for a standby.
+      // Flying on the 24th, in the call-forward order above. Times are not
+      // fixed yet, so TBC; replace a cadet's TBC with their time as slots are
+      // confirmed. Use "RESERVE" for a standby.
       "24 Aug": {
-        "003": "TBC", "015": "TBC", "002": "TBC", "001": "TBC", "006": "TBC",
-        "014": "TBC", "005": "TBC", "007": "TBC", "011": "TBC", "013": "TBC",
-        "009": "TBC", "012": "TBC",
-        "008": "RESERVE", "004": "RESERVE", "010": "RESERVE"
+        "015": "TBC", "002": "TBC", "001": "TBC", "006": "TBC", "014": "TBC",
+        "005": "TBC", "007": "TBC", "011": "TBC", "013": "TBC", "009": "TBC"
       },
 
       "25 Aug": {},
