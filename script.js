@@ -1076,7 +1076,7 @@ function renderFlying(c) {
     <div class="card">
       <div class="section-title">
         <h2>✈️ Flying</h2>
-        <span class="pill blues">${booked ? esc(dayName(countDate)) + " " + esc(countDate) + " · " + booked + " FLYING" : "NONE FLYING TODAY"}${standby ? " · " + standby + " RES" : ""}</span>
+        ${isStaff && booked ? `<span class="pill blues">${esc(dayName(countDate))} ${esc(countDate)} · ${booked} FLYING${standby ? " · " + standby + " RES" : ""}</span>` : ""}
       </div>
       ${slots.length
         ? slots.map(s => isReserve(s.time)
