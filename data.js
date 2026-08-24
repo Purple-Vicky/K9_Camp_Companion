@@ -151,30 +151,37 @@ const data = {
       ],
       // Four squadron visits, locations Q W E R. Each flight does all four
       // and no two flights are ever at the same one.
+      // From the admin order, serials 62-78. Fire Section runs to its own
+      // times: 0900-1000, 1030-1130, 1400-1500 and 1530-1630, so each flight's
+      // Fire slot is shorter and offset from the other three.
       flights: {
+        // Blue
         A: [
-          { time: "08:30", end: "10:00", title: "Sqn Visit", location: "Q", note: "" },
-          { time: "10:00", end: "11:30", title: "Sqn Visit", location: "W", note: "" },
-          { time: "13:30", end: "15:00", title: "Sqn Visit", location: "E", note: "" },
-          { time: "15:00", end: "16:30", title: "Sqn Visit", location: "R", note: "" }
+          { time: "08:30", end: "10:00", title: "Section Visit", location: "90SU", note: "" },
+          { time: "10:00", end: "11:30", title: "Section Visit", location: "34 Sqn", note: "" },
+          { time: "13:30", end: "15:00", title: "Section Visit", location: "11 Sqn", note: "" },
+          { time: "15:30", end: "16:30", title: "Section Visit", location: "Fire Section", note: "Fire Section runs later than the other stands" }
         ],
+        // Bronze
         B: [
-          { time: "08:30", end: "10:00", title: "Sqn Visit", location: "W", note: "" },
-          { time: "10:00", end: "11:30", title: "Sqn Visit", location: "E", note: "" },
-          { time: "13:30", end: "15:00", title: "Sqn Visit", location: "R", note: "" },
-          { time: "15:00", end: "16:30", title: "Sqn Visit", location: "Q", note: "" }
+          { time: "08:30", end: "10:00", title: "Section Visit", location: "34 Sqn", note: "" },
+          { time: "10:00", end: "11:30", title: "Section Visit", location: "ATC", note: "" },
+          { time: "14:00", end: "15:00", title: "Section Visit", location: "Fire Section", note: "Fire Section runs later than the other stands" },
+          { time: "15:00", end: "16:30", title: "Section Visit", location: "11 Sqn", note: "" }
         ],
+        // Silver
         C: [
-          { time: "08:30", end: "10:00", title: "Sqn Visit", location: "E", note: "" },
-          { time: "10:00", end: "11:30", title: "Sqn Visit", location: "R", note: "" },
-          { time: "13:30", end: "15:00", title: "Sqn Visit", location: "Q", note: "" },
-          { time: "15:00", end: "16:30", title: "Sqn Visit", location: "W", note: "" }
+          { time: "08:30", end: "10:00", title: "Section Visit", location: "11 Sqn", note: "" },
+          { time: "10:30", end: "11:30", title: "Section Visit", location: "Fire Section", note: "Fire Section runs later than the other stands" },
+          { time: "13:30", end: "15:00", title: "Section Visit", location: "34 Sqn", note: "" },
+          { time: "15:00", end: "16:30", title: "Section Visit", location: "ATC", note: "" }
         ],
+        // Gold
         D: [
-          { time: "08:30", end: "10:00", title: "Sqn Visit", location: "R", note: "" },
-          { time: "10:00", end: "11:30", title: "Sqn Visit", location: "Q", note: "" },
-          { time: "13:30", end: "15:00", title: "Sqn Visit", location: "W", note: "" },
-          { time: "15:00", end: "16:30", title: "Sqn Visit", location: "E", note: "" }
+          { time: "09:00", end: "10:00", title: "Section Visit", location: "Fire Section", note: "Fire Section starts later than the other stands" },
+          { time: "10:00", end: "11:30", title: "Section Visit", location: "11 Sqn", note: "" },
+          { time: "13:30", end: "15:00", title: "Section Visit", location: "ATC", note: "" },
+          { time: "15:00", end: "16:30", title: "Section Visit", location: "34 Sqn", note: "" }
         ]
       }
     },
