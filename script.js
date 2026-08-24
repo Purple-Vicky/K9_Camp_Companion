@@ -540,6 +540,128 @@ function clearStaffEntries() {
 
 // Built once. After that only the tapped cell and the totals change, so the
 // grid never jumps while staff are working down it.
+// ---------------------------------------------------------------------------
+// STAFF DAY OVERVIEW (?staff=true)
+//
+// Staff need the whole day at a glance, not one cadet's view: every flight
+// side by side so it is obvious who is where and who has moved. Built from
+// the same data as the cadet view, so the two cannot disagree.
+// ---------------------------------------------------------------------------
+const FLIGHTS = ["A", "B", "C", "D"];
+
+// Everything one flight does on a date, ignoring any individual cadet.
+function flightItems(date, f) {
+  const p = data.programme[date];
+
+  if (!p) return [];
+
+  return [...(p.items || []), ...((p.flights && p.flights[f]) || [])].sort(byTime);
+}
+
+function renderStaffDay() {
+  const box = document.getElementById("staffDay");
+
+  if (!box) return;
+
+  box.hidden = !isStaff;
+
+  if (!isStaff) return;
+
+  const date = staffDayDate || todayOrFirst();
+  const p = data.programme[date];
+
+  if (!p) { box.innerHTML = ""; return; }
+
+  // Every distinct start time across the four flights, in order.
+  const times = [];
+
+  FLIGHTS.forEach(f => flightItems(date, f).forEach(i => {
+    if (times.indexOf(i.time) === -1) times.push(i.time);
+  }));
+
+  times.sort((a, b) => toMinutes(a) - toMinutes(b));
+
+  const moves = p.flightMoves || {};
+  const movedBy = {};
+
+  Object.keys(moves).forEach(id => {
+    movedBy[moves[id]] = (movedBy[moves[id]] || []).concat(id);
+  });
+
+  const headCount = {};
+
+  Object.keys(roster).forEach(id => {
+    const f = moves[id] || roster[id].flight;
+    headCount[f] = (headCount[f] || 0) + 1;
+  });
+
+  const rows = times.map(t => {
+    const cells = FLIGHTS.map(f => {
+      const hit = flightItems(date, f).filter(i => i.time === t);
+
+      if (!hit.length) return `<td class="none"></td>`;
+
+      // Whole-camp items look the same in every column; mark them once.
+      const common = (p.items || []).some(i => i.time === t && i.title === hit[0].title);
+
+      return `<td class="${common ? "common" : ""}">
+        <b>${esc(hit[0].title)}</b>
+        ${hit[0].location ? `<span class="where">${esc(hit[0].location)}</span>` : ""}
+      </td>`;
+    }).join("");
+
+    const label = formatTime(t);
+
+    return `<tr><th scope="row">${esc(label)}</th>${cells}</tr>`;
+  }).join("");
+
+  const dayPicker = names.map(d =>
+    `<option value="${esc(d)}"${d === date ? " selected" : ""}>${esc(dayName(d))} ${esc(d)}</option>`
+  ).join("");
+
+  box.innerHTML = `
+    <div class="card">
+      <div class="section-title">
+        <h2>🗓️ Day overview</h2>
+        <span class="pill ${uniformClass(p.uniform)}">${esc(p.uniform.toUpperCase())}</span>
+      </div>
+
+      <select id="staffDayPick" onchange="setStaffDay(this.value)">${dayPicker}</select>
+
+      ${Object.keys(moves).length
+        ? `<p class="muted small">Moved today: ${FLIGHTS.filter(f => movedBy[f]).map(f =>
+            `<b>${esc(f)}</b> &larr; ${movedBy[f].map(esc).join(", ")}`).join(" &nbsp;·&nbsp; ")}</p>`
+        : ""}
+
+      <div class="gridwrap">
+        <table class="daygrid">
+          <thead>
+            <tr><th></th>${FLIGHTS.map(f =>
+              `<th>${esc(f)}<span class="hc">${headCount[f] || 0}</span></th>`).join("")}</tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+
+      <p class="muted small">Shaded rows are whole-camp. A blank cell means that flight has nothing scheduled at that time.</p>
+    </div>
+  `;
+}
+
+let staffDayDate = "";
+
+function todayOrFirst() {
+  const now = new Date();
+  const guess = `${now.getDate()} Aug`;
+
+  return (now.getMonth() === 7 && names.indexOf(guess) > -1) ? guess : names[0];
+}
+
+function setStaffDay(d) {
+  staffDayDate = d;
+  renderStaffDay();
+}
+
 function renderStaffGrid() {
   const box = document.getElementById("mobilesStaff");
 
@@ -789,6 +911,7 @@ function render() {
 
   renderWeek(c);
   renderMobiles(c);
+  renderStaffDay();
   renderStaffGrid();
   renderFlying(c);
 }
