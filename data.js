@@ -145,7 +145,7 @@ const data = {
       items: [
         { time: "07:00", end: "08:00", title: "Breakfast", location: "Dining Facility", note: "", type: "meal" },
         { time: "11:30", end: "13:30", title: "Packed Lunch", location: "RAFAC HQ", note: "Collect from Catering Flt", type: "meal" },
-        { time: "17:00", end: "18:00", title: "Dinner", location: "Dining Facility", note: "", type: "meal" },
+        { time: "17:30", end: "18:30", title: "Dinner", location: "Dining Facility", note: "", type: "meal" },
         { time: "18:00", end: "20:30", title: "RAFAC Activities", location: "RAFAC HQ", uniform: "Civvies", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
