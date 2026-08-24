@@ -1054,14 +1054,17 @@ function renderFlying(c) {
     .map(date => ({ date, time: flyingSlotFor(date, c.id) }))
     .filter(s => s.time !== null && s.time !== undefined);
 
-  // Reserves are listed but are not booked on, so they are counted separately.
+  // Count one day, not the week. Totalling every day gave a number like "22
+  // flying", which is true of the camp and useless to the cadet reading it.
+  // Show the day they are on if they have one, otherwise today.
+  const countDate = (slots[0] && slots[0].date) || todayOrFirst();
+  const dayList = data.flying.days[countDate] || {};
+
   let booked = 0, standby = 0;
 
-  Object.keys(data.flying.days).forEach(date => {
-    Object.keys(data.flying.days[date]).forEach(id => {
-      if (isReserve(data.flying.days[date][id])) standby++;
-      else booked++;
-    });
+  Object.keys(dayList).forEach(id => {
+    if (isReserve(dayList[id])) standby++;
+    else booked++;
   });
 
   // Where they sit in the order cadets are called forward.
@@ -1073,7 +1076,7 @@ function renderFlying(c) {
     <div class="card">
       <div class="section-title">
         <h2>✈️ Flying</h2>
-        <span class="pill blues">${booked} FLYING${standby ? " · " + standby + " RESERVE" : ""}</span>
+        <span class="pill blues">${booked ? esc(dayName(countDate)) + " " + esc(countDate) + " · " + booked + " FLYING" : "NONE FLYING TODAY"}${standby ? " · " + standby + " RES" : ""}</span>
       </div>
       ${slots.length
         ? slots.map(s => isReserve(s.time)
