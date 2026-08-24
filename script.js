@@ -847,16 +847,23 @@ function itemsFor(date) {
 
   const slot = flyingSlotFor(date, c.id);
 
-  // Being listed at all is the allocation; the time may still be TBC, and a
-  // standby is listed as RESERVE rather than a time.
+  // Being listed at all is the allocation; a standby is listed as RESERVE
+  // rather than a time. AEF takes the whole day, so a cadet with no specific
+  // slot time is out all day rather than free until some unknown moment --
+  // showing a bare "TBC" would have them waiting around for a time that is
+  // never coming.
   if (slot !== null && slot !== undefined) {
     const reserve = isReserve(slot);
+    const timed = !reserve && slot && !/^tbc$/i.test(slot);
 
     items.push({
-      time: reserve ? "TBC" : (slot || "TBC"),
-      title: reserve ? "Flying Reserve" : "Flying Slot",
+      time: timed ? slot : "TBC",
+      allDay: !timed,
+      title: reserve ? "Flying Reserve" : "Air Experience Flying",
       location: reserve ? "" : data.flying.location,
-      note: reserve ? "Standby, in case a slot frees up." : data.flying.note,
+      note: reserve
+        ? "Standby all day, in case a slot frees up."
+        : (timed ? data.flying.note : "At the AEF line all day. " + data.flying.note),
       uniform: "Greens"
     });
   }
@@ -962,7 +969,9 @@ function eventHtml(item, dayUniform) {
 
   return `
     <div class="event">
-      <div class="time">${esc(formatTime(item.time))}${item.end ? `<span class="until">–${esc(formatTime(item.end))}</span>` : ""}</div>
+      <div class="time">${item.allDay
+        ? `<span class="allday">ALL<br>DAY</span>`
+        : esc(formatTime(item.time)) + (item.end ? `<span class="until">–${esc(formatTime(item.end))}</span>` : "")}</div>
       <div>
         <h3>${esc(item.title)}</h3>
         ${label}
@@ -1041,9 +1050,14 @@ function renderFlying(c) {
                <p class="muted">You are not booked on. Be ready in case a slot frees up, and check with your Flight Staff on the day.</p>`
             : eventHtml({
                 time: s.time || "TBC",
-                title: "Your Flying Slot",
+                // No specific time means the whole day at AEF, not an unknown
+                // moment to hang around waiting for.
+                allDay: !s.time || /^tbc$/i.test(s.time),
+                title: "Air Experience Flying",
                 location: data.flying.location,
-                note: s.date + " • " + data.flying.note,
+                note: s.date + " • " + (!s.time || /^tbc$/i.test(s.time)
+                  ? "At the AEF line all day. " + data.flying.note
+                  : data.flying.note),
                 uniform: "Greens"
               }, "Greens")).join("")
           + (queued ? `<p class="muted">You are <b>number ${queued}</b> in the order cadets are called forward.</p>` : "")
