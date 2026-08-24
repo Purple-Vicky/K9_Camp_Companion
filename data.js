@@ -149,34 +149,32 @@ const data = {
         { time: "18:00", end: "20:30", title: "RAFAC Activities", location: "RAFAC HQ", uniform: "Civvies", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
+      // Four squadron visits, locations Q W E R. Each flight does all four
+      // and no two flights are ever at the same one.
       flights: {
-        // Blue
         A: [
-          { time: "08:30", end: "10:00", title: "Section Visit", location: "90SU", note: "" },
-          { time: "10:00", end: "11:30", title: "Section Visit", location: "34 Sqn", note: "" },
-          { time: "13:30", end: "15:00", title: "Section Visit", location: "11 Sqn", note: "" },
-          { time: "15:00", end: "16:30", title: "Section Visit", location: "Fire Section", note: "" }
+          { time: "08:30", end: "10:00", title: "Sqn Visit", location: "Q", note: "" },
+          { time: "10:00", end: "11:30", title: "Sqn Visit", location: "W", note: "" },
+          { time: "13:30", end: "15:00", title: "Sqn Visit", location: "E", note: "" },
+          { time: "15:00", end: "16:30", title: "Sqn Visit", location: "R", note: "" }
         ],
-        // Bronze
         B: [
-          { time: "08:30", end: "10:00", title: "Section Visit", location: "34 Sqn", note: "" },
-          { time: "10:00", end: "11:30", title: "Section Visit", location: "ATC", note: "" },
-          { time: "13:30", end: "15:00", title: "Section Visit", location: "Fire Section", note: "" },
-          { time: "15:00", end: "16:30", title: "Section Visit", location: "11 Sqn", note: "" }
+          { time: "08:30", end: "10:00", title: "Sqn Visit", location: "W", note: "" },
+          { time: "10:00", end: "11:30", title: "Sqn Visit", location: "E", note: "" },
+          { time: "13:30", end: "15:00", title: "Sqn Visit", location: "R", note: "" },
+          { time: "15:00", end: "16:30", title: "Sqn Visit", location: "Q", note: "" }
         ],
-        // Silver
         C: [
-          { time: "08:30", end: "10:00", title: "Section Visit", location: "11 Sqn", note: "" },
-          { time: "10:00", end: "11:30", title: "Section Visit", location: "Fire Section", note: "" },
-          { time: "13:30", end: "15:00", title: "Section Visit", location: "34 Sqn", note: "" },
-          { time: "15:00", end: "16:30", title: "Section Visit", location: "ATC", note: "" }
+          { time: "08:30", end: "10:00", title: "Sqn Visit", location: "E", note: "" },
+          { time: "10:00", end: "11:30", title: "Sqn Visit", location: "R", note: "" },
+          { time: "13:30", end: "15:00", title: "Sqn Visit", location: "Q", note: "" },
+          { time: "15:00", end: "16:30", title: "Sqn Visit", location: "W", note: "" }
         ],
-        // Gold
         D: [
-          { time: "08:30", end: "10:00", title: "Section Visit", location: "Fire Section", note: "" },
-          { time: "10:00", end: "11:30", title: "Section Visit", location: "11 Sqn", note: "" },
-          { time: "13:30", end: "15:00", title: "Section Visit", location: "ATC", note: "" },
-          { time: "15:00", end: "16:30", title: "Section Visit", location: "34 Sqn", note: "" }
+          { time: "08:30", end: "10:00", title: "Sqn Visit", location: "R", note: "" },
+          { time: "10:00", end: "11:30", title: "Sqn Visit", location: "Q", note: "" },
+          { time: "13:30", end: "15:00", title: "Sqn Visit", location: "W", note: "" },
+          { time: "15:00", end: "16:30", title: "Sqn Visit", location: "E", note: "" }
         ]
       }
     },
@@ -263,7 +261,7 @@ const data = {
   // appear in their week. Cadets not listed see "no slot allocated".
   // =========================================================================
   flying: {
-    location: "",
+    location: "AEF",
     note: "Report to your Flight Staff before going.",
 
     // AEF runs every day, two cadets a day. Add a cadet by putting their
