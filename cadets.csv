@@ -14,7 +14,7 @@ SN,Flight,Tent,Notice
 13,A,F2,
 14,A,F3,
 15,A,F1,
-16,B,M5,GO TO M5
+16,B,M5,
 17,B,M6,
 18,B,F1,
 19,B,M0-18,
@@ -45,11 +45,11 @@ SN,Flight,Tent,Notice
 45,C,M4,
 46,D,F2,
 47,D,F2,
-48,D,M4,GO TO M4
+48,D,M4,
 49,D,M2,
 50,D,M4,
 51,D,F1,
-52,D,M5,GO TO M5
+52,D,M5,
 53,D,M1,
 54,D,M2,
 55,D,M1,
