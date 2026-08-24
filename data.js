@@ -299,15 +299,19 @@ const data = {
         "005": "TBC", "007": "TBC", "011": "TBC", "013": "TBC", "009": "TBC"
       },
 
-      // 12 for the 25th, grouped by flight: B 5, C 4, D 3.
+      // Only 6 slots on the 25th. Flight B goes complete, plus one from C,
+      // so a whole flight moves together rather than being split.
       "25 Aug": {
         "017": "TBC", "020": "TBC", "026": "TBC", "027": "TBC", "030": "TBC",
-        "035": "TBC", "039": "TBC", "040": "TBC", "042": "TBC",
-        "050": "TBC", "051": "TBC", "052": "TBC"
+        "035": "TBC"
       },
-      // The two who did not fit on the 25th. Wednesday is doubtful, so these
-      // may need moving to the 27th.
-      "26 Aug": { "053": "TBC", "057": "TBC" },
+      // Carried from the 25th when it dropped to 6 slots, plus the original
+      // two. Wednesday is doubtful, so these eight may need moving to the 27th.
+      "26 Aug": {
+        "039": "TBC", "040": "TBC", "042": "TBC",
+        "050": "TBC", "051": "TBC", "052": "TBC",
+        "053": "TBC", "057": "TBC"
+      },
       "27 Aug": {},
       "28 Aug": {}
     }
