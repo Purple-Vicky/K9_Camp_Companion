@@ -84,7 +84,7 @@ const data = {
       // The Flight A cadets who are not flying join another flight for the
       // day: their own flight is empty, so without this they would see
       // nothing. The roster is untouched; this is for this date only.
-      flightMoves: { "003": "D", "010": "D", "012": "B", "004": "C", "008": "C" },
+      flightMoves: { "003": "D", "010": "D", "012": "B", "004": "C", "008": "C", "015": "C", "002": "B" },
 
       // Everyone gets these...
       items: [
@@ -271,10 +271,10 @@ const data = {
     // a cadet sees their position and that the day is still to be confirmed.
     // Once a slot is fixed, put them under the day below and the position is
     // replaced by the real thing.
-    // 003, 012, 008, 004 and 010 came off for the 24th: they are not flying
-    // and have joined another flight for the day instead.
+    // 003, 012, 008, 004, 010, 015 and 002 came off for the 24th: they are not
+    // flying and have joined another flight for the day instead.
     priority: [
-      "015", "002", "001", "006", "014",
+      "001", "006", "014",
       "005", "007", "011", "013", "009"
     ],
 
@@ -286,7 +286,7 @@ const data = {
       // fixed yet, so TBC; replace a cadet's TBC with their time as slots are
       // confirmed. Use "RESERVE" for a standby.
       "24 Aug": {
-        "015": "TBC", "002": "TBC", "001": "TBC", "006": "TBC", "014": "TBC",
+        "001": "TBC", "006": "TBC", "014": "TBC",
         "005": "TBC", "007": "TBC", "011": "TBC", "013": "TBC", "009": "TBC"
       },
 
