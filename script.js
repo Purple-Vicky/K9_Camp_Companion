@@ -150,7 +150,11 @@ function parseMobiles(text) {
       "Cable": countOf(cell[3]),
       other: (cell[4] || "").trim(),
       status: (cell[5] || "").trim().toUpperCase(),
-      time: (cell[6] || "").trim()
+      time: (cell[6] || "").trim(),
+      // Asked at hand-in. Both are blank until asked, which is deliberately
+      // different from an answer: "" is unknown, "0" is has never flown.
+      flown: (cell[7] || "").trim(),
+      bronze: (cell[8] || "").trim().toUpperCase()
     };
   }
 
@@ -204,6 +208,51 @@ function nowHHMM() {
 // Tapping a cell cycles 0 -> 1 -> 2 -> 3 -> 0. Most cadets hand in one of a
 // thing, so that is a single tap, and there is no fiddly plus/minus pair to
 // hit on a phone in the dark.
+// Asked at hand-in, when every cadet passes a staff member anyway.
+// Blank means not asked; 0 means never flown. Keeping those apart matters,
+// because "never flown" is the group that gets priority and "not asked" is
+// a cadet still to chase.
+function cycleFlown(id, el) {
+  const rec = mobileRecord(id) || {};
+  const order = ["", "0", "1", "2", "3", "4", "5+"];
+  const next = order[(order.indexOf(String(rec.flown || "")) + 1) % order.length];
+
+  const updated = Object.assign({}, rec);
+
+  updated.flown = next;
+  updated.time = nowHHMM();
+
+  staffEntries[id] = updated;
+  saveStaffEntries();
+
+  el.textContent = next || "–";
+  el.className = "qty flown" + (next === "0" ? " never" : next ? " on" : "");
+
+  noteSaved(id);
+  updateStaffTotals();
+}
+
+// Would they give up York Air Museum for Bronze flying instead?
+function cycleBronze(id, el) {
+  const rec = mobileRecord(id) || {};
+  const order = ["", "Y", "N"];
+  const next = order[(order.indexOf(String(rec.bronze || "")) + 1) % order.length];
+
+  const updated = Object.assign({}, rec);
+
+  updated.bronze = next;
+  updated.time = nowHHMM();
+
+  staffEntries[id] = updated;
+  saveStaffEntries();
+
+  el.textContent = next || "–";
+  el.className = "qty bz" + (next === "Y" ? " yes" : next === "N" ? " no" : "");
+
+  noteSaved(id);
+  updateStaffTotals();
+}
+
 function cycleItem(id, item, el) {
   const rec = mobileRecord(id) || {};
   const next = ((rec[item] || 0) + 1) % 4;
@@ -289,7 +338,17 @@ function updateStaffTotals() {
     if (n && rec.status !== "OUT") { held += n; cadets++; }
   });
 
-  el.textContent = held + " items held, " + cadets + " cadets";
+  let never = 0, bronze = 0, asked = 0;
+
+  Object.keys(roster).forEach(id => {
+    const r = mobileRecord(id);
+
+    if (!r) return;
+    if (r.flown !== undefined && r.flown !== "") { asked++; if (String(r.flown) === "0") never++; }
+    if (String(r.bronze).toUpperCase() === "Y") bronze++;
+  });
+
+  el.textContent = held + " items · " + cadets + " cadets · " + asked + " asked, " + never + " never flown, " + bronze + " want Bronze";
 }
 
 // ---------------------------------------------------------------------------
@@ -447,13 +506,18 @@ function publishMobiles() {
 // Build the file from an arbitrary set of records, so the same code serves
 // both a local save and a merged publish.
 function mobilesCsvFrom(records) {
-  const rows = ["SN,Phone,Power bank,Cable,Other,Status,Time"];
+  const rows = ["SN,Phone,Power bank,Cable,Other,Status,Time,Flown,Bronze"];
 
   Object.keys(records).sort().forEach(id => {
     const rec = records[id];
 
     if (!rec) return;
-    if (!ITEMS.reduce((n, k) => n + (rec[k] || 0), 0)) return;
+
+    // A cadet who handed nothing in may still have answered the flying
+    // questions, so keep the row if there is anything at all to keep.
+    const held = ITEMS.reduce((n, k) => n + (rec[k] || 0), 0);
+
+    if (!held && !rec.flown && !rec.bronze) return;
 
     rows.push([
       parseInt(id, 10),
@@ -462,7 +526,9 @@ function mobilesCsvFrom(records) {
       rec["Cable"] || "",
       (rec.other || "").replace(/,/g, ";"),
       rec.status || "",
-      rec.time || ""
+      rec.time || "",
+      rec.flown || "",
+      rec.bronze || ""
     ].join(","));
   });
 
@@ -694,12 +760,16 @@ function renderStaffGrid() {
     }).join("");
 
     const state = rec.status === "OUT" ? "OUT" : (rec.status === "IN" ? "IN" : "");
+    const fl = String(rec.flown || "");
+    const bz = String(rec.bronze || "");
 
     return `
       <tr>
         <th scope="row">${esc(id)}</th>
         <td class="fixed">${esc(r.tent || "—")}</td>
         ${cells}
+        <td><button type="button" class="qty flown${fl === "0" ? " never" : fl ? " on" : ""}" onclick="cycleFlown('${id}',this)" aria-label="Flights flown by cadet ${id}">${esc(fl || "–")}</button></td>
+        <td><button type="button" class="qty bz${bz === "Y" ? " yes" : bz === "N" ? " no" : ""}" onclick="cycleBronze('${id}',this)" aria-label="Bronze instead of York for cadet ${id}">${esc(bz || "–")}</button></td>
         <td><button type="button" class="statecell ${state === "OUT" ? "out" : state === "IN" ? "in" : ""}" onclick="toggleReturned('${id}',this)" aria-label="Handed in or returned for cadet ${id}">${state}</button></td>
       </tr>
     `;
@@ -708,12 +778,12 @@ function renderStaffGrid() {
   box.innerHTML = `
     <div class="card">
       <div class="section-title"><h2>📱 Mobiles register</h2><span class="pill info" id="mTotals"></span></div>
-      <p class="muted small">Tap a number to change it: 0, 1, 2, 3 and back to 0. Tap the last column to mark items returned. Tent comes from cadets.csv and cannot be edited here.</p>
+      <p class="muted small">Tap to change. <b>Flown</b> is how many AEF flights they have had before: – means not asked, <b>0</b> means never. <b>Bronze</b> is whether they would give up York for Bronze flying: Y, N or – if not asked.</p>
 
       <div class="gridwrap">
         <table class="mgrid">
           <thead>
-            <tr><th>SN</th><th>Tent</th><th>📱</th><th>🔋</th><th>🔌</th><th>State</th></tr>
+            <tr><th>SN</th><th>Tent</th><th>📱</th><th>🔋</th><th>🔌</th><th>Flown</th><th>Bronze</th><th>State</th></tr>
           </thead>
           <tbody>${rows}</tbody>
         </table>
