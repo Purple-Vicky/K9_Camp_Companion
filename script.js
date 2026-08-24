@@ -983,12 +983,39 @@ function eventHtml(item, dayUniform) {
   `;
 }
 
+// Which dates a cadet may see. Staff see everything; cadets see up to the
+// date camp.showUpTo names, so a plan that has not been confirmed is not read
+// as gospel the night before.
+function visibleDates() {
+  if (isStaff) return names;
+
+  const setting = String((data.camp && data.camp.showUpTo) || "today").trim();
+
+  if (/^all$/i.test(setting)) return names;
+
+  const today = todayOrFirst();
+  const from = names.indexOf(today);
+  const cutoff = /^today$/i.test(setting) ? today : setting;
+  const to = names.indexOf(cutoff);
+
+  // An unrecognised date is safer read as "today" than as "everything".
+  if (to === -1 || to < from) return [today];
+
+  // Days already gone are dropped as well: a cadet wants today and whatever
+  // has been released, not a record of Saturday.
+  return names.slice(from, to + 1);
+}
+
 function renderWeek(c) {
   const box = document.getElementById("week");
 
   if (!box) return;
 
-  box.innerHTML = names.map(date => {
+  const shown = visibleDates();
+  const last = names.indexOf(shown[shown.length - 1]);
+  const held = names.length - 1 - last;
+
+  box.innerHTML = shown.map(date => {
     const p = data.programme[date];
 
     // Some days call the flights something else -- 25 Aug uses colours. Show
@@ -1008,7 +1035,12 @@ function renderWeek(c) {
         ${itemsFor(date).map(item => eventHtml(item, p.uniform)).join("")}
       </div>
     `;
-  }).join("");
+  }).join("") + (held
+    ? `<div class="card held">
+         <div class="section-title"><h2>🔒 Rest of the week</h2><span class="pill info">${held} DAY${held > 1 ? "S" : ""}</span></div>
+         <p class="muted">The next day is released once staff have confirmed it. Check back in the morning, or ask your Flight Staff.</p>
+       </div>`
+    : "");
 
   updateNextUp(c);
 }
@@ -1100,10 +1132,13 @@ function updateNextUp(c) {
     nextItem = itemsFor(targetDate).find(item => toMinutes(item.time) > minutesNow);
 
     if (!nextItem) {
-      const index = names.indexOf(targetDate);
+      // Rolling into tomorrow would show the first item of a day that is
+      // still being held back, so only roll as far as the cadet may see.
+      const shown = visibleDates();
+      const index = shown.indexOf(targetDate);
 
-      if (index >= 0 && index < names.length - 1) {
-        targetDate = names[index + 1];
+      if (index >= 0 && index < shown.length - 1) {
+        targetDate = shown[index + 1];
         nextItem = itemsFor(targetDate)[0] || null;
       }
     }
@@ -1119,7 +1154,7 @@ function updateNextUp(c) {
 
   next.innerHTML = `
     <small>🐾 K9 SAYS… NEXT UP</small>
-    <h2>${nextItem ? esc(nextItem.title) : "Check your programme"}</h2>
+    <h2>${nextItem ? esc(nextItem.title) : "Nothing more today"}</h2>
     <p>
       Cadet ${esc(c.id)} • Flight ${esc(c.flight)}
       ${nextItem ? ` • ${esc(targetDate)} • ${esc(formatTime(nextItem.time))}` : ""}

@@ -21,6 +21,17 @@ const data = {
 
   camp: {
     location: "RAF Leeming",
+
+    // How far ahead cadets can see in My Week. Days after this are held back,
+    // so nobody reads a plan that has not been confirmed yet.
+    //
+    //   "today"    only today, and nothing further        <- normal
+    //   "24 Aug"   up to and including that date          <- release a day
+    //   "all"      the whole week
+    //
+    // To release tomorrow, set this to tomorrow's date and push. Staff with
+    // ?staff=true always see the full week regardless.
+    showUpTo: "today"
   },
 
   programme: {
