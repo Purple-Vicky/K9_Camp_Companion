@@ -222,7 +222,9 @@ const data = {
       }
     },
 
-    // The swap: A and B to Adventure Training, C and D to York.
+    // Every flight is on Adventure Training, in civvies. Anyone with an AEF
+    // slot today flies instead and picks the activity up when they are back.
+    // York Air Museum does not run on the 27th at all.
     "27 Aug": {
       uniform: "Civvies",
       items: [
@@ -235,20 +237,20 @@ const data = {
       ],
       flights: {
         A: [
-          { time: "09:00", title: "Adventure Training", location: "", uniform: "Sports", note: "" },
-          { time: "13:00", title: "Adventure Training", location: "", uniform: "Sports", note: "" }
+          { time: "09:00", title: "Adventure Training", location: "", uniform: "Civvies", note: "Unless you have a flying slot today" },
+          { time: "13:00", title: "Adventure Training", location: "", uniform: "Civvies", note: "" }
         ],
         B: [
-          { time: "09:00", title: "Adventure Training", location: "", uniform: "Sports", note: "" },
-          { time: "13:00", title: "Adventure Training", location: "", uniform: "Sports", note: "" }
+          { time: "09:00", title: "Adventure Training", location: "", uniform: "Civvies", note: "Unless you have a flying slot today" },
+          { time: "13:00", title: "Adventure Training", location: "", uniform: "Civvies", note: "" }
         ],
         C: [
-          { time: "09:00", title: "York Air Museum", location: "", note: "" },
-          { time: "13:00", title: "York Air Museum", location: "", note: "" }
+          { time: "09:00", title: "Adventure Training", location: "", uniform: "Civvies", note: "Unless you have a flying slot today" },
+          { time: "13:00", title: "Adventure Training", location: "", uniform: "Civvies", note: "" }
         ],
         D: [
-          { time: "09:00", title: "York Air Museum", location: "", note: "" },
-          { time: "13:00", title: "York Air Museum", location: "", note: "" }
+          { time: "09:00", title: "Adventure Training", location: "", uniform: "Civvies", note: "Unless you have a flying slot today" },
+          { time: "13:00", title: "Adventure Training", location: "", uniform: "Civvies", note: "" }
         ]
       }
     },
