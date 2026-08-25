@@ -139,7 +139,7 @@ const data = {
     // The order groups cadets as Blue, Bronze, Silver and Gold. Those are the
     // flights under other names: A = Blue, B = Bronze, C = Silver, D = Gold.
     "25 Aug": {
-      uniform: "Blues",
+      uniform: "Greens",
       // The order calls the flights by colour on this day, so show that.
       flightNames: { A: "Blue", B: "Bronze", C: "Silver", D: "Gold" },
       items: [
@@ -257,9 +257,9 @@ const data = {
       uniform: "Civvies",
       items: [
         { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "", type: "meal" },
-        { time: "08:00", title: "Fireside Chat", location: "", uniform: "Blues", note: "" },
-        { time: "08:30", title: "Camp Photo", location: "", uniform: "Blues", note: "" },
-        { time: "09:00", title: "Parade", location: "", uniform: "Blues", note: "" },
+        { time: "08:00", title: "Fireside Chat", location: "", uniform: "Greens", note: "" },
+        { time: "08:30", title: "Camp Photo", location: "", uniform: "Greens", note: "" },
+        { time: "09:00", title: "Parade", location: "", uniform: "Greens", note: "" },
         { time: "09:30", title: "Camp Admin", location: "", note: "Clean up and pack" },
         { time: "12:00", title: "Transport Departs", location: "", note: "" }
       ]
