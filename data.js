@@ -149,38 +149,43 @@ const data = {
         { time: "18:00", end: "20:30", title: "RAFAC Activities", location: "RAFAC HQ", uniform: "Civvies", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
-      // Four squadron visits, locations Q W E R. Each flight does all four
-      // and no two flights are ever at the same one.
-      // From the admin order, serials 62-78. Fire Section runs to its own
-      // times: 0900-1000, 1030-1130, 1400-1500 and 1530-1630, so each flight's
-      // Fire slot is shorter and offset from the other three.
+      // Four section visits. Each flight does four distinct stands and no two
+      // flights are ever at the same one at the same time.
+      //
+      // From the admin order, serials 62-78, with one change on top: ATC is one
+      // hour rather than the full period, including Bronze at 1030-1130.
+      //
+      // Most stands run the full 0830-1000, 1000-1130, 1330-1500 and 1500-1630.
+      // Fire Section and ATC are one hour, sitting at the end of their period
+      // (0900-1000, 1030-1130, 1400-1500, 1530-1630), so the half hour before is
+      // free for transfer and every flight still finishes together.
       flights: {
         // Blue
         A: [
           { time: "08:30", end: "10:00", title: "Section Visit", location: "90SU", note: "" },
           { time: "10:00", end: "11:30", title: "Section Visit", location: "34 Sqn", note: "" },
           { time: "13:30", end: "15:00", title: "Section Visit", location: "11 Sqn", note: "" },
-          { time: "15:30", end: "16:30", title: "Section Visit", location: "Fire Section", note: "Fire Section runs later than the other stands" }
+          { time: "15:30", end: "16:30", title: "Section Visit", location: "Fire Section", note: "One hour only, the time before is for transfer" }
         ],
         // Bronze
         B: [
           { time: "08:30", end: "10:00", title: "Section Visit", location: "34 Sqn", note: "" },
-          { time: "10:00", end: "11:30", title: "Section Visit", location: "ATC", note: "" },
-          { time: "14:00", end: "15:00", title: "Section Visit", location: "Fire Section", note: "Fire Section runs later than the other stands" },
+          { time: "10:30", end: "11:30", title: "Section Visit", location: "ATC", note: "One hour only, the time before is for transfer" },
+          { time: "14:00", end: "15:00", title: "Section Visit", location: "Fire Section", note: "One hour only, the time before is for transfer" },
           { time: "15:00", end: "16:30", title: "Section Visit", location: "11 Sqn", note: "" }
         ],
         // Silver
         C: [
           { time: "08:30", end: "10:00", title: "Section Visit", location: "11 Sqn", note: "" },
-          { time: "10:30", end: "11:30", title: "Section Visit", location: "Fire Section", note: "Fire Section runs later than the other stands" },
+          { time: "10:30", end: "11:30", title: "Section Visit", location: "Fire Section", note: "One hour only, the time before is for transfer" },
           { time: "13:30", end: "15:00", title: "Section Visit", location: "34 Sqn", note: "" },
-          { time: "15:00", end: "16:30", title: "Section Visit", location: "ATC", note: "" }
+          { time: "15:30", end: "16:30", title: "Section Visit", location: "ATC", note: "One hour only, the time before is for transfer" }
         ],
         // Gold
         D: [
-          { time: "09:00", end: "10:00", title: "Section Visit", location: "Fire Section", note: "Fire Section starts later than the other stands" },
+          { time: "09:00", end: "10:00", title: "Section Visit", location: "Fire Section", note: "One hour only, the time before is for transfer" },
           { time: "10:00", end: "11:30", title: "Section Visit", location: "11 Sqn", note: "" },
-          { time: "13:30", end: "15:00", title: "Section Visit", location: "ATC", note: "" },
+          { time: "14:00", end: "15:00", title: "Section Visit", location: "ATC", note: "One hour only, the time before is for transfer" },
           { time: "15:00", end: "16:30", title: "Section Visit", location: "34 Sqn", note: "" }
         ]
       }
