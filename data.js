@@ -196,12 +196,12 @@ const data = {
       ],
       flights: {
         A: [
-          { time: "09:00", title: "York Air Museum", location: "", note: "" },
-          { time: "13:00", title: "York Air Museum", location: "", note: "" }
+          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "" },
+          { time: "13:00", title: "York Air Museum", location: "Elvington", note: "" }
         ],
         B: [
-          { time: "09:00", title: "York Air Museum", location: "", note: "" },
-          { time: "13:00", title: "York Air Museum", location: "", note: "" }
+          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "" },
+          { time: "13:00", title: "York Air Museum", location: "Elvington", note: "" }
         ],
         C: [
           { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre" },
@@ -237,12 +237,12 @@ const data = {
           { time: "13:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "" }
         ],
         C: [
-          { time: "09:00", title: "York Air Museum", location: "", note: "If you flew on Wednesday you are at Adrenaline today instead. Unless you have a flying slot" },
-          { time: "13:00", title: "York Air Museum", location: "", note: "" }
+          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "If you flew on Wednesday you are at Adrenaline today instead. Unless you have a flying slot" },
+          { time: "13:00", title: "York Air Museum", location: "Elvington", note: "" }
         ],
         D: [
-          { time: "09:00", title: "York Air Museum", location: "", note: "If you flew on Wednesday you are at Adrenaline today instead. Unless you have a flying slot" },
-          { time: "13:00", title: "York Air Museum", location: "", note: "" }
+          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "If you flew on Wednesday you are at Adrenaline today instead. Unless you have a flying slot" },
+          { time: "13:00", title: "York Air Museum", location: "Elvington", note: "" }
         ]
       }
     },
