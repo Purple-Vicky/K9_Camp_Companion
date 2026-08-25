@@ -136,12 +136,8 @@ const data = {
     },
 
     // Taken from the camp admin order, Camp Four serials 61-80.
-    // The order groups cadets as Blue, Bronze, Silver and Gold. Those are the
-    // flights under other names: A = Blue, B = Bronze, C = Silver, D = Gold.
     "25 Aug": {
       uniform: "Greens",
-      // The order calls the flights by colour on this day, so show that.
-      flightNames: { A: "Blue", B: "Bronze", C: "Silver", D: "Gold" },
       items: [
         { time: "07:00", end: "08:00", title: "Breakfast", location: "Dining Facility", note: "", type: "meal" },
         { time: "11:30", end: "13:30", title: "Packed Lunch", location: "RAFAC HQ", note: "Collect from Catering Flt", type: "meal" },
@@ -153,35 +149,31 @@ const data = {
       // flights are ever at the same one at the same time.
       //
       // From the admin order, serials 62-78, with one change on top: ATC is one
-      // hour rather than the full period, including Bronze at 1030-1130.
+      // hour rather than the full period, including B at 1030-1130.
       //
       // Most stands run the full 0830-1000, 1000-1130, 1330-1500 and 1500-1630.
       // Fire Section and ATC are one hour, sitting at the end of their period
       // (0900-1000, 1030-1130, 1400-1500, 1530-1630), so the half hour before is
       // free for transfer and every flight still finishes together.
       flights: {
-        // Blue
         A: [
           { time: "08:30", end: "10:00", title: "Section Visit", location: "90SU", note: "" },
           { time: "10:00", end: "11:30", title: "Section Visit", location: "34 Sqn", note: "" },
           { time: "13:30", end: "15:00", title: "Section Visit", location: "11 Sqn", note: "" },
           { time: "15:30", end: "16:30", title: "Section Visit", location: "Fire Section", note: "One hour only, the time before is for transfer" }
         ],
-        // Bronze
         B: [
           { time: "08:30", end: "10:00", title: "Section Visit", location: "34 Sqn", note: "" },
           { time: "10:30", end: "11:30", title: "Section Visit", location: "ATC", note: "One hour only, the time before is for transfer" },
           { time: "14:00", end: "15:00", title: "Section Visit", location: "Fire Section", note: "One hour only, the time before is for transfer" },
           { time: "15:00", end: "16:30", title: "Section Visit", location: "11 Sqn", note: "" }
         ],
-        // Silver
         C: [
           { time: "08:30", end: "10:00", title: "Section Visit", location: "11 Sqn", note: "" },
           { time: "10:30", end: "11:30", title: "Section Visit", location: "Fire Section", note: "One hour only, the time before is for transfer" },
           { time: "13:30", end: "15:00", title: "Section Visit", location: "34 Sqn", note: "" },
           { time: "15:30", end: "16:30", title: "Section Visit", location: "ATC", note: "One hour only, the time before is for transfer" }
         ],
-        // Gold
         D: [
           { time: "09:00", end: "10:00", title: "Section Visit", location: "Fire Section", note: "One hour only, the time before is for transfer" },
           { time: "10:00", end: "11:30", title: "Section Visit", location: "11 Sqn", note: "" },
@@ -198,7 +190,7 @@ const data = {
         { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "", type: "meal" },
         { time: "08:00", title: "Travel", location: "", note: "On foot / minibus / TBC" },
         { time: "12:00", title: "Lunch", location: "Dining Facility", note: "", type: "meal" },
-        { time: "17:00", title: "Dinner", location: "Dining Facility", note: "", type: "meal" },
+        { time: "17:30", end: "18:30", title: "Dinner", location: "Dining Facility", note: "", type: "meal" },
         { time: "18:00", title: "RAF Presentation", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
@@ -212,45 +204,45 @@ const data = {
           { time: "13:00", title: "York Air Museum", location: "", note: "" }
         ],
         C: [
-          { time: "09:00", title: "Adventure Training", location: "", uniform: "Sports", note: "" },
-          { time: "13:00", title: "Adventure Training", location: "", uniform: "Sports", note: "" }
+          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre" },
+          { time: "13:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "" }
         ],
         D: [
-          { time: "09:00", title: "Adventure Training", location: "", uniform: "Sports", note: "" },
-          { time: "13:00", title: "Adventure Training", location: "", uniform: "Sports", note: "" }
+          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre" },
+          { time: "13:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "" }
         ]
       }
     },
 
-    // Every flight is on Adventure Training, in civvies. Anyone with an AEF
-    // slot today flies instead and picks the activity up when they are back.
-    // York Air Museum does not run on the 27th at all.
+    // The swap. Two coaches again: A and B to Adrenaline for Adventure
+    // Training, C and D to York Air Museum, opposite to the 26th. Anyone with
+    // an AEF slot flies instead and picks the activity up when they are back.
     "27 Aug": {
       uniform: "Civvies",
       items: [
         { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "", type: "meal" },
-        { time: "08:00", title: "Travel", location: "", note: "Coach / TBC" },
+        { time: "08:00", title: "Travel", location: "", note: "Coach" },
         { time: "12:00", title: "Lunch", location: "Dining Facility", note: "", type: "meal" },
-        { time: "17:00", title: "Dinner", location: "Dining Facility", note: "", type: "meal" },
+        { time: "17:30", end: "18:30", title: "Dinner", location: "Dining Facility", note: "", type: "meal" },
         { time: "18:00", title: "Disco", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
       flights: {
         A: [
-          { time: "09:00", title: "Adventure Training", location: "", uniform: "Civvies", note: "Unless you have a flying slot today" },
-          { time: "13:00", title: "Adventure Training", location: "", uniform: "Civvies", note: "" }
+          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre. Unless you have a flying slot today" },
+          { time: "13:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "" }
         ],
         B: [
-          { time: "09:00", title: "Adventure Training", location: "", uniform: "Civvies", note: "Unless you have a flying slot today" },
-          { time: "13:00", title: "Adventure Training", location: "", uniform: "Civvies", note: "" }
+          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre. Unless you have a flying slot today" },
+          { time: "13:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "" }
         ],
         C: [
-          { time: "09:00", title: "Adventure Training", location: "", uniform: "Civvies", note: "Unless you have a flying slot today" },
-          { time: "13:00", title: "Adventure Training", location: "", uniform: "Civvies", note: "" }
+          { time: "09:00", title: "York Air Museum", location: "", note: "If you flew on Wednesday you are at Adrenaline today instead. Unless you have a flying slot" },
+          { time: "13:00", title: "York Air Museum", location: "", note: "" }
         ],
         D: [
-          { time: "09:00", title: "Adventure Training", location: "", uniform: "Civvies", note: "Unless you have a flying slot today" },
-          { time: "13:00", title: "Adventure Training", location: "", uniform: "Civvies", note: "" }
+          { time: "09:00", title: "York Air Museum", location: "", note: "If you flew on Wednesday you are at Adrenaline today instead. Unless you have a flying slot" },
+          { time: "13:00", title: "York Air Museum", location: "", note: "" }
         ]
       }
     },
@@ -313,18 +305,18 @@ const data = {
         "005": "TBC", "007": "TBC", "011": "TBC", "013": "TBC", "009": "TBC"
       },
 
-      // Only 6 slots on the 25th. Flight B goes complete, plus one from C,
-      // so a whole flight moves together rather than being split.
+      // Seven flew on the 25th. Three never got airborne and
+      // came off; three others went up in their place.
       "25 Aug": {
-        "017": "TBC", "020": "TBC", "026": "TBC", "027": "TBC", "030": "TBC",
-        "035": "TBC"
+        "017": "TBC", "026": "TBC", "027": "TBC", "035": "TBC",
+        "039": "TBC", "050": "TBC", "051": "TBC"
       },
-      // Carried from the 25th when it dropped to 6 slots, plus the original
-      // two. Wednesday is doubtful, so these eight may need moving to the 27th.
+      // Six on the 26th, every one a first-time flyer aged 13 or over.
+      // Two cadets are not on this list, one medically and one on age. A third is
+      // back on after missing his slot on the 25th.
       "26 Aug": {
-        "039": "TBC", "040": "TBC", "042": "TBC",
-        "050": "TBC", "051": "TBC", "052": "TBC",
-        "053": "TBC", "057": "TBC"
+        "020": "TBC", "052": "TBC", "043": "TBC",
+        "057": "TBC", "040": "TBC", "053": "TBC"
       },
       "27 Aug": {},
       "28 Aug": {}
