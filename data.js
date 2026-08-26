@@ -231,23 +231,24 @@ const data = {
         { time: "18:00", title: "Disco", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
-      // B and D to Adrenaline, A and C to the museum, back at camp for 1330.
-      // Flying is cancelled, so the six who were listed join Adrenaline; 031
-      // and 044 from C travel away from their flight, as do 040 and 043 who
-      // flew on the 26th. Bronze Wings cadets wear MTP, not civvies.
+      // The swap is by where a cadet was on the 26th, not by flight, so the
+      // notes carry the exceptions. A and C to the museum, B and D to
+      // Adrenaline. The 14 Bronze Wings cadets stay on camp in MTP and are on
+      // neither coach. 002 and 015 went to the museum on the 26th so they go
+      // to Adrenaline; 040 and 043 flew on the 26th, so they do too.
       flights: {
         A: [
-          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "Back at camp for 1330. MTP if you are on the Bronze Wings list" }
+          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "Back at camp for 1330. On camp in MTP if you are doing Bronze Wings. At Adrenaline if you went to the museum yesterday" }
         ],
         B: [
-          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre. MTP if you are on the Bronze Wings list" },
+          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre. On camp in MTP if you are doing Bronze Wings" },
           { time: "13:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "" }
         ],
         C: [
-          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "Back at camp for 1330. Unless you were down to fly or flew yesterday, in which case you are at Adrenaline. MTP if you are on the Bronze Wings list" }
+          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "Back at camp for 1330. On camp in MTP if you are doing Bronze Wings. At Adrenaline if you flew yesterday" }
         ],
         D: [
-          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre. MTP if you are on the Bronze Wings list" },
+          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre. On camp in MTP if you are doing Bronze Wings" },
           { time: "13:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "" }
         ]
       }
