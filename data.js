@@ -31,7 +31,7 @@ const data = {
     //
     // To release tomorrow, set this to tomorrow's date and push. Staff with
     // ?staff=true always see the full week regardless.
-    showUpTo: "today"
+    showUpTo: "all"
   },
 
   programme: {
@@ -231,39 +231,35 @@ const data = {
         { time: "18:00", title: "Disco", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
-      // The swap: B and D to Adrenaline, A and C to the museum. Flying is
-      // cancelled on the 27th, so the six who were listed join Adrenaline --
-      // 031 and 044 from C travel away from their flight to do so, as do
-      // 040 and 043, who flew on the 26th and would otherwise miss Adventure
-      // Training altogether.
+      // B and D to Adrenaline, A and C to the museum, back at camp for 1330.
+      // Flying is cancelled, so the six who were listed join Adrenaline; 031
+      // and 044 from C travel away from their flight, as do 040 and 043 who
+      // flew on the 26th. Bronze Wings cadets wear MTP, not civvies.
       flights: {
         A: [
-          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "" },
-          { time: "13:00", title: "York Air Museum", location: "Elvington", note: "" }
+          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "Back at camp for 1330. MTP if you are on the Bronze Wings list" }
         ],
         B: [
-          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre" },
+          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre. MTP if you are on the Bronze Wings list" },
           { time: "13:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "" }
         ],
         C: [
-          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "Unless you were down to fly, or flew yesterday, in which case you are at Adrenaline" },
-          { time: "13:00", title: "York Air Museum", location: "Elvington", note: "" }
+          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "Back at camp for 1330. Unless you were down to fly or flew yesterday, in which case you are at Adrenaline. MTP if you are on the Bronze Wings list" }
         ],
         D: [
-          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre" },
+          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre. MTP if you are on the Bronze Wings list" },
           { time: "13:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "" }
         ]
       }
     },
 
+    // Friday is not settled yet. Breakfast and the 1200 departure are fixed;
+    // everything between them is to be confirmed.
     "28 Aug": {
-      uniform: "Civvies",
+      uniform: "TBD",
       items: [
         { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "", type: "meal" },
-        { time: "08:00", title: "Fireside Chat", location: "", uniform: "Greens", note: "" },
-        { time: "08:30", title: "Camp Photo", location: "", uniform: "Greens", note: "" },
-        { time: "09:00", title: "Parade", location: "", uniform: "Greens", note: "" },
-        { time: "09:30", title: "Camp Admin", location: "", note: "Clean up and pack" },
+        { time: "08:00", title: "Programme TBD", location: "", note: "To be confirmed" },
         { time: "12:00", title: "Transport Departs", location: "", note: "" }
       ]
     }
