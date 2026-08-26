@@ -194,13 +194,17 @@ const data = {
         { time: "18:00", title: "RAF Presentation", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
+      // A and C to Adrenaline for Adventure Training, B and D to the museum.
+      // Four Bronze Wings candidates travel away from their own flight to be
+      // at Adrenaline: three from B and one from D. One other goes
+      // the other way, to the museum. Their notes say so.
       flights: {
         A: [
-          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "" },
-          { time: "13:00", title: "York Air Museum", location: "Elvington", note: "" }
+          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre" },
+          { time: "13:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "" }
         ],
         B: [
-          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "" },
+          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "Unless you are on the Bronze Wings list, in which case you are at Adrenaline" },
           { time: "13:00", title: "York Air Museum", location: "Elvington", note: "" }
         ],
         C: [
@@ -208,8 +212,8 @@ const data = {
           { time: "13:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "" }
         ],
         D: [
-          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre" },
-          { time: "13:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "" }
+          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "Unless you are on the Bronze Wings list, in which case you are at Adrenaline" },
+          { time: "13:00", title: "York Air Museum", location: "Elvington", note: "" }
         ]
       }
     },
@@ -227,22 +231,27 @@ const data = {
         { time: "18:00", title: "Disco", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
+      // The swap: B and D to Adrenaline, A and C to the museum. Flying is
+      // cancelled on the 27th, so the six who were listed join Adrenaline --
+      // 031 and 044 from C travel away from their flight to do so, as do
+      // 040 and 043, who flew on the 26th and would otherwise miss Adventure
+      // Training altogether.
       flights: {
         A: [
-          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre. Unless you have a flying slot today" },
-          { time: "13:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "" }
+          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "" },
+          { time: "13:00", title: "York Air Museum", location: "Elvington", note: "" }
         ],
         B: [
-          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre. Unless you have a flying slot today" },
+          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre" },
           { time: "13:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "" }
         ],
         C: [
-          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "If you flew on Wednesday you are at Adrenaline today instead. Unless you have a flying slot" },
+          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "Unless you were down to fly, or flew yesterday, in which case you are at Adrenaline" },
           { time: "13:00", title: "York Air Museum", location: "Elvington", note: "" }
         ],
         D: [
-          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "If you flew on Wednesday you are at Adrenaline today instead. Unless you have a flying slot" },
-          { time: "13:00", title: "York Air Museum", location: "Elvington", note: "" }
+          { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre" },
+          { time: "13:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "" }
         ]
       }
     },
