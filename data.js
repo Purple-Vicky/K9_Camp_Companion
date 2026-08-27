@@ -322,7 +322,7 @@ const data = {
       // back on after missing his slot on the 25th.
       "26 Aug": {
         "020": "TBC", "052": "TBC", "043": "TBC",
-        "040": "TBC", "053": "TBC"
+        "040": "TBC", "053": "TBC", "057": "TBC"
       },
       "27 Aug": {},
       "28 Aug": {}
