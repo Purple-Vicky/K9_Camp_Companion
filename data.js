@@ -238,14 +238,14 @@ const data = {
       // to Adrenaline; 040 and 043 flew on the 26th, so they do too.
       flights: {
         A: [
-          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "Back at camp for 1330. On camp in MTP if you are doing Bronze Wings. At Adrenaline if you went to the museum yesterday" }
+          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "Leaves the museum at 1330. On camp in MTP if you are doing Bronze Wings. At Adrenaline if you went to the museum yesterday" }
         ],
         B: [
           { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre. On camp in MTP if you are doing Bronze Wings" },
           { time: "13:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "" }
         ],
         C: [
-          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "Back at camp for 1330. On camp in MTP if you are doing Bronze Wings. At Adrenaline if you flew yesterday" }
+          { time: "09:00", title: "York Air Museum", location: "Elvington", note: "Leaves the museum at 1330. On camp in MTP if you are doing Bronze Wings. At Adrenaline if you flew yesterday" }
         ],
         D: [
           { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre. On camp in MTP if you are doing Bronze Wings" },
@@ -322,7 +322,7 @@ const data = {
       // back on after missing his slot on the 25th.
       "26 Aug": {
         "020": "TBC", "052": "TBC", "043": "TBC",
-        "057": "TBC", "040": "TBC", "053": "TBC"
+        "040": "TBC", "053": "TBC"
       },
       "27 Aug": {},
       "28 Aug": {}
