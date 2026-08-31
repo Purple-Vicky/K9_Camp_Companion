@@ -191,7 +191,7 @@ const data = {
         { time: "08:00", title: "Travel", location: "", note: "On foot / minibus / TBC" },
         { time: "12:00", title: "Lunch", location: "Dining Facility", note: "", type: "meal" },
         { time: "17:30", end: "18:30", title: "Dinner", location: "Dining Facility", note: "", type: "meal" },
-        { time: "18:00", title: "RAF Presentation", location: "", note: "" },
+        { time: "18:00", title: "Free Time", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
       // A and C to Adrenaline for Adventure Training, B and D to the museum.
@@ -228,7 +228,8 @@ const data = {
         { time: "08:00", title: "Travel", location: "", note: "Coach" },
         { time: "12:00", title: "Lunch", location: "Dining Facility", note: "", type: "meal" },
         { time: "17:30", end: "18:30", title: "Dinner", location: "Dining Facility", note: "", type: "meal" },
-        { time: "18:00", title: "Disco", location: "", note: "" },
+        { time: "19:30", end: "20:00", title: "Careers Guidance", location: "", note: "" },
+        { time: "20:00", end: "21:30", title: "Disco", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
       // The swap is by where a cadet was on the 26th, not by flight, so the
@@ -257,10 +258,10 @@ const data = {
     // Friday is not settled yet. Breakfast and the 1200 departure are fixed;
     // everything between them is to be confirmed.
     "28 Aug": {
-      uniform: "TBD",
+      uniform: "Civvies",
       items: [
         { time: "07:00", title: "Breakfast", location: "Dining Facility", note: "", type: "meal" },
-        { time: "08:00", title: "Programme TBD", location: "", note: "To be confirmed" },
+        { time: "08:00", title: "Camp Clear-Up", location: "Accommodation", note: "Beds taken down, kit packed and block cleaned. Civvies for this." },
         { time: "12:00", title: "Transport Departs", location: "", note: "" }
       ]
     }
