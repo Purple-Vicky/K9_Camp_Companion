@@ -18,30 +18,10 @@ function dayName(date) {
   return WEEKDAYS[new Date(CAMP_YEAR, month, day).getDay()];
 }
 
-// Both of the app's URL parameters, read once:
-//
-//   ?staff=true   staff view: every flight, plus the mobiles register
-//   ?cadet=019    open straight to that cadet, the form used on wristbands
-//
+const isStaff = new URLSearchParams(window.location.search).get("staff") === "true";
 
-// ===========================================================================
-// VIEW MODE AND CADET IDENTITY
-// ===========================================================================
-const params = new URLSearchParams(window.location.search);
+let cadetId = new URLSearchParams(window.location.search).get("cadet") || localStorage.getItem("k9CadetId") || "001";
 
-const isStaff = params.get("staff") === "true";
-
-// The cadet's own number is remembered, so they type it once on their phone
-// and the app opens to their programme from then on.
-let cadetId = params.get("cadet") || localStorage.getItem("k9CadetId") || "001";
-
-
-// ===========================================================================
-// UNIFORMS AND ACTIVITY TAGS
-//
-// Uniform names map to colour classes in style.css; activity tags are the
-// little "water bottle" style reminders matched against an item's title.
-// ===========================================================================
 const uniforms = {
   "Greens": "greens",
   "Blues": "blues",
@@ -72,25 +52,12 @@ const activityTags = [
 // columns -- SN, Flight, Tent, Notice -- and upload it over cadets.csv.
 // Notice is a per-cadet message shown as an alert; leave it blank for most.
 // ---------------------------------------------------------------------------
-
-// ===========================================================================
-// ROSTER
-//
-// cadets.csv: SN, Flight, Tent, Notice. Numbers only, never names -- see the
-// note on privacy in README.md.
-// ===========================================================================
 let roster = {};
 let rosterError = "";
 
-// Both CSVs in this app are "one row per cadet, serial in the first column".
-// This walks such a file and hands each row's cells to a builder, so the header
-// handling, the blank and malformed row guards and the serial padding live in
-// one place rather than being repeated per file.
-//
-// Rows without a usable serial are skipped rather than throwing: these files
-// get hand-edited during camp, and one bad line should cost that line, not the
-// whole app.
-function parseBySerial(text, build) {
+// cadets.csv is the roster: SN, Flight, Tent, Notice. Keyed by the padded
+// three-digit serial so a lookup straight from the URL parameter works.
+function parseRoster(text) {
   const out = {};
   const lines = text.trim().split(/\r?\n/);
 
@@ -106,21 +73,16 @@ function parseBySerial(text, build) {
 
     if (!Number.isInteger(n)) continue;
 
-    out[String(n).padStart(3, "0")] = build(cell);
+    out[String(n).padStart(3, "0")] = {
+      flight: (cell[1] || "").trim().toUpperCase(),
+      tent: (cell[2] || "").trim(),
+      // Free text for one cadet, shown to them as an alert. Used for things
+      // like a tent move: "GO TO M5".
+      notice: (cell[3] || "").trim()
+    };
   }
 
   return out;
-}
-
-// cadets.csv: SN,Flight,Tent,Notice
-function parseRoster(text) {
-  return parseBySerial(text, cell => ({
-    flight: (cell[1] || "").trim().toUpperCase(),
-    tent: (cell[2] || "").trim(),
-    // Free text for one cadet, shown to them as an alert. Used for things
-    // like a tent move: "GO TO M5".
-    notice: (cell[3] || "").trim()
-  }));
 }
 
 // Resolves the cadet named in the URL or in localStorage. Always returns a
@@ -178,20 +140,34 @@ function countOf(v) {
   return Number.isInteger(n) && n > 0 ? n : 0;
 }
 
-// mobiles.csv: SN,Phone,Power bank,Cable,Other,Status,Time,Flown,Bronze
+// mobiles.csv is the published phone and power bank register, same shape as
+// the roster parse above.
 function parseMobiles(text) {
-  return parseBySerial(text, cell => ({
-    "Phone": countOf(cell[1]),
-    "Power bank": countOf(cell[2]),
-    "Cable": countOf(cell[3]),
-    other: (cell[4] || "").trim(),
-    status: (cell[5] || "").trim().toUpperCase(),
-    time: (cell[6] || "").trim(),
-    // Asked at hand-in. Both are blank until asked, which is deliberately
-    // different from an answer: "" is unknown, "0" is has never flown.
-    flown: (cell[7] || "").trim(),
-    bronze: (cell[8] || "").trim().toUpperCase()
-  }));
+  const out = {};
+  const lines = text.trim().split(/\r?\n/);
+  const start = /^\s*sn\b/i.test(lines[0]) ? 1 : 0;
+
+  for (let i = start; i < lines.length; i++) {
+    const cell = lines[i].split(",");
+    const n = parseInt(cell[0], 10);
+
+    if (!Number.isInteger(n)) continue;
+
+    out[String(n).padStart(3, "0")] = {
+      "Phone": countOf(cell[1]),
+      "Power bank": countOf(cell[2]),
+      "Cable": countOf(cell[3]),
+      other: (cell[4] || "").trim(),
+      status: (cell[5] || "").trim().toUpperCase(),
+      time: (cell[6] || "").trim(),
+      // Asked at hand-in. Both are blank until asked, which is deliberately
+      // different from an answer: "" is unknown, "0" is has never flown.
+      flown: (cell[7] || "").trim(),
+      bronze: (cell[8] || "").trim().toUpperCase()
+    };
+  }
+
+  return out;
 }
 
 // Staff taps live on the staff device until they are published. A corrupt or
@@ -394,7 +370,7 @@ function updateStaffTotals() {
   el.textContent = held + " items · " + cadets + " cadets · " + asked + " asked, " + never + " never flown, " + bronze + " want Bronze";
 }
 
-// ===========================================================================
+// ---------------------------------------------------------------------------
 // PUBLISH TO CADETS
 //
 // Commits mobiles.csv straight to the repo through the GitHub API, so the
@@ -411,14 +387,14 @@ function updateStaffTotals() {
 // rather than reaching the whole account.
 //
 // Revoke at github.com/settings/personal-access-tokens when camp is over.
-// ===========================================================================
+// ---------------------------------------------------------------------------
 const REPO = "Purple-Vicky/K9_Camp_Companion";
 const BRANCH = "main";
 const TOKEN_KEY = "k9GhToken";
 
-// Empty string when no token is stored, which is what the publish button
-// checks before offering to upload. Conditions on the token are in the section
-// note above.
+// The publish token: fine-grained, repo-scoped, and expected to expire at the
+// end of camp. It is held unencrypted in localStorage, which is why publishing
+// is a staff-device feature and the token is never committed.
 function ghToken() {
   return localStorage.getItem(TOKEN_KEY) || "";
 }
@@ -670,13 +646,6 @@ function clearStaffEntries() {
 // side by side so it is obvious who is where and who has moved. Built from
 // the same data as the cadet view, so the two cannot disagree.
 // ---------------------------------------------------------------------------
-
-// ===========================================================================
-// STAFF VIEW
-//
-// Everything behind ?staff=true: the full programme for all four flights side
-// by side, and the mobiles collection grid.
-// ===========================================================================
 const FLIGHTS = ["A", "B", "C", "D"];
 
 // Everything one flight does on a date, ignoring any individual cadet.
@@ -930,10 +899,6 @@ function renderMobiles(c) {
 }
 
 // Remembered so a cadet only types their number once on their own phone.
-
-// ===========================================================================
-// SMALL HELPERS
-// ===========================================================================
 function setId(v) {
   cadetId = v;
   localStorage.setItem("k9CadetId", v);
@@ -975,13 +940,6 @@ function byTime(a, b) {
 
 // Everything a cadet does on a given day: the whole-camp items, their own
 // flight's rotation, and their flying slot if they have one.
-
-// ===========================================================================
-// BUILDING A CADET'S DAY
-//
-// Merges the three sources of events into one sorted list for one cadet:
-// whole-camp items, their flight's items, and their AEF slot if they have one.
-// ===========================================================================
 function itemsFor(date) {
   const p = data.programme[date];
 
@@ -1050,15 +1008,6 @@ function uniformClass(uniform) {
 
 // Single entry point for a redraw. Everything that changes what the cadet sees
 // funnels through here rather than patching the DOM in place.
-
-// ===========================================================================
-// CADET VIEW - RENDERING
-//
-// render() is the single entry point. Everything that changes what a cadet
-// sees goes through it and redraws, rather than patching the DOM in place --
-// there is little enough on screen that this is simpler and cannot drift out
-// of step with the data.
-// ===========================================================================
 function render() {
   const c = cadet();
 
@@ -1361,14 +1310,6 @@ function show(id, btn) {
 
 // Pull in the roster, then draw. If cadets.csv cannot be read the programme
 // still works; only the flight and tent drop out.
-
-// ===========================================================================
-// STARTUP
-//
-// Fetch the two CSVs, then draw. Neither fetch is fatal: a missing roster
-// leaves cadets without flight and tent but with the programme intact, and a
-// missing register just means nothing has been collected yet.
-// ===========================================================================
 function loadRoster() {
   return fetch("cadets.csv", { cache: "no-cache" })
     .then(r => {
