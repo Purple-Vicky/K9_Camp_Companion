@@ -32,7 +32,7 @@ once.
 | **`data.js`** | **The programme.** This is the file you edit day to day. |
 | `cadets.csv` | Roster: `SN,Flight,Tent,Notice`. 55 cadets. |
 | `mobiles.csv` | Published phone / power bank register. Written by the app, not by hand. |
-| `script.js` | All the logic. ~1370 lines, commented by section. |
+| `script.js` | All the logic. ~1370 lines; nearly every function carries a comment explaining why it works the way it does. |
 | `index.html` | Page shell and the five tab views. |
 | `style.css` | Styling, including the uniform colour classes. |
 | `sw.js` | Service worker, so the app opens on a weak signal. |
