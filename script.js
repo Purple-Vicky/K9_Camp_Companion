@@ -416,9 +416,9 @@ const REPO = "Purple-Vicky/K9_Camp_Companion";
 const BRANCH = "main";
 const TOKEN_KEY = "k9GhToken";
 
-// The publish token: fine-grained, repo-scoped, and expected to expire at the
-// end of camp. It is held unencrypted in localStorage, which is why publishing
-// is a staff-device feature and the token is never committed.
+// Empty string when no token is stored, which is what the publish button
+// checks before offering to upload. Conditions on the token are in the section
+// note above.
 function ghToken() {
   return localStorage.getItem(TOKEN_KEY) || "";
 }
