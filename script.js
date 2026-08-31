@@ -55,6 +55,8 @@ const activityTags = [
 let roster = {};
 let rosterError = "";
 
+// cadets.csv is the roster: SN, Flight, Tent, Notice. Keyed by the padded
+// three-digit serial so a lookup straight from the URL parameter works.
 function parseRoster(text) {
   const out = {};
   const lines = text.trim().split(/\r?\n/);
@@ -83,6 +85,9 @@ function parseRoster(text) {
   return out;
 }
 
+// Resolves the cadet named in the URL or in localStorage. Always returns a
+// record, even for a serial that is not on the roster, so a mistyped number
+// shows an empty programme rather than a blank screen.
 function cadet() {
   let n = parseInt(cadetId, 10);
 
@@ -122,6 +127,8 @@ let mobiles = {};
 let mobilesError = "";
 let staffEntries = {};
 
+// Mobiles cells get filled in by hand, so accept a count, a tick, a Y or a
+// blank and normalise all of them to a number.
 function countOf(v) {
   const s = String(v || "").trim();
 
@@ -133,6 +140,8 @@ function countOf(v) {
   return Number.isInteger(n) && n > 0 ? n : 0;
 }
 
+// mobiles.csv is the published phone and power bank register, same shape as
+// the roster parse above.
 function parseMobiles(text) {
   const out = {};
   const lines = text.trim().split(/\r?\n/);
@@ -161,6 +170,8 @@ function parseMobiles(text) {
   return out;
 }
 
+// Staff taps live on the staff device until they are published. A corrupt or
+// missing store must not stop the page loading, hence the catch.
 function loadStaffEntries() {
   try {
     staffEntries = JSON.parse(localStorage.getItem(STAFF_KEY)) || {};
@@ -200,6 +211,8 @@ function itemList(rec) {
   return out;
 }
 
+// Collection and return times are stamped in local time to match the HH:MM
+// strings used everywhere else.
 function nowHHMM() {
   const d = new Date();
   return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
@@ -253,6 +266,8 @@ function cycleBronze(id, el) {
   updateStaffTotals();
 }
 
+// Writes a tap through to the local store, stamping the collection time when
+// the first item of the night comes in.
 function cycleItem(id, item, el) {
   const rec = mobileRecord(id) || {};
   const next = ((rec[item] || 0) + 1) % 4;
@@ -292,6 +307,8 @@ function cycleItem(id, item, el) {
   renderMobiles(cadet());
 }
 
+// Marks everything a cadet handed in as returned, or undoes it. Cadets who
+// handed nothing in are ignored so the button cannot create a phantom record.
 function toggleReturned(id, el) {
   const rec = mobileRecord(id);
 
@@ -321,6 +338,8 @@ function noteSaved(id) {
   if (msg) msg.textContent = "Saved cadet " + id + " on this device at " + formatTime(nowHHMM()) + ".";
 }
 
+// Running count in the staff header so the duty NCO can reconcile against the
+// tent without counting cells by eye.
 function updateStaffTotals() {
   const el = document.getElementById("mTotals");
 
@@ -373,10 +392,15 @@ const REPO = "Purple-Vicky/K9_Camp_Companion";
 const BRANCH = "main";
 const TOKEN_KEY = "k9GhToken";
 
+// The publish token: fine-grained, repo-scoped, and expected to expire at the
+// end of camp. It is held unencrypted in localStorage, which is why publishing
+// is a staff-device feature and the token is never committed.
 function ghToken() {
   return localStorage.getItem(TOKEN_KEY) || "";
 }
 
+// Stored rather than held in memory so the duty NCO does not have to paste the
+// token again on every shift change. Clearing the box clears the token.
 function saveToken() {
   const box = document.getElementById("mToken");
   const t = box.value.trim();
@@ -393,12 +417,15 @@ function saveToken() {
   renderPublishState();
 }
 
+// Publish status line. Kept separate from the token state so a failed upload
+// does not wipe the message saying whether a token is stored.
 function setPublishMsg(text) {
   const el = document.getElementById("mPubMsg");
 
   if (el) el.textContent = text;
 }
 
+// Shows whether a token is stored, without ever showing the token itself.
 function renderPublishState() {
   const el = document.getElementById("mTokenState");
 
@@ -420,6 +447,9 @@ function toBase64(str) {
   return btoa(bin);
 }
 
+// Commits mobiles.csv to the repo through the GitHub Contents API. Needs the
+// current file SHA, so it reads before it writes; a 409 means someone else
+// published in between and the read has to be retried.
 function publishMobiles() {
   const token = ghToken();
 
@@ -578,6 +608,8 @@ function saveMobilesCsv() {
   }
 }
 
+// Fallback for when publishing is not available: put the CSV on screen so it
+// can be copied off the device by hand.
 function showMobilesText() {
   const csv = mobilesCsvText();
   const out = document.getElementById("mExport");
@@ -590,6 +622,7 @@ function showMobilesText() {
     csv.count + " cadet(s). Copy this and save it as mobiles.csv.";
 }
 
+// Destructive and unrecoverable once the tab is closed, so it confirms first.
 function clearStaffEntries() {
   if (!confirm("Clear every mobile entry held on this device? Export first if you have not uploaded them.")) return;
 
@@ -624,6 +657,8 @@ function flightItems(date, f) {
   return [...(p.items || []), ...((p.flights && p.flights[f]) || [])].sort(byTime);
 }
 
+// Staff copy of one day's programme, including the per-flight splits that the
+// cadet view hides behind whichever flight that cadet is in.
 function renderStaffDay() {
   const box = document.getElementById("staffDay");
 
@@ -716,6 +751,8 @@ function renderStaffDay() {
 
 let staffDayDate = "";
 
+// Defaults the staff view to the real date while camp is running, and to the
+// first day of camp outside it.
 function todayOrFirst() {
   const now = new Date();
   const guess = `${now.getDate()} Aug`;
@@ -728,6 +765,8 @@ function setStaffDay(d) {
   renderStaffDay();
 }
 
+// The mobiles grid: a row per cadet in flight then serial order, matching the
+// order the paper collection sheets are printed in.
 function renderStaffGrid() {
   const box = document.getElementById("mobilesStaff");
 
@@ -859,6 +898,7 @@ function renderMobiles(c) {
   `;
 }
 
+// Remembered so a cadet only types their number once on their own phone.
 function setId(v) {
   cadetId = v;
   localStorage.setItem("k9CadetId", v);
@@ -872,6 +912,7 @@ function esc(s) {
   })[ch]);
 }
 
+// Comparable integer for sorting and for finding what is on next.
 function toMinutes(time) {
   const [h, m] = String(time).split(":");
   return Number(h) * 60 + Number(m);
@@ -941,6 +982,7 @@ function itemsFor(date) {
   return items.sort(byTime);
 }
 
+// A cadet's slot on a given flying day, or null if they are not on that list.
 function flyingSlotFor(date, id) {
   const day = data.flying && data.flying.days && data.flying.days[date];
   return day ? day[id] : null;
@@ -959,10 +1001,13 @@ function uniformForItem(item, dayUniform) {
   return item.uniform || dayUniform || "TBC";
 }
 
+// Maps a uniform name to its colour class; unknown names simply get no colour.
 function uniformClass(uniform) {
   return uniforms[uniform] || "";
 }
 
+// Single entry point for a redraw. Everything that changes what the cadet sees
+// funnels through here rather than patching the DOM in place.
 function render() {
   const c = cadet();
 
@@ -1076,6 +1121,7 @@ function visibleDates() {
   return names.slice(from, to + 1);
 }
 
+// The week view, limited to the days visibleDates() allows.
 function renderWeek(c) {
   const box = document.getElementById("week");
 
@@ -1087,9 +1133,11 @@ function renderWeek(c) {
 
   box.innerHTML = shown.map(date => {
     const p = data.programme[date];
-
-    // Some days call the flights something else -- 25 Aug uses colours. Show
-    // the name the cadet will actually be called by on the day.
+    // Two optional per-day overrides. flightMoves puts a named cadet with a
+    // different flight for that day only, and is in use. flightNames renames
+    // the flights for one day; nothing sets it now, but the read is kept
+    // because the programme has used it before and absent keys fall through
+    // harmlessly. Either way, show the cadet the name they will be called by.
     const dayFlight = (p.flightMoves && p.flightMoves[c.id]) || c.flight;
     const alias = p.flightNames && p.flightNames[dayFlight];
     const moved = p.flightMoves && p.flightMoves[c.id];
@@ -1115,6 +1163,8 @@ function renderWeek(c) {
   updateNextUp(c);
 }
 
+// The flying view: this cadet's slots across every flying day, booked or
+// reserve, plus the days flying was cancelled.
 function renderFlying(c) {
   const box = document.getElementById("flying");
 
@@ -1176,6 +1226,8 @@ function renderFlying(c) {
   `;
 }
 
+// The Next Up card. Picks the next event today by clock time, and falls
+// through to the first event of the next visible day once today is done.
 function updateNextUp(c) {
   const next = document.getElementById("next");
 
@@ -1237,6 +1289,7 @@ function updateNextUp(c) {
   `;
 }
 
+// Tab switching for the five bottom-bar views.
 function show(id, btn) {
   document.querySelectorAll(".view").forEach(x => {
     x.classList.remove("active");
@@ -1276,6 +1329,8 @@ function loadRoster() {
     });
 }
 
+// Published register. A missing file is not an error: it just means nothing
+// has been collected yet.
 function loadMobiles() {
   return fetch("mobiles.csv", { cache: "no-cache" })
     .then(r => {
@@ -1292,6 +1347,7 @@ function loadMobiles() {
     });
 }
 
+// Boot: load the roster and register, then draw. Called once from index.html.
 function start() {
   const input = document.getElementById("cadetInput");
 

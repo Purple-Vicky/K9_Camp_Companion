@@ -95,7 +95,7 @@ const data = {
       // The Flight A cadets who are not flying join another flight for the
       // day: their own flight is empty, so without this they would see
       // nothing. The roster is untouched; this is for this date only.
-      flightMoves: { "003": "D", "010": "D", "012": "B", "004": "C", "008": "C", "015": "C", "002": "B" },
+      flightMoves: {},
 
       // Everyone gets these...
       items: [
@@ -195,9 +195,11 @@ const data = {
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
       // A and C to Adrenaline for Adventure Training, B and D to the museum.
-      // Four Bronze Wings candidates travel away from their own flight to be
-      // at Adrenaline: three from B and one from D. One other goes
-      // the other way, to the museum. Their notes say so.
+      // A and C to Adrenaline for Adventure Training, B and D to the museum.
+      // A few cadets travel away from their own flight to be with the activity
+      // they are booked on rather than with their flight. Name them in
+      // flightMoves above and the app puts them with the right group; the item
+      // notes say so as well, so nobody turns up at the wrong coach.
       flights: {
         A: [
           { time: "09:00", title: "Adventure Training", location: "Adrenaline", uniform: "Sports", note: "Travel in civvies and change at the centre" },
@@ -232,11 +234,11 @@ const data = {
         { time: "20:00", end: "21:30", title: "Disco", location: "", note: "" },
         { time: "22:00", title: "Lights Out", location: "", note: "", type: "lightsout" }
       ],
-      // The swap is by where a cadet was on the 26th, not by flight, so the
-      // notes carry the exceptions. A and C to the museum, B and D to
-      // Adrenaline. The 14 Bronze Wings cadets stay on camp in MTP and are on
-      // neither coach. 002 and 015 went to the museum on the 26th so they go
-      // to Adrenaline; 040 and 043 flew on the 26th, so they do too.
+      // The swap is by where a cadet was the day before, not by flight, so the
+      // item notes carry the exceptions. A and C to the museum, B and D to
+      // Adrenaline. Bronze Wings candidates stay on camp in MTP and are on
+      // neither coach. Anyone whose previous day did not follow their flight
+      // goes the other way, and is listed in flightMoves.
       flights: {
         A: [
           { time: "09:00", title: "York Air Museum", location: "Elvington", note: "Leaves the museum at 1330. On camp in MTP if you are doing Bronze Wings. At Adrenaline if you went to the museum yesterday" }
@@ -277,54 +279,33 @@ const data = {
     location: "AEF",
     note: "Report to your Flight Staff before going.",
 
-    // AEF runs every day, two cadets a day. Add a cadet by putting their
-    // number against the day, with their slot time:
+    // Call-forward order for AEF. Being on here is not a slot: a cadet sees
+    // their position and that the day is still to be confirmed. Once a slot is
+    // fixed, put them under the day below and the position is replaced.
     //
-    //   "24 Aug": { "012": "09:30", "034": "10:15" },
+    //   priority: [ "NNN", "NNN", "NNN" ]
     //
-    // If the time is not confirmed yet, use "TBC" and the slot still shows,
-    // at the top of that day, so the cadet knows to expect it.
+    priority: [],
+
+    // One entry per day of camp. Against each day, put the cadets flying and
+    // their slot time:
     //
-    //   "24 Aug": { "012": "TBC", "034": "TBC" },
+    //   "24 Aug": { "NNN": "09:30", "NNN": "10:15" },
+    //
+    // Use "TBC" where the time is not confirmed — the slot still shows, at the
+    // top of that day, so the cadet knows to expect it. Use "RESERVE" for a
+    // standby.
     //
     // A cadet not listed sees "no slot allocated". Nobody sees anyone else's.
-
-    // The order cadets are called forward for AEF. Being on here is not a slot:
-    // a cadet sees their position and that the day is still to be confirmed.
-    // Once a slot is fixed, put them under the day below and the position is
-    // replaced by the real thing.
-    // 003, 012, 008, 004, 010, 015 and 002 came off for the 24th: they are not
-    // flying and have joined another flight for the day instead.
-    priority: [
-      "001", "006", "014",
-      "005", "007", "011", "013", "009"
-    ],
-
+    // An empty day means flying was cancelled, and the app says so, which is
+    // deliberate: cadets need to see it was cancelled rather than just find
+    // themselves missing from a list.
     days: {
       "22 Aug": {},
       "23 Aug": {},
-
-      // Flying on the 24th, in the call-forward order above. Times are not
-      // fixed yet, so TBC; replace a cadet's TBC with their time as slots are
-      // confirmed. Use "RESERVE" for a standby.
-      "24 Aug": {
-        "001": "TBC", "006": "TBC", "014": "TBC",
-        "005": "TBC", "007": "TBC", "011": "TBC", "013": "TBC", "009": "TBC"
-      },
-
-      // Seven flew on the 25th. Three never got airborne and
-      // came off; three others went up in their place.
-      "25 Aug": {
-        "017": "TBC", "026": "TBC", "027": "TBC", "035": "TBC",
-        "039": "TBC", "050": "TBC", "051": "TBC"
-      },
-      // Six on the 26th, every one a first-time flyer aged 13 or over.
-      // Two cadets are not on this list, one medically and one on age. A third is
-      // back on after missing his slot on the 25th.
-      "26 Aug": {
-        "020": "TBC", "052": "TBC", "043": "TBC",
-        "040": "TBC", "053": "TBC", "057": "TBC"
-      },
+      "24 Aug": {},
+      "25 Aug": {},
+      "26 Aug": {},
       "27 Aug": {},
       "28 Aug": {}
     }
