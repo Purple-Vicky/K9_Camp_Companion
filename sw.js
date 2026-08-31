@@ -10,7 +10,7 @@
 // yesterday's programme while they have signal. Falling back to cache is for
 // when there is genuinely nothing else.
 
-const CACHE = "k9-v2";
+const CACHE = "k9-v3";
 
 // Fetched on install so the app works offline even if the cadet has only ever
 // opened the home screen.
